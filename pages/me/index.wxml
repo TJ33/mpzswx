@@ -1,0 +1,37 @@
+<!-- pages/me/index.wxml -->
+<view class="all">
+  <view class="top">
+    <view class="myhead">
+      <view class="namePhone">
+        <view class="name">{{userName || '未登录'}}</view>
+        <text class="phone">{{userPhone || ''}}</text>
+      </view>
+      <button wx:if="{{userPhone == ''}}" class="sq" bindtap="getLogin" bindgetphonenumber='getPhoneNumber' plain="true" open-type="getPhoneNumber">
+        请点击授权
+        <i class="iconfont icon-jiantou" />
+      </button>
+      <i class="iconfont icon-lujing" bindtap='vehicleTap' wx:if="{{userHead == ''}}" />
+      <image class="head" wx:else src="{{userHead}}" />
+    </view>
+  </view>
+  <view class="other">
+    <navigator class="choice" wx:for="{{list}}" wx:key="{{index}}" url="{{item.link}}" bindtap="judgeUser">
+      <text class="textStyle">{{item.name}}</text>
+      <i class="iconfont icon-jiantou" />
+    </navigator>
+  </view>
+</view>
+<!-- 组件--弹出框 -->
+<view class="Dialog_Box {{popupShow ?'Dialog_Box_active':'Dialog_Box_hidden'}}" catchtouchmove="ture" animation="{{showHeightAnimation}}">
+  <view class="Dialog_Box_float {{popupShow ? 'Dialog_Box_float_show' : ''}}">
+    <view class="Dialog_  {{popupShow ? 'Dialog_show' : ''}}">
+      <view class="Dialog_title">{{popupTitle}}</view>
+      <view class="Dialog_content">获取用户信息</view>
+      <view class="Dialog_Btn">
+        <button class="Dialog_Btn_s" hover-class="Dialog_Btn_hover" plain open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="authorize">
+          确认
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

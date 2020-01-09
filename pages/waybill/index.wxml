@@ -1,0 +1,41 @@
+<!-- pages/waybill/index.wxml -->
+<view class="all">
+  <view class="title">
+    <view>已下单</view>
+    <view>已揽件</view>
+    <view>已签收</view>
+    <view>已完成</view>
+  </view>
+  <view class="list">
+    <view class="content">
+      <view class="waybill">
+        <view class="left">
+          <view>运单编号</view>
+          <view>20000200002200</view>
+        </view>
+        <view class="right">
+          <view>配送中</view>
+        </view>
+      </view>
+      <view class="receipt">
+        <view>收件人</view>
+        <view>收件人地址</view>
+        <view>收件人姓名</view>
+      </view>
+      <view class="parcel">
+        <view>包裹数</view>
+        <view>件数</view>
+      </view>
+      <view class="order">
+        <view class="left">
+          <view>下单时间</view>
+          <view>2020-01-08 14:42:36</view>
+        </view>
+        <view class="right">
+          <view>代收货款</view>
+          <view>￥0</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

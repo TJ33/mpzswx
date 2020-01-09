@@ -1,0 +1,48 @@
+/* pages/waybill/index.wxss */
+.all{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.list{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.content{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.waybill , .receipt , .parcel , .order{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.waybill .left{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.order .left{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.order .right{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}

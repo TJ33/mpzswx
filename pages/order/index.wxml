@@ -1,0 +1,171 @@
+<!-- pages/order/index.wxml -->
+<view class="all">
+		<view class="TopicTitle">
+				<view class="TopicTitleBox" wx:key="" wx:for="{{vehicleType}}" data-index="{{index}}" bindtap="{{TopicTitleActive == index ? '' : 'titleTab'}}">
+						<view class="{{TopicTitleActive == index ? 'TopicTitleActive' : ''}}">{{item.name}}</view>
+				</view>
+				<!-- <view class="TopicTitle_bottom {{TopicTitleActive == 1?'TopicTitle_bottom_on':''}}" animation="{{animation}}" /> -->
+		</view>
+		<view class="map">
+				<view class="send" data-id='0' bindtap="bindAdds">
+						<view class="left">
+								<view class="monst" />
+								<view class="line" />
+						</view>
+						<view class="right">
+								<view class="shop">
+										wuwu
+										<view class="phone">13011111111</view>
+								</view>
+								<view class="address">广东省广州市XXX</view>
+								<!-- <view class="other">请选择寄件人</view> -->
+						</view>
+						<i class="iconfont icon-qianjin" />
+				</view>
+				<view class="send" data-id='1' bindtap="bindAdds">
+						<view class="left">
+								<view class="monst2" />
+						</view>
+						<view class="right">
+								<view class="shop">
+										uuuu
+										<view class="phone">13211111111</view>
+								</view>
+								<view class="address">广东省上海市XXX</view>
+								<!-- <view class="other">请选择收件人</view> -->
+						</view>
+						<i class="iconfont icon-qianjin" />
+				</view>
+		</view>
+		<view class="box_3">
+				<view class="content">
+						<radio-group class="radio-group" bindchange="radioChange2">
+								<label class="radio" wx:for="{{sdClearingTypeList}}" wx:key="">
+										<radio value="{{item.id}}" checked="{{item.checked}}" />
+										{{item.value}}
+								</label>
+						</radio-group>
+				</view>
+				<view class="content">
+						<view class="left">
+								<i class="iconfont icon-baoguo--" />
+								<view>包裹数量</view>
+						</view>
+						<view class="right">
+								<view>
+										<input maxlength="2" type="number" value="{{packageCount}}" bindinput="bindPc" />
+								</view>
+								<i class="iconfont icon-qianjin" />
+						</view>
+				</view>
+				<view class="content">
+						<view class="left">
+								<i class="iconfont icon-daikuan" />
+								<view>代收货款</view>
+						</view>
+						<view class="right">
+								<view>
+										<input placeholder="0" type="number" value="{{cargoMoney}}" bindinput="bindCm" />
+								</view>
+								<i class="iconfont icon-qianjin" />
+						</view>
+				</view>
+				<view class="content">
+						<view class="left">
+								<i class="iconfont icon-yunshu" />
+								<view>预收费用</view>
+						</view>
+						<view class="right">
+								<view class="color" wx:if="{{!mileageCost.money}}">暂无运费信息</view>
+								<view class="color" wx:else>{{mileageCost.money}}</view>
+								<i class="iconfont icon-qianjin" />
+						</view>
+				</view>
+				<view class="content">
+						<view class="left">
+								<i class="iconfont icon-yunshu" />
+								<view>预收距离</view>
+						</view>
+						<view class="right">
+								<view class="color" wx:if="{{!mileageCost.kilometre}}">暂无运费信息</view>
+								<view class="color" wx:else>{{mileageCost.kilometre}}公里</view>
+								<i class="iconfont icon-qianjin" />
+						</view>
+				</view>
+				<view class="content">
+						<view class="left">
+								<i class="iconfont icon-fenfabaoxian" />
+								<view>物品</view>
+						</view>
+						<view class="right">
+								<picker bindchange="bindGoodsList" value="{{goodsListIndex}}" range="{{goodsList}}">
+										<view class="picker">{{goodsList[goodsListIndex]}}</view>
+								</picker>
+								<i class="iconfont icon-qianjin" />
+						</view>
+				</view>
+				<view class="content" wx:if="{{goodsListIndex == 2}}">
+						<view class="right">
+								<view>
+										<input type="text" placeholder="请输入物品" value="{{goods}}" bindinput="InputGoods" />
+								</view>
+								<i class="iconfont icon-qianjin" />
+						</view>
+				</view>
+		</view>
+		<!-- <view class="month">
+				<view class="left">
+						<i class="iconfont icon-daikuan" />
+						<view>优先扣除</view>
+				</view>
+				<view class="right">
+						<radio-group class="radio-group" bindchange="bindSettings">
+								<radio class="radio" wx:for-items="{{setItems}}" wx:key="name" value="{{item.name}}" checked="{{item.checked}}">
+										<text>{{item.value}}</text>
+								</radio>
+						</radio-group>
+				</view>
+				<i class="iconfont icon-qianjin" />
+		</view>
+		<view class="cod">
+				<view class="left">
+						<view>图标</view>
+						<view>代收货款金额</view>
+				</view>
+				<view class="right">
+						<view>金额</view>
+						<view>箭头</view>
+				</view>
+		</view>
+		<view class="distance">
+				<view class="left">
+						<view>图标</view>
+						<view>距离</view>
+				</view>
+				<view class="right">
+						<view>距离数值</view>
+						<view>箭头</view>
+				</view>
+		</view>
+		<view class="freight">
+				<view class="left">
+						<view>图标</view>
+						<view>运费</view>
+				</view>
+				<view class="right">
+						<view>运费数值</view>
+						<view>箭头</view>
+				</view>
+		</view>
+		<view class="remark">
+				<view class="left">
+						<view>图标</view>
+						<view>备注</view>
+				</view>
+				<view class="right">
+						<view>备注是啥</view>
+						<view>箭头</view>
+				</view>
+		</view>
+		<view>立即下单</view> -->
+</view>
