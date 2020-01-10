@@ -1,0 +1,11 @@
+<!-- pages/map/index.wxml -->
+<view class="all">
+  <view class="top">
+    <view class="left">大大大</view>
+    <view class="right">取消</view>
+  </view>
+  <view class="center" />
+  <view class="last">
+    <button>确定</button>
+  </view>
+</view>

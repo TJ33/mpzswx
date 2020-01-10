@@ -1,0 +1,72 @@
+.all{
+  
+  .last{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 710rpx;
+    height: 200rpx;
+    background-color: #ffffff;
+    margin: 20rpx;
+    .send{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 0rpx 20rpx;
+      border-bottom: 1rpx solid #f5f5f5;
+      padding-bottom: 20rpx;
+      .right{
+        padding: 20rpx;
+        .rightIcon{
+          width:10rpx;
+          height:10rpx;
+          border:6rpx solid rgba(77,191,110,1);
+          border-radius: 50%;
+        }
+      }
+
+      .left{
+        padding: 20rpx;
+        .rightAddress{
+          font-size:28rpx;
+          color:rgba(145,149,153,1);
+          line-height:28rpx;
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
+          width: 450rpx;
+        }
+      }
+    }
+
+    .received{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      margin: 0rpx 20rpx;
+      .right{
+        padding: 20rpx;
+        .leftIcon{
+          width:10rpx;
+          height:10rpx;
+          border:6rpx solid rgb(253, 7, 7);
+          border-radius: 50%;
+        }
+      }
+
+      .left{
+        padding: 20rpx;
+        .leftAddress{
+          font-size:28rpx;
+          color:rgba(145,149,153,1);
+          line-height:28rpx;
+          overflow: hidden;
+          text-overflow:ellipsis;
+          white-space: nowrap;
+          width: 450rpx;
+        }
+      }
+
+    }
+  }
+}

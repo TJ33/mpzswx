@@ -51,8 +51,8 @@ Page({
    */
   onShow: async function () {
     //查询车辆类型
-    let vehicleType = await ToolServer.vehicleType()
-    console.log('vehicleType======', vehicleType)
+    // let vehicleType = await ToolServer.vehicleType()
+    // console.log('vehicleType======', vehicleType)
   },
 
   //导航栏
