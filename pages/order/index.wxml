@@ -4,7 +4,6 @@
 				<view class="TopicTitleBox" wx:key="" wx:for="{{vehicleType}}" data-index="{{index}}" bindtap="{{TopicTitleActive == index ? '' : 'titleTab'}}">
 						<view class="{{TopicTitleActive == index ? 'TopicTitleActive' : ''}}">{{item.name}}</view>
 				</view>
-				<!-- <view class="TopicTitle_bottom {{TopicTitleActive == 1?'TopicTitle_bottom_on':''}}" animation="{{animation}}" /> -->
 		</view>
 		<view class="map">
 				<view class="send" data-id='0' bindtap="bindAdds">
