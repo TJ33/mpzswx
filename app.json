@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/map/index",
+    "pages/waybill/index",
     "pages/index/index",
     "pages/order/index",
-    "pages/waybill/index",
+    "pages/map/index",
     "pages/me/index"
   ],
   "permission": {

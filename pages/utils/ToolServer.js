@@ -107,8 +107,61 @@ class ToolServer {
     }
     return this.post2(url, data)
   }
+  /*-------------------------------------------原版------------------------------------------------*/
+  //获取商家信息
+  async getInformation() {
+    let that = this
+    let phones = wx.getStorageSync('MYPHONE')
+    phones = "13412924605"
+    let Authorization = wx.getStorageSync('AUTHORIZATION')
+    return new Promise((resolve, reject) => {
+      wx.showLoading({
+        title: '加载中',
+      })
+      wx.request({
+        url: `${domain}/api/mobile/merchant/get_information`,
+        method: 'GET',
+        header: {
+          'Authorization': Authorization
+        },
 
-  //
+        success: async (res) => {
+          if (res.data.errorcode == 0) {
+            resolve(res.data)
+            res.data.data.user = res.data.data.contacts.find(d => d.phone === phones)
+            for (var i in res.data.data.contacts) {
+              if (res.data.data.contacts[i].default == true) {
+                res.data.data.contact = res.data.data.contacts[i]
+              }
+            }
+            console.log('MYSHOP', res.data.data)
+            wx.setStorageSync('MYSHOP', res.data.data)
+          } else {
+            await LoginServer.myPhoneLogin(phones)
+            await that.getInformation()
+          }
+        }
+      })
+      setTimeout(function () {
+        wx.hideLoading()
+      })
+    })
+  }
+
+  //带搜索的查单列表
+  async searchOrder(sn, flag, pageNum, time, transportStatus) {
+    let url = `${domain}/api/mobile/merchant/search_order`
+    let data = {
+      sn: sn,
+      flag: flag,
+      pageNum: pageNum,
+      pageSize: 10,
+      time: time,
+      transportStatus: transportStatus
+    }
+    return this.get(url, data)
+
+  }
 
 
 

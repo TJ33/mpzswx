@@ -1,5 +1,5 @@
-// import regeneratorRuntime from "regenerator-runtime";
-// var ToolServer = require('../utils/ToolServer');
+import regeneratorRuntime from "regenerator-runtime";
+var ToolServer = require('../utils/ToolServer');
 // var TimeServer = require('../utils/TimeServer');
 Page({
 
@@ -53,12 +53,12 @@ Page({
   },
 
   //转换日期
-  async createTime(e) {
-    if (e != '') {
-      e = await TimeServer.createAtFormatLLL(e)
-    }
-    return e
-  },
+  // async createTime(e) {
+  //   if (e != '') {
+  //     e = await TimeServer.createAtFormatLLL(e)
+  //   }
+  //   return e
+  // },
   reviseTr(e) {
     let list = e
     for (let i in list.rows) {
@@ -133,13 +133,13 @@ Page({
     if (this.data.TopicTitleActive == 0) {
       this.data.flag = 'SEND'
       this.data.list1 = await ToolServer.searchOrder(e.detail.value, this.data.flag, this.data.pageNum, '', '')
-      this.data.list1.rows = await this.createTime(this.data.list1.rows)
+      // this.data.list1.rows = await this.createTime(this.data.list1.rows)
       this.reviseTr(this.data.list1)
       this.setData({ 'list1': this.data.list1, 'pageNum': 1 })
     } else {
       this.data.flag = 'RECEIVE'
       this.data.list2 = await ToolServer.searchOrder(e.detail.value, this.data.flag, this.data.pageNum, '', '')
-      this.data.list2.rows = await this.createTime(this.data.list2.rows)
+      // this.data.list2.rows = await this.createTime(this.data.list2.rows)
       this.reviseTr(this.data.list2)
       this.setData({ 'list2': this.data.list2, 'pageNum': 1 })
     }
@@ -165,7 +165,7 @@ Page({
         console.log(res)
         that.data.list = await ToolServer.searchOrder(res.result, '', that.data.pageNum)
         that.reviseTr(that.data.list)
-        that.data.list.rows = await that.createTime(that.data.list.rows)
+        // that.data.list.rows = await that.createTime(that.data.list.rows)
         that.setData({ 'list': that.data.list })
       }
     })
@@ -189,13 +189,13 @@ Page({
     if (index == 0) {
       this.data.flag = 'SEND'
       this.data.list1 = await ToolServer.searchOrder(this.data.waybill, this.data.flag, this.data.pageNum, '', '')
-      this.data.list1.rows = await this.createTime(this.data.list1.rows)
+      // this.data.list1.rows = await this.createTime(this.data.list1.rows)
       this.reviseTr(this.data.list1)
       this.setData({ 'list1': this.data.list1, 'pageNum': 1 })
     } else {
       this.data.flag = 'RECEIVE'
       this.data.list2 = await ToolServer.searchOrder(this.data.waybill, this.data.flag, this.data.pageNum, '', '')
-      this.data.list2.rows = await this.createTime(this.data.list2.rows)
+      // this.data.list2.rows = await this.createTime(this.data.list2.rows)
       this.reviseTr(this.data.list2)
       this.setData({ 'list2': this.data.list2, 'pageNum': 1 })
     }
@@ -216,24 +216,11 @@ Page({
       let item = await ToolServer.searchOrder(this.data.waybill, this.data.flag, this.data.pageNum, '', '')
       e.rows = e.rows.concat(item.rows)
       this.reviseTr(e)
-      e.rows = await this.createTime(e.rows)
+      // e.rows = await this.createTime(e.rows)
       this.setData({
         pageNum: this.data.pageNum,
       })
     }
   },
-  // //分享
-  // onShareAppMessage(res) {
-  //   return {
-  //     title: '查单',
-  //     path: '/pages/waybill/index',
-  //     success: (res) => {
-  //       console.log("转发成功", res);
-  //     },
-  //     fail: (res) => {
-  //       console.log("转发失败", res);
-  //     }
-  //   }
-  // }
 
 })
