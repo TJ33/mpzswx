@@ -1,0 +1,24 @@
+<!-- pages/register/index.wxml -->
+<view class="top">
+  <view class="storeNameTitle">店铺名称</view>
+  <input placeholder="请输入店铺名称" class="storeNameValue" placeholder-class="input-placeholder" bindinput="inputStoreName" value="{{storeName}}" />
+</view>
+<view class="top">
+  <view class="storeAddressTitle">店铺地址</view>
+  <input placeholder="请选择店铺地址" class="storeAddressValue" placeholder-class="input-placeholder" bindtap="inputStoreAddress" value="{{storeAddress}}" />
+</view>
+<view class="top">
+  <view class="numberTitle">门牌号</view>
+  <input placeholder="请输入门牌号" class="numberValue" placeholder-class="input-placeholder" bindinput="inputNumber" value="{{number}}" />
+</view>
+<view class="top">
+  <view class="userTitle">用户名</view>
+  <input placeholder="请输入用户名" class="userValue" placeholder-class="input-placeholder" bindinput="inputUser" value="{{userName}}" />
+</view>
+<view class="top">
+  <view class="phoneTitle">联系电话</view>
+  <input placeholder="请输入联系电话" class="phoneValue" placeholder-class="input-placeholder" bindinput="inputPhone" value="{{userPhone}}" />
+</view>
+<view class="last">
+  <button class="search" bindtap="register">注册</button>
+</view>

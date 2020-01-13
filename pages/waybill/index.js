@@ -1,6 +1,6 @@
 import regeneratorRuntime from "regenerator-runtime";
 var ToolServer = require('../utils/ToolServer');
-// var TimeServer = require('../utils/TimeServer');
+var TimeServer = require('../utils/TimeServer');
 Page({
 
   /**
@@ -10,7 +10,7 @@ Page({
     duration: 500,
     animation: '',
     TopicTitleActive: 0,
-    type: ['我的寄出', '我的接收'],
+    type: ['已下单', '已揽件', '已签收', '已完成'],
     waybill: '',
     flag: 'SEND',    //我发的(SEND) 或 我收的（RECEIVE）
     pageNum: 1,
@@ -53,12 +53,12 @@ Page({
   },
 
   //转换日期
-  // async createTime(e) {
-  //   if (e != '') {
-  //     e = await TimeServer.createAtFormatLLL(e)
-  //   }
-  //   return e
-  // },
+  async createTime(e) {
+    if (e != '') {
+      e = await TimeServer.createAtFormatLLL(e)
+    }
+    return e
+  },
   reviseTr(e) {
     let list = e
     for (let i in list.rows) {

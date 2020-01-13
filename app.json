@@ -1,7 +1,9 @@
 {
   "pages": [
     "pages/waybill/index",
+    "pages/register/index",
     "pages/index/index",
+    "pages/address/index",
     "pages/order/index",
     "pages/map/index",
     "pages/me/index"

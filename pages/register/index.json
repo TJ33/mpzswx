@@ -1,8 +1,7 @@
 {
-  "usingComponents": {},
   "navigationBarBackgroundColor": "#ffffff",
   "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "查询运单",
+  "navigationBarTitleText": "注册",
   "backgroundColor": "#eeeeee",
   "backgroundTextStyle": "light",
   "onReachBottomDistance": 50
