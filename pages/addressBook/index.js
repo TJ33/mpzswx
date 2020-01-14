@@ -20,6 +20,7 @@ Page({
   },
 
   async onShow() {
+    //查询地址簿列表
     let list = await ToolServer.findAddressBook()
     for (var i in list) {
       list[i].region = list[i].location.region[0].replace(/,/g, '')
@@ -38,7 +39,7 @@ Page({
   //修改地址
   bindUp(e) {
     let id = e.currentTarget.dataset.id
-    wx.redirectTo({ url: `../addAddress/index?id=${id}` })
+    wx.redirectTo({ url: `../address/index?id=${id}` })
   },
   //删除地址
   async bindDel(e) {
@@ -49,8 +50,8 @@ Page({
       content: '是否删除当前地址',
       success: async function (res) {
         if (res.confirm) {
-          // await ToolServer.QuicklyfDel(id)
-          // await that.onShow()
+          await ToolServer.delAddressBook(id)
+          await that.onShow()
         } else if (res.cancel) {
         }
       }

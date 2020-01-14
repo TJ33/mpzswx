@@ -3,12 +3,14 @@ var ToolServer = require('../utils/ToolServer');
 Page({
 
   data: {
-    id: '',
-    name: '',    //收件人
-    phone: '',   //电话号码
-    address: '',    //详情地址
+    storeName: '',   //店铺名称
+    name: '',    //联系人
+    phone: '',   //联系电话
+    address: '',    //店铺地址
+    coordinates: '', //地图坐标
+    id: '',          //非必须
     door: '', //门牌号
-    set: true, //是否保存到地址薄
+    //set: true, //是否保存到地址薄
   },
 
   /**
@@ -20,11 +22,16 @@ Page({
   onShow() {
 
   },
-  //收件人
+  //店铺名称
+  bindStoreName(e) {
+    this.setData({ 'storeName': e.detail.value })
+  },
+
+  //联系姓名
   bindName(e) {
     this.setData({ 'name': e.detail.value })
   },
-  //电话号码
+  //联系电话
   bindPhone(e) {
     this.setData({ 'phone': e.detail.value })
   },
@@ -65,33 +72,25 @@ Page({
         let chooseLongitude = res.longitude
         let chooseName = res.name
         //选择地点之后返回的结果
-        if (type == "send") {
-          that.setData({
-            send: chooseName
-          })
-        } else {
-          that.setData({
-            received: chooseName
-          })
-        }
-
-        if (that.data.send != "" && that.data.received != "") {
-          that.setData({
-            flag: true
-          })
-        } else {
-          that.setData({
-            flag: false
-          })
-        }
+        that.setData({
+          address: chooseName
+        })
       }
     })
   },
-  bindSwitch(e) {
-    this.setData({ 'set': e.detail.value })
-  },
+  // bindSwitch(e) {
+  //   this.setData({ 'set': e.detail.value })
+  // },
   //保存信息
   async bindAdds(e) {
+    let storeName = this.data.storeName
+    let name = this.data.name
+    let phone = this.data.phone
+    let address = this.data.address
+    let coordinates = this.data.coordinates
+    let door = this.data.door
+    let id = this.data.id
+
     if (!(/^1[3456789]\d{9}$/.test(this.data.phone))) {
       wx.showToast({
         title: '手机号码有误，请重填',
@@ -100,26 +99,9 @@ Page({
       })
       return false;
     }
-    let data = {
-      'id': this.data.id,
-      'name': this.data.name,
-      'phone': this.data.phone,
-      'street': this.data.address,
-      'houseNumber': this.data.door,
-    }
-
-    let ds = {
-      _id: '',
-      nickname: '',
-      contact: {
-        name: this.data.name,
-        phone: this.data.phone
-      },
-      address: this.data.address + this.data.door,
-    }
 
     if (this.data.set) {
-      // await ToolServer.createAndUpdate(data)
+      await ToolServer.addAddressBook(storeName, name, phone, address, coordinates, door, id)
     }
     console.log('e', e.detail.value)
   },

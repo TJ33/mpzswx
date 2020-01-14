@@ -39,7 +39,7 @@ class ToolServer {
     return this.get(url)
   }
 
-  //添加/编辑 地址
+  //添加/编辑 地址簿
   async addAddressBook(anotherNamer, contactName, contactPhone, address, coordinates, doorplate, id) {
     let url = `${domain}/api/wxapp/add_address_book`
     let data = {
@@ -70,9 +70,12 @@ class ToolServer {
   }
 
   //查询车辆类型
-  async vehicleType() {
+  async vehicleType(operationTeam) {
     let url = `${domain}/api/wxapp/vehicle_type`
-    return this.get(url)
+    let data = {
+      operationTeam: operationTeam
+    }
+    return this.get(url, data)
   }
 
 
@@ -101,7 +104,7 @@ class ToolServer {
 
 
   //商家下单
-  async merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, useCoupon, remark, vehicleType, freight, operationTeam, state, appointment) {
+  async merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, appointment) {
     let url = `${domain}/api/wxapp/merchant_order`
     let data = {
       consignor: consignor,

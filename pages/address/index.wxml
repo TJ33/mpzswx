@@ -1,5 +1,11 @@
 <view class="box">
 	<view class="content">
+		<view class="left">店铺名称:</view>
+		<view class="right">
+			<input value="{{storeName}}" bindinput="bindStoreName" placeholder="请输入店铺名称" />
+		</view>
+	</view>
+	<view class="content">
 		<view class="left">联系姓名:</view>
 		<view class="right">
 			<input value="{{name}}" bindinput="bindName" placeholder="请输入联系姓名" />
@@ -25,7 +31,7 @@
 		</view>
 	</view>
 </view>
-<view class="box">
+<!-- <view class="box">
 	<view class="content">
 		<view class="left fontCl">是否存入地址薄:</view>
 		<view class="right other">
@@ -34,7 +40,7 @@
 			</view>
 		</view>
 	</view>
-</view>
+</view> -->
 <view class="box4 {{name !=''&& phone!='' && address!='' ?'':'box_4_no'}} " bindtap="{{name !=''&& phone!='' && address!='' ?'bindAdds':''}}">
 	保存
 </view>

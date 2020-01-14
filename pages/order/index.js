@@ -9,7 +9,14 @@ Page({
   data: {
     send: '',
     receipt: '',
+    freightMonthly: '',
+    cargoMoney: '',
+    distance: '',
+    remark: '',
     animation: '',
+    freight: '',
+    state: '',
+    appointment: '',
     vehicleType: [{
       type: '111',
       name: '小型面包'
@@ -61,9 +68,13 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: async function () {
+    //查询用户关联物流公司
+    let company = await ToolServer.queryLogisticsCompany()
+
     //查询车辆类型
-    // let vehicleType = await ToolServer.vehicleType()
-    // console.log('vehicleType======', vehicleType)
+    let operationTeam = ""
+    let vehicleType = await ToolServer.vehicleType(operationTeam)
+    console.log('vehicleType======', vehicleType)
   },
 
   //导航栏
@@ -86,6 +97,8 @@ Page({
       'TopicTitleActive': index,
       'animation': animation.export()
     })
+
+    //导航栏自动带出配送距离 参考运费
 
   },
 
@@ -157,7 +170,19 @@ Page({
   },
 
   //立即下单
-  bindOrder() {
+  async bindOrder() {
+    let send = this.data.send
+    let receipt = this.data.receipt
+    let freightMonthly = this.data.freightMonthly
+    let cargoMoney = this.data.cargoMoney
+    let distance = this.data.distance
+    let remark = this.data.remark
+    let vehicleType = this.data.vehicleType
+    let freight = this.data.freight
+    let operationTeam = this.data.operationTeam
+    let state = this.data.state
+    let appointment = this.data.appointment
 
+    let result = await ToolServer.merchantOrder(send, receipt, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, appointment)
   }
 })

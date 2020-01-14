@@ -9,10 +9,12 @@ Page({
   data: {
     title: '注册',
     storeName: '',
-    storeAddress: '',
-    number: '',
+    longitude: '',
+    latitude: '',
     userName: '',
     userPhone: '',
+    storeAddress: '',
+    number: ''
   },
 
   /**
@@ -99,7 +101,9 @@ Page({
         let chooseName = res.name
         //选择地点之后返回的结果
         that.setData({
-          storeAddress: chooseName
+          storeAddress: chooseName,
+          longitude: chooseLongitude,
+          latitude: chooseLatitude
         })
       }
     })
@@ -108,10 +112,13 @@ Page({
   //点击注册按钮
   register() {
     let storeName = this.data.storeName
-    let storeAddress = this.data.storeAddress
-    let number = this.data.number
+    let longitude = this.data.longitude
+    let latitude = this.data.latitude
     let userName = this.data.userName
     let userPhone = this.data.userPhone
+    let storeAddress = this.data.storeAddress
+    let number = this.data.number
+
 
     if (storeName == "") {
       wx.showToast({
@@ -163,7 +170,7 @@ Page({
       content: '是否确认注册',
       async success(res) {
         if (res.confirm) {
-          // let result = await ToolServer.userRegistration(oCode, name, phone)
+          let result = await ToolServer.merchantEntry(storeName, longitude, latitude, userName, userPhone, code, storeAddress)
           // if (result.message == "手机号码已存在") {
           //   wx.showToast({
           //     title: '手机号码已存在',
@@ -176,7 +183,7 @@ Page({
           //   icon: 'success',
           //   duration: 1000
           // })
-          // wx.switchTab({ url: '../../tap/me/index' })
+          // wx.switchTab({ url: '../me/index' })
         }
       }
     })

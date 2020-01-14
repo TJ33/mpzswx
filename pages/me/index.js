@@ -1,5 +1,8 @@
 // pages/me/index.js
 import regeneratorRuntime from "regenerator-runtime";
+var LoginServer = require('../utils/LoginServer');
+const { domain } = require('../config.js')
+
 Page({
 
   /**
@@ -11,14 +14,16 @@ Page({
     isCancelShow: true,
     showHeightAnimation: '',
     Myhead: '',
-    myshop: '',
     set: [
       {
         icon: 'iconfont icon-xiaoxi1',
         centent: '店铺地址',
         url: '../addressBook/index',
       }
-    ]
+    ],
+    user: {
+      name: ''
+    }
   },
 
   /**
@@ -26,11 +31,7 @@ Page({
    */
 
   async onLoad(options) {
-    let myshop = wx.getStorageSync('MYSHOP')
-    console.log('myshop', myshop);
-    this.setData({
-      'myshop': myshop
-    })
+
   },
   onShow: function () {
     // let myshop = wx.getStorageSync('MYSHOP')
@@ -60,11 +61,6 @@ Page({
     //   'Myhead': Myhead,
     //   'popupShow': this.data.popupShow,
     // })
-  },
-  bindUser() {
-    wx.navigateTo({
-      url: '../me_other/users/index'
-    })
   },
   onGotUserInfo(e) {
     console.log(e.detail.userInfo.avatarUrl)
@@ -114,7 +110,7 @@ Page({
                         if (res.confirm) {
                           wx.setStorageSync('MYPHONE', ret)
                           //用户不存在 跳转注册页面
-                          wx.navigateTo({ url: '../../me/register/index' })
+                          wx.navigateTo({ url: '../register/index' })
                         }
                       }
                     })
@@ -123,8 +119,9 @@ Page({
                     if (user.data != null) {
                       that.setData({
                         popupShow: true,
-                        userName: user.name,
-                        userPhone: user.phone,
+                        user: {
+                          name: user.name
+                        }
                       })
                     }
                   }

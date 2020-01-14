@@ -13,7 +13,7 @@ class LoginServer {
         success(res) {
           console.log('res', res)
           wx.request({
-            url: `${domain}/api/mobile/merchant/get_user_info`,
+            url: `${domain}/api/wxapp/analys_phone`,
             method: 'POST',
             header: {
               'Content-Type': 'application/x-www-form-urlencoded'
@@ -24,7 +24,14 @@ class LoginServer {
               code: res.code
             },
             success(res) {
-              resolve(res.data.data.phoneNumber)
+              if (res.data == "Internal Server Error") {
+                resolve(res.data)
+              } else {
+                resolve(res.data.phone)
+              }
+            },
+            fail(res) {
+              resolve(res.data)
             }
           })
         }
@@ -36,13 +43,12 @@ class LoginServer {
   }
   //本机登录
   async myPhoneLogin(phone) {
-    wx.setStorageSync('MYPHONE', phone)
     return new Promise((resolve, reject) => {
       wx.showLoading({
         title: '加载中',
       })
       wx.request({
-        url: `${domain}/api/mobile/merchant/login`,
+        url: `${domain}/api/wxapp/login`,
         method: 'POST',
         header: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -51,24 +57,19 @@ class LoginServer {
           phone: phone,
         },
         success(res) {
-          if (res.data.errortype == 0) {
+          if (res.data.data != null) {
             resolve(res.data)
-            wx.setStorageSync('AUTHORIZATION', res.data.data)
-            wx.setStorageSync('LOGINSTART', 'LOGINSTART1')
-
-            wx.switchTab({
-              url: '../../waybill/index'
-            })
+            let AUTHORIZATION = 'Bearer ' + res.data.token
+            wx.setStorageSync('AUTHORIZATION', AUTHORIZATION)
+            wx.setStorageSync('USER', res.data.data)
           } else {
-
+            resolve(res.data)
             wx.showToast({
-              title: res.data.message,
+              title: '用户需要注册',
               icon: 'none',
-              duration: 4000
+              duration: 1000
             })
-
           }
-
         }
       })
       setTimeout(function () {
@@ -85,7 +86,7 @@ class LoginServer {
         title: '加载中',
       })
       wx.request({
-        url: `${domain}/api/mobile/merchant/phone_code`,
+        url: `${domain}/api/mobile/main/phone_code`,
         method: 'POST',
         header: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -137,7 +138,7 @@ class LoginServer {
         title: '加载中',
       })
       wx.request({
-        url: `${domain}/api/mobile/merchant/check_code`,
+        url: `${domain}/api/mobile/main/check_code`,
         method: 'POST',
         header: {
           'Content-Type': 'application/x-www-form-urlencoded'
@@ -150,7 +151,8 @@ class LoginServer {
           resolve(res.data)
           switch (true) {
             case res.data.errortype == 0:
-              wx.setStorageSync('AUTHORIZATION', res.data.data)
+              let AUTHORIZATION = 'Bearer ' + res.data.token
+              wx.setStorageSync('AUTHORIZATION', AUTHORIZATION)
               wx.setStorageSync('LOGINSTART', 'LOGINSTART1')
               wx.showToast({
                 title: '登录成功',
@@ -158,7 +160,7 @@ class LoginServer {
                 duration: 2000
               })
               wx.switchTab({
-                url: '../../waybill/index'
+                url: '../../tap/index/index'
               })
               break;
             case res.data.errortype == 1:
