@@ -1,0 +1,4 @@
+<view class="tsBox">
+		<image class="tsImg" src="/images/default.png" />
+		<view class="ts">暂无数据</view>
+</view>

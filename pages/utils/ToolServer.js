@@ -5,6 +5,7 @@ var LoginServer = require('./LoginServer')
 class ToolServer {
 
   //手机登陆接口
+
   //解析手机号
 
   //商家注册
@@ -23,23 +24,23 @@ class ToolServer {
   }
 
   //查询运单
-  async findWayBill(status, transportStatus) {
+  async findWayBill(sn, transportStatus) {
     let url = `${domain}/api/wxapp/find_waybill`
     let data = {
-      status: status,
+      sn: sn,
       transportStatus: transportStatus
     }
     return this.post(url)
   }
 
-  //查询地址簿
+  //查询地址簿列表
   async findAddressBook() {
     let url = `${domain}/api/wxapp/find_address_book`
     return this.get(url)
   }
 
-  //添加地址
-  async addAddressBook(anotherNamer, contactName, contactPhone, address, coordinates) {
+  //添加/编辑 地址
+  async addAddressBook(anotherNamer, contactName, contactPhone, address, coordinates, doorplate, id) {
     let url = `${domain}/api/wxapp/add_address_book`
     let data = {
       anotherNamer: anotherNamer,
@@ -47,25 +48,31 @@ class ToolServer {
       contactPhone: contactPhone,
       address: address,
       coordinates: coordinates,
+      doorplate: doorplate,
+      id: id
     }
     return this.post(url)
   }
 
-  //商家下单
-  async merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, useCoupon, remark, vehicleType, freight) {
-    let url = `${domain}/api/wxapp/merchant_order`
+  //删除地址簿
+  async delAddressBook(id) {
+    let url = `${domain}/api/wxapp/del_address_book`
     let data = {
-      consignor: consignor,
-      consignee: consignee,
-      freightMonthly: freightMonthly,
-      cargoMoney: cargoMoney,
-      distance: distance,
-      useCoupon: useCoupon,
-      remark: remark,
-      vehicleType: vehicleType,
-      freight: freight,
+      id: id
     }
     return this.post(url)
+  }
+
+  //查询用户关联的物流公司
+  async queryLogisticsCompany() {
+    let url = `${domain}/api/wxapp/query_logistics_company`
+    return this.get(url)
+  }
+
+  //查询车辆类型
+  async vehicleType() {
+    let url = `${domain}/api/wxapp/vehicle_type`
+    return this.get(url)
   }
 
 
@@ -92,11 +99,31 @@ class ToolServer {
   }
 
 
-  //查询车辆类型
-  async vehicleType() {
-    let url = `${domain}/api/wxapp/vehicle_type`
-    return this.get(url)
+
+  //商家下单
+  async merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, useCoupon, remark, vehicleType, freight, operationTeam, state, appointment) {
+    let url = `${domain}/api/wxapp/merchant_order`
+    let data = {
+      consignor: consignor,
+      consignee: consignee,
+      freightMonthly: freightMonthly,
+      cargoMoney: cargoMoney,
+      distance: distance,
+      useCoupon: useCoupon,
+      remark: remark,
+      vehicleType: vehicleType,
+      freight: freight,
+      operationTeam: operationTeam,
+      state: state,
+      appointment: appointment
+    }
+    return this.post(url)
   }
+
+
+
+
+
 
 
 

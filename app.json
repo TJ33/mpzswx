@@ -1,12 +1,13 @@
 {
   "pages": [
-    "pages/waybill/index",
-    "pages/register/index",
-    "pages/index/index",
-    "pages/address/index",
     "pages/order/index",
-    "pages/map/index",
-    "pages/me/index"
+    "pages/me/index",
+    "pages/waybill/index",
+    "pages/index/index",
+    "pages/addressBook/index",
+    "pages/address/index",
+    "pages/register/index",
+    "pages/map/index"
   ],
   "permission": {
     "scope.userLocation": {

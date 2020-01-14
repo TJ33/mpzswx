@@ -1,37 +1,75 @@
-<!-- pages/me/index.wxml -->
-<view class="all">
-  <view class="top">
-    <view class="myhead">
-      <view class="namePhone">
-        <view class="name">{{userName || '未登录'}}</view>
-        <text class="phone">{{userPhone || ''}}</text>
-      </view>
-      <button wx:if="{{userPhone == ''}}" class="sq" bindtap="getLogin" bindgetphonenumber='getPhoneNumber' plain="true" open-type="getPhoneNumber">
-        请点击授权
-        <i class="iconfont icon-jiantou" />
-      </button>
-      <i class="iconfont icon-lujing" bindtap='vehicleTap' wx:if="{{userHead == ''}}" />
-      <image class="head" wx:else src="{{userHead}}" />
-    </view>
-  </view>
-  <view class="other">
-    <navigator class="choice" wx:for="{{list}}" wx:key="{{index}}" url="{{item.link}}" bindtap="judgeUser">
-      <text class="textStyle">{{item.name}}</text>
-      <i class="iconfont icon-jiantou" />
-    </navigator>
-  </view>
+<view class="top" bindtap="{{Authorization!=''?'bindUser':''}}">
+		<image class="bgs" src="/images/my_bg.png" />
+		<view class="left" wx:if="{{user.name}}">
+				<view>{{user.name}}</view>
+				<view>{{user.roles}}</view>
+		</view>
+		<view wx:else class="left">
+				<button class="dl" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" plain="{{true}}">
+						用户登录
+				</button>
+		</view>
+		<view class="right" wx:if="{{Myhead !=''}}">
+				<image src="{{Myhead}}" />
+		</view>
+		<view class="right" wx:else>
+				<view class="box_null">
+						<i class="iconfont iconweibiaoti--" />
+				</view>
+		</view>
+</view>
+<view class="box">
+		<navigator class="content" url="../addressBook/index">
+				<view class="left">
+						<view class="icon">
+								<i class="iconfont iconyuyuexinxi" />
+						</view>
+						<view class="name">店铺地址</view>
+				</view>
+				<i class="iconfont iconyoujiantou" />
+		</navigator>
+		<!-- <navigator class="content" url="../../other/carsList/index">
+		<view class="left">
+			<view class="icon">
+				<i class="iconfont iconcheliang-" />
+			</view>
+			<view class="name">我的车辆</view>
+		</view>
+		<i class="iconfont iconyoujiantou" />
+	</navigator>
+	<navigator class="content" url="../../setUp/station/index" wx:if="{{ user.serviceStation != null}}">
+		<view class="left">
+			<view class="icon">
+				<i class="iconfont iconyizhan" />
+			</view>
+			<view class="name">汽修厂</view>
+		</view>
+		<i class="iconfont iconyoujiantou" />
+	</navigator>
+	<navigator class="content" url="../../login/merEntry/index" wx:if="{{user.role[0] == 'USER' && Authorization!=''}}">
+		<view class="left">
+			<view class="icon">
+				<i class="iconfont iconshangjiaruzhu" />
+			</view>
+			<view class="name">商家入驻</view>
+		</view>
+		<i class="iconfont iconyoujiantou" />
+	</navigator> -->
 </view>
 <!-- 组件--弹出框 -->
-<view class="Dialog_Box {{popupShow ?'Dialog_Box_active':'Dialog_Box_hidden'}}" catchtouchmove="ture" animation="{{showHeightAnimation}}">
-  <view class="Dialog_Box_float {{popupShow ? 'Dialog_Box_float_show' : ''}}">
-    <view class="Dialog_  {{popupShow ? 'Dialog_show' : ''}}">
-      <view class="Dialog_title">{{popupTitle}}</view>
-      <view class="Dialog_content">获取用户信息</view>
-      <view class="Dialog_Btn">
-        <button class="Dialog_Btn_s" hover-class="Dialog_Btn_hover" plain open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="authorize">
-          确认
-        </button>
-      </view>
-    </view>
-  </view>
+<view class="Dialog_Box {{Myhead ==''?'Dialog_Box_active':'Dialog_Box_hidden'}}" catchtouchmove="ture" animation="{{showHeightAnimation}}">
+		<view class="Dialog_Box_float {{popupShow ? 'Dialog_Box_float_show' : ''}}">
+				<view class="Dialog_  {{popupShow ? 'Dialog_show' : ''}}">
+						<view class="Dialog_title">{{title}}</view>
+						<view class="Dialog_content">微信授权登陆</view>
+						<view class="Dialog_Btn">
+								<button class="Dialog_Btn_s" hover-class="Dialog_Btn_hover" plain open-type="getUserInfo" lang="zh_CN" bindtap="bindClose">
+										取消
+								</button>
+								<button class="Dialog_Btn_s" hover-class="Dialog_Btn_hover" plain open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">
+										确认
+								</button>
+						</view>
+				</view>
+		</view>
 </view>

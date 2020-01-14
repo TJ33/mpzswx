@@ -1,8 +1,11 @@
 {
-  "usingComponents": {},
+  "usingComponents": {
+    "miss": "../../../component/miss/index",
+    "border": "../../../component/border/index"
+  },
   "navigationBarBackgroundColor": "#ffffff",
   "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "添加新地址",
+  "navigationBarTitleText": "地址薄",
   "backgroundColor": "#eeeeee",
   "backgroundTextStyle": "light",
   "enablePullDownRefresh": true,

@@ -12,10 +12,11 @@ Page({
     TopicTitleActive: 0,
     type: ['已下单', '已揽件', '已签收', '已完成'],
     waybill: '',
-    flag: 'SEND',    //我发的(SEND) 或 我收的（RECEIVE）
     pageNum: 1,
     list1: [],
-    list2: []
+    list2: [],
+    list3: [],
+    list4: [],
   },
 
   /**
@@ -26,16 +27,23 @@ Page({
   },
 
   async onShow() {
-    await ToolServer.getInformation()
-    let list1 = await ToolServer.searchOrder(this.data.waybill, 'SEND', this.data.pageNum, '', '')
-    let list2 = await ToolServer.searchOrder(this.data.waybill, 'RECEIVE', this.data.pageNum, '', '')
+    let list1 = await ToolServer.findWayBill(this.data.waybill, 'CREATED', this.data.pageNum)
+    let list2 = await ToolServer.findWayBill(this.data.waybill, 'DELIVERING', this.data.pageNum)
+    let list3 = await ToolServer.findWayBill(this.data.waybill, 'SIGN_IN', this.data.pageNum)
+    let list4 = await ToolServer.findWayBill(this.data.waybill, 'COMPLETE', this.data.pageNum)
     this.reviseTr(list1)
     this.reviseTr(list2)
+    this.reviseTr(list3)
+    this.reviseTr(list4)
     list1.rows = await this.createTime(list1.rows)
     list2.rows = await this.createTime(list2.rows)
+    list3.rows = await this.createTime(list3.rows)
+    list4.rows = await this.createTime(list4.rows)
     this.setData({
       list1: list1,
-      list2: list2
+      list2: list2,
+      list3: list3,
+      list4: list4,
     })
   },
   async onPullDownRefresh() {
@@ -133,13 +141,13 @@ Page({
     if (this.data.TopicTitleActive == 0) {
       this.data.flag = 'SEND'
       this.data.list1 = await ToolServer.searchOrder(e.detail.value, this.data.flag, this.data.pageNum, '', '')
-      // this.data.list1.rows = await this.createTime(this.data.list1.rows)
+      this.data.list1.rows = await this.createTime(this.data.list1.rows)
       this.reviseTr(this.data.list1)
       this.setData({ 'list1': this.data.list1, 'pageNum': 1 })
     } else {
       this.data.flag = 'RECEIVE'
       this.data.list2 = await ToolServer.searchOrder(e.detail.value, this.data.flag, this.data.pageNum, '', '')
-      // this.data.list2.rows = await this.createTime(this.data.list2.rows)
+      this.data.list2.rows = await this.createTime(this.data.list2.rows)
       this.reviseTr(this.data.list2)
       this.setData({ 'list2': this.data.list2, 'pageNum': 1 })
     }
@@ -165,7 +173,7 @@ Page({
         console.log(res)
         that.data.list = await ToolServer.searchOrder(res.result, '', that.data.pageNum)
         that.reviseTr(that.data.list)
-        // that.data.list.rows = await that.createTime(that.data.list.rows)
+        that.data.list.rows = await that.createTime(that.data.list.rows)
         that.setData({ 'list': that.data.list })
       }
     })
@@ -189,13 +197,13 @@ Page({
     if (index == 0) {
       this.data.flag = 'SEND'
       this.data.list1 = await ToolServer.searchOrder(this.data.waybill, this.data.flag, this.data.pageNum, '', '')
-      // this.data.list1.rows = await this.createTime(this.data.list1.rows)
+      this.data.list1.rows = await this.createTime(this.data.list1.rows)
       this.reviseTr(this.data.list1)
       this.setData({ 'list1': this.data.list1, 'pageNum': 1 })
     } else {
       this.data.flag = 'RECEIVE'
       this.data.list2 = await ToolServer.searchOrder(this.data.waybill, this.data.flag, this.data.pageNum, '', '')
-      // this.data.list2.rows = await this.createTime(this.data.list2.rows)
+      this.data.list2.rows = await this.createTime(this.data.list2.rows)
       this.reviseTr(this.data.list2)
       this.setData({ 'list2': this.data.list2, 'pageNum': 1 })
     }
@@ -216,7 +224,7 @@ Page({
       let item = await ToolServer.searchOrder(this.data.waybill, this.data.flag, this.data.pageNum, '', '')
       e.rows = e.rows.concat(item.rows)
       this.reviseTr(e)
-      // e.rows = await this.createTime(e.rows)
+      e.rows = await this.createTime(e.rows)
       this.setData({
         pageNum: this.data.pageNum,
       })

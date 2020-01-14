@@ -7,36 +7,44 @@ Page({
    * 页面的初始数据
    */
   data: {
+    send: '',
+    receipt: '',
     animation: '',
     vehicleType: [{
       type: '111',
-      name: '111'
+      name: '小型面包'
     }, {
       type: '222',
-      name: '222'
+      name: '金杯/微厢'
     }, {
       type: '333',
-      name: '333'
+      name: '小型厢货'
     }, {
       type: '444',
-      name: '444'
-    }, {
-      type: '555',
-      name: '555'
-    }, {
-      type: '666',
-      name: '666'
+      name: '大型厢货'
     }],
-    sdClearingTypeList: [
+    timeList: [
       {
-        id: 'SPAY',
+        id: '0',
+        value: '现在'
+      },
+      {
+        id: '1',
+        value: '预约'
+      }
+    ],
+    monthList: [
+      {
+        id: true,
         value: '是'
       },
       {
-        id: 'POSTPAID',
+        id: false,
         value: '否'
       }
     ],
+    company: [],
+
   },
 
   /**
@@ -111,4 +119,39 @@ Page({
 
     this.setData({ 'sdClearingType': e.detail.value, 'sdFreightPayMethod': sdFreightPayMethod })
   },
+
+  //选择地址
+  bindAdds() {
+
+  },
+
+  //选择物流公司
+  changeCP() {
+
+  },
+
+  //预约时间的选择
+  timeChange(e) {
+
+  },
+
+  //运费是否月结
+  monthChange(e) {
+
+  },
+
+  //输入代收货款
+  bindCM() {
+
+  },
+
+  //输入备注
+  bindBlurBz() {
+
+  },
+
+  //立即下单
+  bindOrder() {
+
+  }
 })

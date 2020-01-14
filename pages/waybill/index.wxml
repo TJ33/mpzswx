@@ -31,17 +31,9 @@
             </view>
           </view>
           <view class="list_box">
-            <view class="box_1">包裹数</view>
-            <view class="box_2">{{item.packageInfo.packageCount}}件</view>
-          </view>
-          <view class="list_box">
             <view class="box_1">下单时间</view>
             <view class="box_2">
-              <view>
-                {{item.time.createAt}}
-                <!-- 2019-02-25
-                    <text>17:25</text> -->
-              </view>
+              <view>{{item.time.createAt}}</view>
             </view>
             <view class="box_3">
               代收货款
@@ -90,46 +82,81 @@
       </scroll-view>
       <miss wx:else></miss>
     </swiper-item>
+    <swiper-item>
+      <scroll-view scroll-y="{{true}}" style="height:calc(100vh - 102px);" bindscrolltolower="bindscrolltolower2" wx:if="{{list3.rows.length > 0 }}">
+        <view class="list" wx:for="{{list3.rows}}" wx:key="" data-index="1" data-id="{{item.id}}" bindtap="bindDes">
+          <view class="list_dh">
+            <view>运单编号：{{item.sn}}</view>
+            <view class="{{item.transportStatus == '已签收'?'st_2':'st_1'}}">
+              {{item.transportStatus}}
+            </view>
+          </view>
+          <view class="list_box">
+            <view class="box_1">收件人</view>
+            <view class="box_2">
+              {{item.consignee.nickname}}
+              <text>{{item.consignee.contact.name}}</text>
+            </view>
+          </view>
+          <view class="list_box">
+            <view class="box_1">包裹数</view>
+            <view class="box_2">{{item.packageInfo.packageCount}}件</view>
+          </view>
+          <view class="list_box">
+            <view class="box_1">下单时间</view>
+            <view class="box_2">
+              <view>
+                {{item.time.createAt}}
+                <!-- 2019-02-25
+                    <text>17:25</text> -->
+              </view>
+            </view>
+            <view class="box_3">
+              代收货款
+              <text>￥{{item.cost.cargoMoney}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <miss wx:else></miss>
+    </swiper-item>
+    <swiper-item>
+      <scroll-view scroll-y="{{true}}" style="height:calc(100vh - 102px);" bindscrolltolower="bindscrolltolower2" wx:if="{{list4.rows.length > 0 }}">
+        <view class="list" wx:for="{{list4.rows}}" wx:key="" data-index="1" data-id="{{item.id}}" bindtap="bindDes">
+          <view class="list_dh">
+            <view>运单编号：{{item.sn}}</view>
+            <view class="{{item.transportStatus == '已签收'?'st_2':'st_1'}}">
+              {{item.transportStatus}}
+            </view>
+          </view>
+          <view class="list_box">
+            <view class="box_1">收件人</view>
+            <view class="box_2">
+              {{item.consignee.nickname}}
+              <text>{{item.consignee.contact.name}}</text>
+            </view>
+          </view>
+          <view class="list_box">
+            <view class="box_1">包裹数</view>
+            <view class="box_2">{{item.packageInfo.packageCount}}件</view>
+          </view>
+          <view class="list_box">
+            <view class="box_1">下单时间</view>
+            <view class="box_2">
+              <view>
+                {{item.time.createAt}}
+                <!-- 2019-02-25
+                    <text>17:25</text> -->
+              </view>
+            </view>
+            <view class="box_3">
+              代收货款
+              <text>￥{{item.cost.cargoMoney}}</text>
+            </view>
+          </view>
+        </view>
+      </scroll-view>
+      <miss wx:else></miss>
+    </swiper-item>
   </block>
 </swiper>
-<!-- pages/waybill/index.wxml -->
-<!-- <view class="all">
-  <view class="title">
-    <view>已下单</view>
-    <view>已揽件</view>
-    <view>已签收</view>
-    <view>已完成</view>
-  </view>
-  <view class="list">
-    <view class="content">
-      <view class="waybill">
-        <view class="left">
-          <view>运单编号</view>
-          <view>20000200002200</view>
-        </view>
-        <view class="right">
-          <view>配送中</view>
-        </view>
-      </view>
-      <view class="receipt">
-        <view>收件人</view>
-        <view>收件人地址</view>
-        <view>收件人姓名</view>
-      </view>
-      <view class="parcel">
-        <view>包裹数</view>
-        <view>件数</view>
-      </view>
-      <view class="order">
-        <view class="left">
-          <view>下单时间</view>
-          <view>2020-01-08 14:42:36</view>
-        </view>
-        <view class="right">
-          <view>代收货款</view>
-          <view>￥0</view>
-        </view>
-      </view>
-    </view>
-  </view>
-</view> -->

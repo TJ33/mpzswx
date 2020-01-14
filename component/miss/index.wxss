@@ -1,0 +1,19 @@
+.tsBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+.ts{
+    font-size: 32rpx;
+    color: hsla(210, 10%, 80%, 1); 
+    display: flex;
+    margin-top: 30rpx;
+    font-weight: bold;
+    letter-spacing: 4rpx;
+}
+.tsImg{
+    width:350rpx;
+    height:350rpx;
+}

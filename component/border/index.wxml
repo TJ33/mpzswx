@@ -1,0 +1,5 @@
+<view>
+	<view class="box4" bindtap="tap1" wx:if="{{bs1}}">{{bsText1}}</view>
+	<view class="box4" bindtap="tap2" wx:if="{{bs2}}">{{bsText2}}</view>
+</view>
+
