@@ -1,4 +1,4 @@
-<view class="top" bindtap="{{Authorization!=''?'bindUser':''}}">
+<view class="top">
 		<image class="bgs" src="/images/my_bg.png" />
 		<view class="left" wx:if="{{user.name}}">
 				<view>{{user.name}}</view>

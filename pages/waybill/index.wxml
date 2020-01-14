@@ -2,7 +2,7 @@
   <view class="TopicTitleBox" wx:key="" wx:for="{{type}}" data-index="{{index}}" bindtap="{{TopicTitleActive == index ? '' : 'titleTab'}}">
     <view class="{{TopicTitleActive == index ? 'TopicTitleActive' : ''}}">{{item}}</view>
   </view>
-  <view class="TopicTitle-bottom" animation="{{animation}}" />
+  <!-- <view class="TopicTitle-bottom" animation="{{animation}}" /> -->
 </view>
 <view class="search">
   <input placeholder="请输入要搜索的运单编号…" placeholder-class="placeholder" value="{{waybill}}" bindblur="waybillInput" />
@@ -60,10 +60,10 @@
               <text>{{item.consignee.contact.name}}</text>
             </view>
           </view>
-          <view class="list_box">
-            <view class="box_1">包裹数</view>
-            <view class="box_2">{{item.packageInfo.packageCount}}件</view>
-          </view>
+          <!-- <view class="list_box">
+						<view class="box_1">包裹数</view>
+						<view class="box_2">{{item.packageInfo.packageCount}}件</view>
+					</view> -->
           <view class="list_box">
             <view class="box_1">下单时间</view>
             <view class="box_2">
@@ -98,10 +98,10 @@
               <text>{{item.consignee.contact.name}}</text>
             </view>
           </view>
-          <view class="list_box">
-            <view class="box_1">包裹数</view>
-            <view class="box_2">{{item.packageInfo.packageCount}}件</view>
-          </view>
+          <!-- <view class="list_box">
+						<view class="box_1">包裹数</view>
+						<view class="box_2">{{item.packageInfo.packageCount}}件</view>
+					</view> -->
           <view class="list_box">
             <view class="box_1">下单时间</view>
             <view class="box_2">
@@ -136,10 +136,10 @@
               <text>{{item.consignee.contact.name}}</text>
             </view>
           </view>
-          <view class="list_box">
-            <view class="box_1">包裹数</view>
-            <view class="box_2">{{item.packageInfo.packageCount}}件</view>
-          </view>
+          <!-- <view class="list_box">
+						<view class="box_1">包裹数</view>
+						<view class="box_2">{{item.packageInfo.packageCount}}件</view>
+					</view> -->
           <view class="list_box">
             <view class="box_1">下单时间</view>
             <view class="box_2">

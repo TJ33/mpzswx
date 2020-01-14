@@ -43,8 +43,11 @@ Page({
         value: '否'
       }
     ],
-    company: [],
-
+    companyList: [
+      '111', '222'
+    ],
+    companyIndex: 0,
+    companyIdList: [],
   },
 
   /**
@@ -121,13 +124,16 @@ Page({
   },
 
   //选择地址
-  bindAdds() {
+  bindAdds(e) {
 
   },
 
   //选择物流公司
-  changeCP() {
-
+  changeCP(e) {
+    this.setData({
+      companyList: this.data.companyList,
+      companyIndex: e.detail.value
+    })
   },
 
   //预约时间的选择

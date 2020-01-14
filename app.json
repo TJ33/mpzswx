@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/order/index",
     "pages/me/index",
+    "pages/order/index",
     "pages/waybill/index",
     "pages/index/index",
     "pages/addressBook/index",
@@ -20,14 +20,14 @@
     "borderStyle": "black",
     "list": [
       {
-        "pagePath": "pages/index/index",
-        "text": "下单",
+        "pagePath": "pages/waybill/index",
+        "text": "查单",
         "iconPath": "/images/index.png",
         "selectedIconPath": "/images/selected_index.png"
       },
       {
-        "pagePath": "pages/waybill/index",
-        "text": "查单",
+        "pagePath": "pages/order/index",
+        "text": "下单",
         "iconPath": "/images/index.png",
         "selectedIconPath": "/images/selected_index.png"
       },
