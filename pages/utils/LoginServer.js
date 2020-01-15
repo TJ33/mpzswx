@@ -11,7 +11,6 @@ class LoginServer {
       })
       wx.login({
         success(res) {
-          console.log('res', res)
           wx.request({
             url: `${domain}/api/wxapp/analys_phone`,
             method: 'POST',
@@ -54,7 +53,7 @@ class LoginServer {
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         data: {
-          phone: phone,
+          code: phone,
         },
         success(res) {
           if (res.data.data != null) {

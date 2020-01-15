@@ -1,6 +1,8 @@
 // pages/register/index.js
 var ToolServer = require('../utils/ToolServer');
 var LoginServer = require('../utils/LoginServer');
+const { domain } = require('../config.js')
+
 Page({
 
   /**
@@ -14,7 +16,8 @@ Page({
     userName: '',
     userPhone: '',
     storeAddress: '',
-    number: ''
+    number: '',
+    code: ''
   },
 
   /**
@@ -90,7 +93,6 @@ Page({
 
   //移动选点
   moveToLocation: function () {
-    console.log("进入移动选点")
     var that = this;
     wx.chooseLocation({
       success: function (res) {
@@ -109,6 +111,63 @@ Page({
     })
   },
 
+  //点击获取手机号码
+  getPhoneNumber(e) {
+    let that = this
+    //执行wx.login
+    wx.login({
+      async success(res) {
+        that.setData({
+          code: res.code
+        })
+        if (e.detail.errMsg == 'getPhoneNumber:ok') {
+          await wx.request({
+            url: `${domain}/api/wxapp/analys_phone`,
+            method: 'POST',
+            header: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data: {
+              iv: e.detail.iv,
+              encryptedData: e.detail.encryptedData,
+              code: res.code
+            },
+            async success(res) {
+              if (res.statusCode == 200) {
+                let ret = res.data.data.phoneNumber
+                if (ret == undefined) {
+                  wx.showToast({
+                    title: '请求异常',
+                    icon: 'none',
+                    duration: 1000
+                  })
+                } else {
+                  that.setData({
+                    userPhone: ret
+                  })
+                }
+              }
+              else if (res.statusCode = 500) {
+                wx.showToast({
+                  title: '请求错误',
+                  icon: 'none',
+                  duration: 1000
+                })
+              }
+              else {
+                wx.showToast({
+                  title: '网络连接异常',
+                  icon: 'none',
+                  duration: 1000
+                })
+              }
+            }
+          })
+        }
+      }
+    })
+  },
+
   //点击注册按钮
   register() {
     let storeName = this.data.storeName
@@ -118,7 +177,7 @@ Page({
     let userPhone = this.data.userPhone
     let storeAddress = this.data.storeAddress
     let number = this.data.number
-
+    let code = this.data.code
 
     if (storeName == "") {
       wx.showToast({
@@ -165,29 +224,52 @@ Page({
       return
     }
 
+    if (!(/^1[3456789]\d{9}$/.test(userPhone))) {
+      wx.showToast({
+        title: '号码有误，请重填',
+        icon: 'none',
+        duration: 1000
+      })
+      return
+    }
+
+    storeAddress = storeAddress + number
+
     wx.showModal({
       title: '提示',
       content: '是否确认注册',
       async success(res) {
         if (res.confirm) {
-          let result = await ToolServer.merchantEntry(storeName, longitude, latitude, userName, userPhone, code, storeAddress)
-          // if (result.message == "手机号码已存在") {
-          //   wx.showToast({
-          //     title: '手机号码已存在',
-          //     icon: 'none',
-          //     duration: 1000
-          //   })
-        } else {
-          // wx.showToast({
-          //   title: '注册成功',
-          //   icon: 'success',
-          //   duration: 1000
-          // })
-          // wx.switchTab({ url: '../me/index' })
+          if (code != '') {
+            let result = await ToolServer.merchantEntry(storeName, longitude, latitude, userName, userPhone, code, storeAddress)
+            let errorcode = result.errorcode
+            let message = result.message
+            let success = result.success
+            if (errorcode == 0) {
+              wx.showToast({
+                title: '注册成功',
+                icon: 'success',
+                duration: 1000
+              })
+              wx.switchTab({
+                url: '../me/index'
+              })
+            } else {
+              wx.showToast({
+                title: '注册失败',
+                icon: 'none',
+                duration: 1000
+              })
+            }
+          } else {
+            wx.showToast({
+              title: '网络请求错误',
+              icon: 'none',
+              duration: 1000
+            })
+          }
         }
       }
     })
-
   }
-
 })

@@ -18,8 +18,17 @@
 		</view>
 </view>
 <view class="box">
-		<navigator class="content" url="../addressBook/index">
-				<view class="left">
+		<navigator wx:if="{{Myhead!=''}}" class="content" url="../addressBook/index">
+				<view class=" left">
+						<view class="icon">
+								<i class="iconfont iconyuyuexinxi" />
+						</view>
+						<view class="name">店铺地址</view>
+				</view>
+				<i class="iconfont iconyoujiantou" />
+		</navigator>
+		<navigator wx:else class="content" url="">
+				<view class=" left">
 						<view class="icon">
 								<i class="iconfont iconyuyuexinxi" />
 						</view>
@@ -56,7 +65,7 @@
 	</navigator> -->
 </view>
 <!-- 组件--弹出框 -->
-<view class="Dialog_Box {{Myhead ==''?'Dialog_Box_active':'Dialog_Box_hidden'}}" catchtouchmove="ture" animation="{{showHeightAnimation}}">
+<view class="Dialog_Box {{popupShow?'Dialog_Box_active':'Dialog_Box_hidden'}}" catchtouchmove="ture" animation="{{showHeightAnimation}}">
 		<view class="Dialog_Box_float {{popupShow ? 'Dialog_Box_float_show' : ''}}">
 				<view class="Dialog_  {{popupShow ? 'Dialog_show' : ''}}">
 						<view class="Dialog_title">{{title}}</view>

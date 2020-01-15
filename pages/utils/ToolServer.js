@@ -9,7 +9,7 @@ class ToolServer {
   //解析手机号
 
   //商家注册
-  async merchantEntry(name, longitude, latitude, userName, userPhone, address, code) {
+  async merchantEntry(name, longitude, latitude, userName, userPhone, code, address) {
     let url = `${domain}/api/wxapp/merchant_entry`
     let data = {
       name: name,
@@ -17,10 +17,10 @@ class ToolServer {
       latitude: latitude,
       userName: userName,
       userPhone: userPhone,
-      address: address,
       code: code,
+      address: address,
     }
-    return this.post(url)
+    return this.post2(url, data)
   }
 
   //查询运单
@@ -214,6 +214,7 @@ class ToolServer {
         method: 'POST',
         data: data,
         success: async function (res) {
+          console.log('res-------------------------------------------------', res)
           if (res.data == 'Internal Server Error') {
             wx.showToast({
               title: '服务器连接异常',
