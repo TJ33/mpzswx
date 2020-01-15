@@ -22,9 +22,7 @@ Page({
   async onShow() {
     //查询地址簿列表
     let list = await ToolServer.findAddressBook()
-    for (var i in list) {
-      list[i].region = list[i].location.region[0].replace(/,/g, '')
-    }
+    console.log("list================================", list)
     this.setData({ 'list': list })
   },
 

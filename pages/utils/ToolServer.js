@@ -41,7 +41,7 @@ class ToolServer {
 
   //添加/编辑 地址簿
   async addAddressBook(anotherNamer, contactName, contactPhone, address, coordinates, doorplate, id) {
-    let url = `${domain}/api/wxapp/add_address_book`
+    let url = `${domain}/api/wxapp/add_update_address_book`
     let data = {
       anotherNamer: anotherNamer,
       contactName: contactName,

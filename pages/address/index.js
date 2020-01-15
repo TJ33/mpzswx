@@ -10,6 +10,8 @@ Page({
     coordinates: '', //地图坐标
     id: '',          //非必须
     door: '', //门牌号
+    longitude: '',  //经度
+    latitude: '', //维度
     //set: true, //是否保存到地址薄
   },
 
@@ -17,7 +19,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
-
+    console.log('options================', options)
   },
   onShow() {
 
@@ -47,9 +49,9 @@ Page({
       altitude: true,
       //定位成功，更新定位结果      
       success: function (res) {
-        var latitude = res.latitude
-        var longitude = res.longitude
-        that.moveToLocation("send")
+        that.data.latitude = res.latitude
+        that.data.longitude = res.longitude
+        that.moveToLocation()
       }, //定位失败回调      
       fail: function () {
         wx.hideLoading();
@@ -83,15 +85,69 @@ Page({
   // },
   //保存信息
   async bindAdds(e) {
+    console.log('e', e.detail.value)
     let storeName = this.data.storeName
     let name = this.data.name
     let phone = this.data.phone
     let address = this.data.address
-    let coordinates = this.data.coordinates
+    let coordinates = '(' + this.data.longitude + ',' + this.data.latitude + ')'
     let door = this.data.door
     let id = this.data.id
 
-    if (!(/^1[3456789]\d{9}$/.test(this.data.phone))) {
+    console.log('storeName======================', storeName)
+    console.log('name======================', name)
+    console.log('phone======================', phone)
+    console.log('address======================', address)
+    console.log('coordinates======================', coordinates)
+    console.log('door======================', door)
+    console.log('id======================', id)
+
+    if (storeName == "") {
+      wx.showToast({
+        title: '请输入店铺名称',
+        icon: 'none',
+        duration: 1000
+      })
+      return
+    }
+
+    if (name == "") {
+      wx.showToast({
+        title: '请输入联系人姓名',
+        icon: 'none',
+        duration: 1000
+      })
+      return
+    }
+
+    if (phone == "") {
+      wx.showToast({
+        title: '请输入联系人电话',
+        icon: 'none',
+        duration: 1000
+      })
+      return
+    }
+
+    if (address == "") {
+      wx.showToast({
+        title: '请选择店铺地址',
+        icon: 'none',
+        duration: 1000
+      })
+      return
+    }
+
+    if (door == "") {
+      wx.showToast({
+        title: '请输入门牌号',
+        icon: 'none',
+        duration: 1000
+      })
+      return
+    }
+
+    if (!(/^1[3456789]\d{9}$/.test(phone))) {
       wx.showToast({
         title: '手机号码有误，请重填',
         icon: 'none',
@@ -100,10 +156,32 @@ Page({
       return false;
     }
 
-    if (this.data.set) {
-      await ToolServer.addAddressBook(storeName, name, phone, address, coordinates, door, id)
-    }
-    console.log('e', e.detail.value)
+    wx.showModal({
+      title: '提示',
+      content: '是否确认添加',
+      async success(res) {
+        if (res.confirm) {
+          let result = await ToolServer.addAddressBook(storeName, name, phone, address, coordinates, door, id)
+          console.log('result=====', result)
+          let success = result.success
+          if (success) {
+            wx.showToast({
+              title: '添加成功',
+              icon: 'success',
+              duration: 1000
+            })
+            wx.redirectTo({
+              url: '../addressBook/index'
+            })
+          } else {
+            wx.showToast({
+              title: '添加失败',
+              icon: 'none',
+              duration: 1000
+            })
+          }
+        }
+      }
+    })
   },
-
 })

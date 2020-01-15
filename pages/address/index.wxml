@@ -41,7 +41,7 @@
 		</view>
 	</view>
 </view> -->
-<view class="box4 {{name !=''&& phone!='' && address!='' ?'':'box_4_no'}} " bindtap="{{name !=''&& phone!='' && address!='' ?'bindAdds':''}}">
+<view class="box4 {{storeName != '' && name !=''&& phone!='' && address!='' && door!='' ?'':'box_4_no'}} " bindtap="{{storeName != '' && name !=''&& phone!='' && address!='' && door!=''  ?'bindAdds':''}}">
 	保存
 </view>
 
