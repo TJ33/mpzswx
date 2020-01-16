@@ -22,7 +22,6 @@ Page({
   async onShow() {
     //查询地址簿列表
     let list = await ToolServer.findAddressBook()
-    console.log("list================================", list)
     this.setData({ 'list': list })
   },
 
@@ -48,9 +47,21 @@ Page({
       content: '是否删除当前地址',
       success: async function (res) {
         if (res.confirm) {
-          await ToolServer.delAddressBook(id)
-          await that.onShow()
-        } else if (res.cancel) {
+          let result = await ToolServer.delAddressBook(id)
+          if (result.success == true) {
+            wx.showToast({
+              title: '删除成功',
+              icon: 'success',
+              duration: 1000
+            })
+            await that.onShow()
+          } else {
+            wx.showToast({
+              title: '删除失败',
+              icon: 'none',
+              duration: 1000
+            })
+          }
         }
       }
     })

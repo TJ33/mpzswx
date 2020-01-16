@@ -70,9 +70,10 @@ Page({
   onShow: async function () {
     //查询用户关联物流公司
     let company = await ToolServer.queryLogisticsCompany()
+    console.log("company=======================================", company)
 
     //查询车辆类型
-    let operationTeam = ""
+    let operationTeam = company.id
     let vehicleType = await ToolServer.vehicleType(operationTeam)
     console.log('vehicleType======', vehicleType)
   },

@@ -1,6 +1,4 @@
-// export let domain = "http://192.168.7.115:9012"
 // export let domain = "http://localhost:8021"
-// export let domain = "http://192.168.7.123:8011"
 export let domain = "http://192.168.7.110:8011"
 // export let domain = "https://tms.51qp.top"
 // export let domain = "http://localhost:9012"

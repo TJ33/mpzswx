@@ -19,7 +19,29 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
-    console.log('options================', options)
+    let id = options.id
+    if (id != undefined) {
+      //根据地址簿id查询地址簿信息
+      let result = await ToolServer.findAddressById(id)
+      let storeName = result.anotherNamer
+      let name = result.contactName
+      let phone = result.contactPhone
+      let address = result.address
+      let door = result.doorplate
+      let coordinates = result.coordinates
+      let longitude = coordinates[0]
+      let latitude = coordinates[1]
+      this.setData({
+        storeName: storeName,
+        name: name,
+        phone: phone,
+        address: address,
+        id: id,
+        door: door,
+        longitude: longitude,
+        latitude: latitude
+      })
+    }
   },
   onShow() {
 
@@ -85,22 +107,13 @@ Page({
   // },
   //保存信息
   async bindAdds(e) {
-    console.log('e', e.detail.value)
     let storeName = this.data.storeName
     let name = this.data.name
     let phone = this.data.phone
     let address = this.data.address
-    let coordinates = '(' + this.data.longitude + ',' + this.data.latitude + ')'
+    let coordinates = this.data.longitude + ',' + this.data.latitude
     let door = this.data.door
     let id = this.data.id
-
-    console.log('storeName======================', storeName)
-    console.log('name======================', name)
-    console.log('phone======================', phone)
-    console.log('address======================', address)
-    console.log('coordinates======================', coordinates)
-    console.log('door======================', door)
-    console.log('id======================', id)
 
     if (storeName == "") {
       wx.showToast({
@@ -156,32 +169,68 @@ Page({
       return false;
     }
 
-    wx.showModal({
-      title: '提示',
-      content: '是否确认添加',
-      async success(res) {
-        if (res.confirm) {
-          let result = await ToolServer.addAddressBook(storeName, name, phone, address, coordinates, door, id)
-          console.log('result=====', result)
-          let success = result.success
-          if (success) {
-            wx.showToast({
-              title: '添加成功',
-              icon: 'success',
-              duration: 1000
-            })
-            wx.redirectTo({
-              url: '../addressBook/index'
-            })
-          } else {
-            wx.showToast({
-              title: '添加失败',
-              icon: 'none',
-              duration: 1000
-            })
+    if (id.length == 0) {
+      id = ''
+    }
+
+    if (id == '') {
+      wx.showModal({
+        title: '提示',
+        content: '是否确认添加',
+        async success(res) {
+          if (res.confirm) {
+            let result = await ToolServer.addAddressBook(storeName, name, phone, address, coordinates, door, id)
+            let success = result.success
+            if (success) {
+              wx.showToast({
+                title: '添加成功',
+                icon: 'success',
+                duration: 1000
+              })
+              wx.redirectTo({
+                url: '../addressBook/index'
+              })
+            } else {
+              wx.showToast({
+                title: '添加失败',
+                icon: 'none',
+                duration: 1000
+              })
+            }
           }
         }
-      }
-    })
-  },
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '是否确认修改',
+        async success(res) {
+          if (res.confirm) {
+            let result = await ToolServer.addAddressBook(storeName, name, phone, address, coordinates, door, id)
+            let success = result.success
+            if (success) {
+              wx.showToast({
+                title: '修改成功',
+                icon: 'success',
+                duration: 1000
+              })
+              wx.redirectTo({
+                url: '../addressBook/index'
+              })
+            } else {
+              wx.showToast({
+                title: '修改失败',
+                icon: 'none',
+                duration: 1000
+              })
+            }
+          }
+        }
+      })
+    }
+
+
+
+
+  }
 })

@@ -27,10 +27,16 @@ Page({
   },
 
   async onShow() {
-    let list1 = await ToolServer.findWayBill(this.data.waybill, 'CREATED', this.data.pageNum)
-    let list2 = await ToolServer.findWayBill(this.data.waybill, 'DELIVERING', this.data.pageNum)
-    let list3 = await ToolServer.findWayBill(this.data.waybill, 'SIGN_IN', this.data.pageNum)
-    let list4 = await ToolServer.findWayBill(this.data.waybill, 'COMPLETE', this.data.pageNum)
+    let list1 = await ToolServer.findWayBill(this.data.waybill, 'CREATED')
+    let list2 = await ToolServer.findWayBill(this.data.waybill, 'DELIVERING')
+    let list3 = await ToolServer.findWayBill(this.data.waybill, 'SIGN_IN')
+    let list4 = await ToolServer.findWayBill(this.data.waybill, 'COMPLETE')
+
+    console.log("list1======================", list1)
+    console.log("list2======================", list2)
+    console.log("list3======================", list3)
+    console.log("list4======================", list4)
+
     this.reviseTr(list1)
     this.reviseTr(list2)
     this.reviseTr(list3)

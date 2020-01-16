@@ -1,6 +1,6 @@
 <!-- pages/addressBook/index.wxml -->
 <scroll-view scroll-y="{{true}}" style="max-height:calc(100vh - 122px);" bindscrolltolower="bindscrolltolower">
-  <view class="box" wx:for="{{list}}" wx:key="">
+  <view class="box" wx:for="{{list}}" wx:key="{{index}}">
     <view class="center">
       <view>{{item.anotherNamer}}</view>
       <view>{{item.contactPhone}}</view>

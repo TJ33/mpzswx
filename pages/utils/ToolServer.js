@@ -24,11 +24,11 @@ class ToolServer {
   }
 
   //查询运单
-  async findWayBill(sn, transportStatus) {
+  async findWayBill(transportStatus, sn) {
     let url = `${domain}/api/wxapp/find_waybill`
     let data = {
-      sn: sn,
-      transportStatus: transportStatus
+      transportStatus: transportStatus,
+      sn: sn
     }
     return this.post(url)
   }
@@ -51,7 +51,16 @@ class ToolServer {
       doorplate: doorplate,
       id: id
     }
-    return this.post(url)
+    return this.post2(url, data)
+  }
+
+  //根据id查询地址簿
+  async findAddressById(id) {
+    let url = `${domain}/api/wxapp/find_address_by_id`
+    let data = {
+      id: id
+    }
+    return this.post(url, data)
   }
 
   //删除地址簿
@@ -60,7 +69,7 @@ class ToolServer {
     let data = {
       id: id
     }
-    return this.post(url)
+    return this.post2(url, data)
   }
 
   //查询用户关联的物流公司
@@ -279,6 +288,7 @@ class ToolServer {
         method: 'GET',
         data: data,
         success: async function (res) {
+          console.log("res-------------------------------------", res)
           if (res.data == 'Internal Server Error') {
             wx.showToast({
               title: '服务器连接异常',
