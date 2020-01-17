@@ -7,7 +7,9 @@
 								<view class="line" />
 						</view>
 						<view class="right">
-								<view class="address">{{send!=''?send:'请选择寄件地址'}}</view>
+								<picker bindchange="changeSend" value="{{sendIndex}}" range="{{sendList}}">
+										<view class="address">{{sendList[sendIndex]!=''?sendList[sendIndex]:'请选择寄件地址'}}</view>
+								</picker>
 						</view>
 						<i class="iconfont icon-qianjin" />
 				</view>
@@ -16,7 +18,11 @@
 								<view class="monst2" />
 						</view>
 						<view class="right">
-								<view class="address">{{receipt!=''?receipt:'请选择收件地址'}}</view>
+								<picker bindchange="changeReceipt" value="{{receiptIndex}}" range="{{receiptList}}">
+										<view class="address">
+												{{receiptList[receiptIndex]!=''?receiptList[receiptIndex]:'请选择收件地址'}}
+										</view>
+								</picker>
 						</view>
 						<i class="iconfont icon-qianjin" />
 				</view>
@@ -41,7 +47,7 @@
 						</view>
 						<view class="right">
 								<radio-group class="radio-group" bindchange="radioChange2">
-										<label class="radio" wx:for="{{timeList}}" wx:key="">
+										<label class="radio" wx:for="{{state}}" wx:key="">
 												<radio value="{{item.id}}" checked="{{item.checked}}" />
 												{{item.value}}
 										</label>
@@ -55,7 +61,7 @@
 						</view>
 						<view class="right">
 								<radio-group class="radio-group" bindchange="radioChange2">
-										<label class="radio" wx:for="{{monthList}}" wx:key="">
+										<label class="radio" wx:for="{{freightMonthly}}" wx:key="">
 												<radio value="{{item.id}}" checked="{{item.checked}}" />
 												{{item.value}}
 										</label>

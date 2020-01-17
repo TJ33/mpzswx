@@ -7,17 +7,31 @@ Page({
    * 页面的初始数据
    */
   data: {
-    send: '',
-    receipt: '',
-    freightMonthly: '',
-    cargoMoney: '',
-    distance: '',
-    remark: '',
-    animation: '',
-    freight: '',
-    state: '',
-    appointment: '',
-    vehicleType: [{
+
+    consignor: {
+      contactName: '',    // 联系人
+      contactPhone: '',   // 联系电话
+      address: '',        // 详细地址
+      coordinates: ''     // 地图坐标
+    },
+    consignee: {
+      contactName: '',
+      contactPhone: '',
+      address: '',
+      coordinates: ''
+    },
+    freightMonthly: [{    //运费是否月结
+      id: true,
+      value: '是'
+    },
+    {
+      id: false,
+      value: '否'
+    }],
+    cargoMoney: '',        //代收货款金额
+    distance: '',          //配送距离
+    remark: '',            //商家备注
+    vehicleType: [{        //车辆类型
       type: '111',
       name: '小型面包'
     }, {
@@ -30,7 +44,12 @@ Page({
       type: '444',
       name: '大型厢货'
     }],
-    timeList: [
+    freight: '',           //运费
+    operationTeam: '',     //物流公司id
+    receiveAt: '',         //预约时间
+    animation: '',         //
+    appointment: '',       //
+    state: [               //现在 0/预约 1
       {
         id: '0',
         value: '现在'
@@ -40,22 +59,18 @@ Page({
         value: '预约'
       }
     ],
-    monthList: [
-      {
-        id: true,
-        value: '是'
-      },
-      {
-        id: false,
-        value: '否'
-      }
-    ],
-    companyList: [
-      '111', '222'
-    ],
-    companyIndex: 0,
-    companyIdList: [],
+    companyIndexList: [],  //物流公司下标集合
+    companyList: [],       //物流公司集合
+    companyIndex: 0,       //物流公司下标
+    sendIndexList: [],     //寄件地址下标集合
+    sendList: [],          //寄件地址集合
+    sendIndex: 0,          //寄件地址下标
+    receiptIndexList: [],  //收件地址下标集合
+    receiptList: [],       //收件地址集合
+    receiptIndex: 0,       //收件地址下标
+    //useCoupon:'',        //优惠卷
   },
+
 
   /**
    * 生命周期函数--监听页面加载
@@ -69,13 +84,71 @@ Page({
    */
   onShow: async function () {
     //查询用户关联物流公司
+    let companyList = []
+    let companyIndexList = []
     let company = await ToolServer.queryLogisticsCompany()
     console.log("company=======================================", company)
+    for (let i = 0; i < company.length; i++) {
+      let name = company[i].name
+      let id = company[i].id
+      companyList.push(name)
+      companyIndexList.push(id)
+    }
+
+    this.setData({
+      companyList: companyList,
+      companyIndexList: companyIndexList
+    })
+
+    console.log("companyList=======", companyList)
+    console.log("companyIndexList===================", companyIndexList)
+
 
     //查询车辆类型
-    let operationTeam = company.id
-    let vehicleType = await ToolServer.vehicleType(operationTeam)
-    console.log('vehicleType======', vehicleType)
+    // let sendList = []
+    // let sendIndexList = []
+    // let operationTeam = company.id
+    // let vehicleType = await ToolServer.vehicleType(operationTeam)
+    // for (let i = 0; i < vehicleType.length; i++) {
+    //   let name = vehicleType[i].name
+    //   let id = vehicleType[i].id
+    //   sendList.push(name)
+    //   sendIndexList.push(id)
+    // }
+    // console.log('vehicleType======', vehicleType)
+
+    //查询地址簿
+    let sendList = []
+    let sendIndexList = []
+    let receiptList = []
+    let receiptIndexList = []
+
+    let addressBook = await ToolServer.findAddressBook()
+    for (let i = 0; i < addressBook.length; i++) {
+      // let consignor = new Object()
+      // let consignee = new Object()
+      let addressName = addressBook[i].address
+      // let name = addressBook[i].contactName
+      // let phone = addressBook[i].contactPhone
+      // let coordinates = addressBook[i].coordinates
+      // consignor.addressName = addressName
+      // consignor.name = name
+      // consignor.phone = phone
+      // consignor.coordinates = coordinates
+      sendList.push(addressName)
+      receiptList.push(addressName)
+
+
+      // let phone = addressBook[i]
+    }
+
+    this.setData({
+      sendList: sendList,
+      receiptList: receiptList
+    })
+
+    console.log('addressBook===========================', addressBook)
+
   },
 
   //导航栏
@@ -137,16 +210,29 @@ Page({
     this.setData({ 'sdClearingType': e.detail.value, 'sdFreightPayMethod': sdFreightPayMethod })
   },
 
-  //选择地址
-  bindAdds(e) {
+  //选择寄件地址
+  changeSend(e) {
+    this.setData({
+      sendList: this.data.sendList,
+      sendIndex: this.data.sendList[e.detail.value]
+    })
+    console.log("选择寄件地址e========================", this.data.sendIndex)
+  },
 
+  //选择收件地址
+  changeReceipt(e) {
+    this.setData({
+      receiptList: this.data.receiptList,
+      receiptIndex: this.data.receiptList[e.detail.value]
+    })
+    console.log("选择收件地址e========================", this.data.receiptIndex)
   },
 
   //选择物流公司
   changeCP(e) {
     this.setData({
       companyList: this.data.companyList,
-      companyIndex: e.detail.value
+      companyIndex: this.data.companyList[e.detail.value]
     })
   },
 
