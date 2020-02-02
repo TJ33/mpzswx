@@ -29,13 +29,13 @@
 		</view>
 		<view class="company">
 				<view class="companyTitle">物流公司</view>
-				<picker class="companyValue" bindchange="changeCP" value="{{companyIndex}}" range="{{companyList}}">
+				<picker class="companyValue" bindchange="changeCP" value="{{company}}" range="{{companyList}}">
 						<view class="picker">{{companyList[companyIndex]}}</view>
 				</picker>
 				<i class="iconfont icon-qianjin" />
 		</view>
 		<view class="TopicTitle">
-				<view class="TopicTitleBox" wx:key="" wx:for="{{vehicleType}}" data-index="{{index}}" bindtap="{{TopicTitleActive == index ? '' : 'titleTab'}}">
+				<view class="TopicTitleBox" wx:key="{{index}}" wx:for="{{vehicleList}}" value="{{item.id}}" data-index="{{index}}" bindtap="{{TopicTitleActive == index ? '' : 'titleTab'}}">
 						<view class="{{TopicTitleActive == index ? 'TopicTitleActive' : ''}}">{{item.name}}</view>
 				</view>
 		</view>

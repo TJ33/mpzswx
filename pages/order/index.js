@@ -31,17 +31,17 @@ Page({
     cargoMoney: '',        //代收货款金额
     distance: '',          //配送距离
     remark: '',            //商家备注
-    vehicleType: [{        //车辆类型
-      type: '111',
+    vehicleList: [{        //车辆类型
+      id: '111',
       name: '小型面包'
     }, {
-      type: '222',
+      id: '222',
       name: '金杯/微厢'
     }, {
-      type: '333',
+      id: '333',
       name: '小型厢货'
     }, {
-      type: '444',
+      id: '444',
       name: '大型厢货'
     }],
     freight: '',           //运费
@@ -68,6 +68,8 @@ Page({
     receiptIndexList: [],  //收件地址下标集合
     receiptList: [],       //收件地址集合
     receiptIndex: 0,       //收件地址下标
+    consignorList: [],      //寄件人对象集合
+    consigneeList: [],      //收件人对象集合
     //useCoupon:'',        //优惠卷
   },
 
@@ -91,6 +93,7 @@ Page({
     for (let i = 0; i < company.length; i++) {
       let name = company[i].name
       let id = company[i].id
+      console.log("物流公司id==========================", id)
       companyList.push(name)
       companyIndexList.push(id)
     }
@@ -104,7 +107,7 @@ Page({
     console.log("companyIndexList===================", companyIndexList)
 
 
-    //查询车辆类型
+    //查询车辆类型 根据物流公司id查询车辆类型
     // let sendList = []
     // let sendIndexList = []
     // let operationTeam = company.id
@@ -122,32 +125,59 @@ Page({
     let sendIndexList = []
     let receiptList = []
     let receiptIndexList = []
+    let consignorList = []
+    let consigneeList = []
+
 
     let addressBook = await ToolServer.findAddressBook()
+    console.log("addressBook======================================", addressBook)
     for (let i = 0; i < addressBook.length; i++) {
-      // let consignor = new Object()
-      // let consignee = new Object()
       let addressName = addressBook[i].address
-      // let name = addressBook[i].contactName
-      // let phone = addressBook[i].contactPhone
-      // let coordinates = addressBook[i].coordinates
-      // consignor.addressName = addressName
-      // consignor.name = name
-      // consignor.phone = phone
-      // consignor.coordinates = coordinates
+      let addressId = addressBook[i]._id
       sendList.push(addressName)
+      sendIndexList.push(addressId)
       receiptList.push(addressName)
+      receiptIndexList.push(addressId)
 
+      //寄件人/收件人 对象集合
+      let name = addressBook[i].contactName
+      let phone = addressBook[i].contactPhone
+      let coordinates = addressBook[i].coordinates
 
+      let consignor = new Object()
+      consignor.address = addressName
+      consignor.name = name
+      consignor.phone = phone
+      consignor.coordinates = coordinates
+      let consignee = new Object()
+      consignee.address = addressName
+      consignee.name = name
+      consignee.phone = phone
+      consignee.coordinates = coordinates
+      consignorList.push(consignor)
+      consigneeList.push(consignee)
       // let phone = addressBook[i]
     }
 
+    //车辆
+    let vehicleList = await ToolServer.vehicleType(companyIndexList[0])
+    console.log("vehicleList================================", vehicleList)
+
     this.setData({
       sendList: sendList,
-      receiptList: receiptList
+      sendIndexList: sendIndexList,
+      receiptList: receiptList,
+      receiptIndexList: receiptIndexList,
+      consignorList: consignorList,
+      consigneeList: consigneeList,
+      consignor: consignorList[0],
+      consignee: consigneeList[0],
+      vehicleList: vehicleList
     })
 
     console.log('addressBook===========================', addressBook)
+    console.log('consignorList===========================', consignorList)
+    console.log('consigneeList===========================', consigneeList)
 
   },
 
@@ -155,7 +185,17 @@ Page({
   async titleTab(e) {
     let index = e.currentTarget.dataset.index;
     console.log('index', index)
+    //选择车辆
+    let vehicleId = this.data.vehicleList[index].id
+    console.log("车辆id========================", vehicleId)
 
+    //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离
+    let send = this.data.consignor.coordinates
+    let receipt = this.data.consignee.coordinates
+    console.log("send=====================", send)
+    console.log("receipt=====================", receipt)
+    // let distance = await ToolServer.waybillDistance(send, receipt, vehicleId);
+    // console.log("distance=====================", distance)
     let active = this.data.TopicTitleActive
 
     let animation = wx.createAnimation({
@@ -212,28 +252,48 @@ Page({
 
   //选择寄件地址
   changeSend(e) {
+    let index = e.detail.value
+    let consignor = this.data.consignorList[index]
     this.setData({
       sendList: this.data.sendList,
-      sendIndex: this.data.sendList[e.detail.value]
+      sendIndex: index,
+      consignor: consignor
     })
-    console.log("选择寄件地址e========================", this.data.sendIndex)
   },
 
   //选择收件地址
   changeReceipt(e) {
+    let index = e.detail.value
+    let consignee = this.data.consigneeList[index]
     this.setData({
       receiptList: this.data.receiptList,
-      receiptIndex: this.data.receiptList[e.detail.value]
+      receiptIndex: index,
+      consignee: consignee
     })
-    console.log("选择收件地址e========================", this.data.receiptIndex)
   },
 
   //选择物流公司
-  changeCP(e) {
+  async changeCP(e) {
+    console.log("e=============================", e)
+    let index = e.detail.value
+    console.log("index==========================", index)
+    console.log("this.data.companyList=======================", this.data.companyList)
+    console.log("this.data.companyList[e.detail.value]=======================", this.data.companyList[e.detail.value])
     this.setData({
       companyList: this.data.companyList,
-      companyIndex: this.data.companyList[e.detail.value]
+      companyIndex: e.detail.value
     })
+
+    //根据物流公司id 选择对应车辆
+    let companyId = this.data.companyIndexList[index]
+    // console.log("companyId==========================", companyId)
+    let vehicleList = await ToolServer.vehicleType(companyId)
+    console.log("vehicleList===============================", vehicleList)
+    this.setData({
+      vehicleList: vehicleList
+    })
+
+
   },
 
   //预约时间的选择
