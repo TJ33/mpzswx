@@ -61,6 +61,7 @@ Page({
   },
   //点击用户授权
   getPhoneNumber(e) {
+    console.log("用户授权================================", e)
     let that = this
     //执行wx.login
     wx.login({

@@ -31,26 +31,26 @@ Page({
     let list2 = await ToolServer.findWayBill(this.data.waybill, 'DELIVERING')
     let list3 = await ToolServer.findWayBill(this.data.waybill, 'SIGN_IN')
     let list4 = await ToolServer.findWayBill(this.data.waybill, 'COMPLETE')
-
+    if (list1 && list2 && list3 && list4) {
+      this.reviseTr(list1)
+      this.reviseTr(list2)
+      this.reviseTr(list3)
+      this.reviseTr(list4)
+      list1.rows = await this.createTime(list1.rows)
+      list2.rows = await this.createTime(list2.rows)
+      list3.rows = await this.createTime(list3.rows)
+      list4.rows = await this.createTime(list4.rows)
+      this.setData({
+        list1: list1,
+        list2: list2,
+        list3: list3,
+        list4: list4,
+      })
+    }
     console.log("list1======================", list1)
     console.log("list2======================", list2)
     console.log("list3======================", list3)
     console.log("list4======================", list4)
-
-    this.reviseTr(list1)
-    this.reviseTr(list2)
-    this.reviseTr(list3)
-    this.reviseTr(list4)
-    list1.rows = await this.createTime(list1.rows)
-    list2.rows = await this.createTime(list2.rows)
-    list3.rows = await this.createTime(list3.rows)
-    list4.rows = await this.createTime(list4.rows)
-    this.setData({
-      list1: list1,
-      list2: list2,
-      list3: list3,
-      list4: list4,
-    })
   },
   async onPullDownRefresh() {
     setTimeout(function () {

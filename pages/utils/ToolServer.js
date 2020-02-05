@@ -90,6 +90,9 @@ class ToolServer {
 
   //配送距离
   async waybillDistance(consignor, consignee, vehicleType) {
+    console.log("consignor+++++++++++++++", consignor)
+    console.log("consignee++++++++++++++++", consignee)
+    console.log("vehicleType+++++++++++++++", vehicleType)
     let url = `${domain}/api/wxapp/waybill_distance`
     let data = {
       consignor: consignor,

@@ -35,7 +35,7 @@
 				<i class="iconfont icon-qianjin" />
 		</view>
 		<view class="TopicTitle">
-				<view class="TopicTitleBox" wx:key="{{index}}" wx:for="{{vehicleList}}" value="{{item.id}}" data-index="{{index}}" bindtap="{{TopicTitleActive == index ? '' : 'titleTab'}}">
+				<view class="TopicTitleBox" wx:key="{{index}}" wx:for="{{vehicleTypeList}}" value="{{item.id}}" data-index="{{index}}" bindtap="{{TopicTitleActive == index ? '' : 'titleTab'}}">
 						<view class="{{TopicTitleActive == index ? 'TopicTitleActive' : ''}}">{{item.name}}</view>
 				</view>
 		</view>
@@ -46,12 +46,28 @@
 								<view>预约时间</view>
 						</view>
 						<view class="right">
-								<radio-group class="radio-group" bindchange="radioChange2">
-										<label class="radio" wx:for="{{state}}" wx:key="">
+								<radio-group class="radio-group" bindchange="timeChange">
+										<label class="radio" wx:for="{{stateList}}" wx:key="">
 												<radio value="{{item.id}}" checked="{{item.checked}}" />
 												{{item.value}}
 										</label>
 								</radio-group>
+						</view>
+				</view>
+				<view class="time" wx:if="{{isNow}}">
+						<view class="left">
+								<i class="iconfont icon-baoguo--" />
+								<view>具体时间</view>
+						</view>
+						<view class="right">
+								<view class="tui-picker-content">
+										<picker mode="multiSelector" value="{{dateTime}}" bindchange="changeDateTime" bindcolumnchange="changeDateTimeColumn" range="{{dateTimeArray}}">
+												<view wx:if="{{haveTime}}">请选择</view>
+												<view class="tui-picker-detail" wx:else>
+														{{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{dateTimeArray[2][dateTime[2]]}} {{dateTimeArray[3][dateTime[3]]}}:{{dateTimeArray[4][dateTime[4]]}}
+												</view>
+										</picker>
+								</view>
 						</view>
 				</view>
 				<view class="month">
@@ -60,8 +76,8 @@
 								<view>是否月结</view>
 						</view>
 						<view class="right">
-								<radio-group class="radio-group" bindchange="radioChange2">
-										<label class="radio" wx:for="{{freightMonthly}}" wx:key="">
+								<radio-group class="radio-group" bindchange="monthChange">
+										<label class="radio" wx:for="{{freightMonthlyList}}" wx:key="">
 												<radio value="{{item.id}}" checked="{{item.checked}}" />
 												{{item.value}}
 										</label>
@@ -86,8 +102,8 @@
 								<view>参考运费</view>
 						</view>
 						<view class="right">
-								<view class="color" wx:if="{{!mileageCost.money}}">暂无运费信息</view>
-								<view class="color" wx:else>{{mileageCost.money}}</view>
+								<view class="color" wx:if="{{haveFreight}}">暂无运费信息</view>
+								<view class="color" wx:else>{{freight}}</view>
 								<i class="iconfont icon-qianjin" />
 						</view>
 				</view>
@@ -98,7 +114,7 @@
 						</view>
 						<view class="right">
 								<view>
-										<textarea placeholder="无" type="text" auto-height value="{{consignorRemark}}" bindinput="bindBlurBz" />
+										<textarea placeholder="无" type="text" auto-height value="{{remark}}" bindinput="bindBlurBz" />
 								</view>
 								<i class="iconfont icon-qianjin" />
 						</view>
