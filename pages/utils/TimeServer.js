@@ -1,4 +1,4 @@
-// import moment from 'moment';
+import moment from 'moment';
 import regeneratorRuntime from "regenerator-runtime";
 
 class TimeServer {

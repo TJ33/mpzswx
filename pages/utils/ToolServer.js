@@ -99,7 +99,7 @@ class ToolServer {
       consignee: consignee,
       vehicleType: vehicleType
     }
-    return this.post(url)
+    return this.post2(url, data)
   }
 
   //优惠卷查询
@@ -116,7 +116,7 @@ class ToolServer {
 
 
   //商家下单
-  async merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, appointment) {
+  async merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, receiveAt) {
     let url = `${domain}/api/wxapp/merchant_order`
     let data = {
       consignor: consignor,
@@ -124,15 +124,14 @@ class ToolServer {
       freightMonthly: freightMonthly,
       cargoMoney: cargoMoney,
       distance: distance,
-      useCoupon: useCoupon,
       remark: remark,
       vehicleType: vehicleType,
       freight: freight,
       operationTeam: operationTeam,
       state: state,
-      appointment: appointment
+      receiveAt: receiveAt
     }
-    return this.post(url)
+    return this.post(url, data)
   }
 
 

@@ -1,7 +1,8 @@
 // pages/order/index.js
 var ToolServer = require('../utils/ToolServer');
 var dateTimePicker = require('../utils/DateTimePicker.js');
-
+// var TimeServer = require('../utils/TimeServer');
+import moment from 'moment';
 
 Page({
 
@@ -9,14 +10,15 @@ Page({
    * 页面的初始数据
    */
   data: {
-
-    consignor: {
+    consignor: '',         //寄件人id
+    consignee: '',         //收件人id
+    consignorObject: {
       contactName: '',    // 联系人
       contactPhone: '',   // 联系电话
       address: '',        // 详细地址
       coordinates: ''     // 地图坐标
     },
-    consignee: {
+    consigneeObject: {
       contactName: '',
       contactPhone: '',
       address: '',
@@ -167,24 +169,28 @@ Page({
       let phone = addressBook[i].contactPhone
       let coordinates = addressBook[i].coordinates
 
-      let consignor = new Object()
-      consignor.address = addressName
-      consignor.name = name
-      consignor.phone = phone
-      consignor.coordinates = coordinates
-      let consignee = new Object()
-      consignee.address = addressName
-      consignee.name = name
-      consignee.phone = phone
-      consignee.coordinates = coordinates
-      consignorList.push(consignor)
-      consigneeList.push(consignee)
-      // let phone = addressBook[i]
+      let consignorObject = new Object()
+      consignorObject.address = addressName
+      consignorObject.name = name
+      consignorObject.phone = phone
+      consignorObject.coordinates = coordinates
+      consignorObject.id = addressId
+      let consigneeObject = new Object()
+      consigneeObject.address = addressName
+      consigneeObject.name = name
+      consigneeObject.phone = phone
+      consigneeObject.coordinates = coordinates
+      consigneeObject.id = addressId
+      consignorList.push(consignorObject)
+      consigneeList.push(consigneeObject)
     }
 
     //车辆
     let vehicleTypeList = await ToolServer.vehicleType(companyIndexList[0])
+    console.log("companyIndexList[0]==========================", companyIndexList[0])
     console.log("vehicleTypeList================================", vehicleTypeList)
+    console.log("consignorList========================", consignorList)
+    console.log("consigneeList========================", consigneeList)
 
     this.setData({
       companyList: companyList,
@@ -195,8 +201,10 @@ Page({
       receiptIndexList: receiptIndexList,
       consignorList: consignorList,
       consigneeList: consigneeList,
-      consignor: consignorList[0],
-      consignee: consigneeList[0],
+      consignorObject: consignorList[0],
+      consigneeObject: consigneeList[0],
+      consignor: consignorList[0].id,
+      consignee: consigneeList[0].id,
       vehicleTypeList: vehicleTypeList,
       operationTeam: companyIndexList[0]
     })
@@ -213,18 +221,27 @@ Page({
     console.log('index', index)
     //选择车辆
     let vehicleId = this.data.vehicleTypeList[index].id
-
     console.log("车辆id========================", vehicleId)
 
     //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离
-    let send = this.data.consignor.coordinates
-    let receipt = this.data.consignee.coordinates
-    console.log("send=====================", send)
-    console.log("receipt=====================", receipt)
-    // let result = await ToolServer.waybillDistance(send, receipt, vehicleId);
-    // let distance = result.distance
-    // let price = result.price
-    // console.log("result=====================", result)
+    console.log("this.data.consignor================", this.data.consignorObject)
+    console.log("this.data.consignor.coordinates================", this.data.consignorObject.coordinates)
+    let sendCoordinates = this.data.consignorObject.coordinates
+    let receipteCoordinates = this.data.consigneeObject.coordinates
+    let send = {
+      longitude: sendCoordinates[0],
+      latitude: sendCoordinates[1]
+    }
+    let receipt = {
+      longitude: receipteCoordinates[0],
+      latitude: receipteCoordinates[1]
+    }
+    let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
+    let distance = result.distance
+    let price = result.price
+    console.log("result=====================", result)
+    console.log("distance=====================", distance)
+    console.log("price=====================", price)
     let active = this.data.TopicTitleActive
 
     let animation = wx.createAnimation({
@@ -240,8 +257,9 @@ Page({
       'TopicTitleActive': index,
       'animation': animation.export(),
       vehicleType: vehicleId,
-      // haveFreight:false,
-      // freight: price
+      haveFreight: false,
+      freight: price,
+      distance: distance
     })
 
     //导航栏自动带出配送距离 参考运费
@@ -270,7 +288,8 @@ Page({
   //选择寄件地址
   changeSend(e) {
     let index = e.detail.value
-    let consignor = this.data.consignorList[index]
+    let consignor = this.data.consignorList[index].id
+    console.log("consignor==================", consignor)
     this.setData({
       sendList: this.data.sendList,
       sendIndex: index,
@@ -281,7 +300,7 @@ Page({
   //选择收件地址
   changeReceipt(e) {
     let index = e.detail.value
-    let consignee = this.data.consigneeList[index]
+    let consignee = this.data.consigneeList[index].id
     this.setData({
       receiptList: this.data.receiptList,
       receiptIndex: index,
@@ -321,15 +340,15 @@ Page({
       this.setData({
         state: '0',
         isNow: false,
-        // receiveAt: moment().format('MMMM Do YYYY, h:mm')
+        receiveAt: moment().format("YYYY-MM-DD HH:mm")
       })
     } else {
       this.setData({
         state: '1',
-        isNow: true
+        isNow: true,
+        receiveAt: ''
       })
     }
-    console.log("预约时间的选择==================", index)
   },
 
   //运费是否月结
@@ -436,8 +455,8 @@ Page({
       content: '是否确认下单',
       async success(res) {
         if (res.confirm) {
-          // let result = await ToolServer.merchantOrder(send, receipt, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, appointment)
-          // console.log("result===================================",result)
+          let result = await ToolServer.merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, receiveAt)
+          console.log("result===================================", result)
         }
       }
     })
