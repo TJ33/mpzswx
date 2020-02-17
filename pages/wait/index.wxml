@@ -1,0 +1,65 @@
+<!-- pages/wait/index.wxml -->
+<!-- <view bindtap="start">请求长连接</view>
+<view bindtap="close">关闭长连接</view> -->
+<!-- map.wxml -->
+<!-- <map id="map" longitude="113.324520" latitude="23.099994" scale="14" markers="{{markers}}" show-location style="width: 100%; height: 300px;" /> -->
+<map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="width: 100%; height: 1200rpx;">
+  <!-- <cover-view class="current-postion">
+    <cover-image class="comments-img icon-current" bindtap="commentDetail" src="/images/car.png" />
+    <cover-image class="search-img icon-current" bindtap="searchFilter" src="/images/qr.png" />
+    <cover-image class="position-img icon-current" bindtap="moveToCurrent" src="/images/call.png" />
+  </cover-view>
+  <cover-view class="current-postion1">
+    <cover-image class="position-img icon-position point-bg {{isColor?'changeColor':'position-img'}}" src="{{isColor?'/images/my_a.png': '/images/my_b.png'}}" bindtap="filterAround" data-filed="point" />
+    <cover-view class="pointShop">网点</cover-view>
+    <cover-image class="position-img icon-position point-bg {{isColor?'changeColor':'position-img'}}" src="{{isColor?'/images/end.png':'/images/index.png'}}" bindtap="filterAround" data-filed="discounts">
+      商家
+    </cover-image>
+    <cover-view class="pointShop">商家</cover-view>
+  </cover-view> -->
+  <cover-view class="cover-view-one" style="display:none">
+    <cover-view class="driver">
+      <cover-view class="first">
+        <cover-view class="first-one">
+          <cover-image src="/images/bg.jpg" class="first-img" />
+        </cover-view>
+      </cover-view>
+      <cover-view class="second">
+        <cover-view class="second-one">粤L958UG</cover-view>
+        <cover-view class="second-two">
+          <cover-view>王师傅</cover-view>
+          <cover-view>5.0</cover-view>
+          <cover-view>近期服务0次</cover-view>
+        </cover-view>
+        <cover-view class="second-three">小型面包|1.7*1.1*1m</cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-view class="message">
+      <cover-view wx:for="{{allMessage}}" wx:index="{{index}}">
+        <cover-view class="message-one">{{item}}</cover-view>
+      </cover-view>
+    </cover-view>
+  </cover-view>
+  <cover-view class="cover-view-two">
+    <cover-view class="order">
+      <cover-view class="order-one">
+        <cover-view>用车时间</cover-view>
+        <cover-view>2020-02-11 11:56</cover-view>
+      </cover-view>
+      <cover-view class="order-two">
+        <cover-view>始发地</cover-view>
+        <cover-view>XXX地点</cover-view>
+      </cover-view>
+      <cover-view class="order-three">
+        <cover-view>目的地</cover-view>
+        <cover-view>XXX地点</cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-view class="message">
+      <cover-view wx:for="{{allMessage}}" wx:index="{{index}}">
+        <cover-view class="message-one">{{item}}</cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-view class="cancel">订单已取消</cover-view>
+  </cover-view>
+</map>

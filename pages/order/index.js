@@ -78,6 +78,8 @@ Page({
     receiptIndex: 0,       //收件地址下标
     consignorList: [],      //寄件人对象集合
     consigneeList: [],      //收件人对象集合
+    sendAddress: false,
+    receiptAddress: false,
     //useCoupon:'',        //优惠卷
 
     //时间选择相关
@@ -117,33 +119,12 @@ Page({
     let companyList = []
     let companyIndexList = []
     let company = await ToolServer.queryLogisticsCompany()
-    console.log("company=======================================", company)
     for (let i = 0; i < company.length; i++) {
       let name = company[i].name
       let id = company[i].id
-      console.log("物流公司id==========================", id)
       companyList.push(name)
       companyIndexList.push(id)
     }
-
-
-
-    console.log("companyList=======", companyList)
-    console.log("companyIndexList===================", companyIndexList)
-
-
-    //查询车辆类型 根据物流公司id查询车辆类型
-    // let sendList = []
-    // let sendIndexList = []
-    // let operationTeam = company.id
-    // let vehicleType = await ToolServer.vehicleType(operationTeam)
-    // for (let i = 0; i < vehicleType.length; i++) {
-    //   let name = vehicleType[i].name
-    //   let id = vehicleType[i].id
-    //   sendList.push(name)
-    //   sendIndexList.push(id)
-    // }
-    // console.log('vehicleType======', vehicleType)
 
     //查询地址簿
     let sendList = []
@@ -152,10 +133,8 @@ Page({
     let receiptIndexList = []
     let consignorList = []
     let consigneeList = []
-
-
     let addressBook = await ToolServer.findAddressBook()
-    console.log("addressBook======================================", addressBook)
+
     for (let i = 0; i < addressBook.length; i++) {
       let addressName = addressBook[i].address
       let addressId = addressBook[i]._id
@@ -187,11 +166,6 @@ Page({
 
     //车辆
     let vehicleTypeList = await ToolServer.vehicleType(companyIndexList[0])
-    console.log("companyIndexList[0]==========================", companyIndexList[0])
-    console.log("vehicleTypeList================================", vehicleTypeList)
-    console.log("consignorList========================", consignorList)
-    console.log("consigneeList========================", consigneeList)
-
     this.setData({
       companyList: companyList,
       companyIndexList: companyIndexList,
@@ -208,24 +182,14 @@ Page({
       vehicleTypeList: vehicleTypeList,
       operationTeam: companyIndexList[0]
     })
-
-    console.log('addressBook===========================', addressBook)
-    console.log('consignorList===========================', consignorList)
-    console.log('consigneeList===========================', consigneeList)
-
   },
 
   //导航栏
   async titleTab(e) {
     let index = e.currentTarget.dataset.index;
-    console.log('index', index)
     //选择车辆
     let vehicleId = this.data.vehicleTypeList[index].id
-    console.log("车辆id========================", vehicleId)
-
     //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离
-    console.log("this.data.consignor================", this.data.consignorObject)
-    console.log("this.data.consignor.coordinates================", this.data.consignorObject.coordinates)
     let sendCoordinates = this.data.consignorObject.coordinates
     let receipteCoordinates = this.data.consigneeObject.coordinates
     let send = {
@@ -239,9 +203,6 @@ Page({
     let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
     let distance = result.distance
     let price = result.price
-    console.log("result=====================", result)
-    console.log("distance=====================", distance)
-    console.log("price=====================", price)
     let active = this.data.TopicTitleActive
 
     let animation = wx.createAnimation({
@@ -289,11 +250,11 @@ Page({
   changeSend(e) {
     let index = e.detail.value
     let consignor = this.data.consignorList[index].id
-    console.log("consignor==================", consignor)
     this.setData({
       sendList: this.data.sendList,
       sendIndex: index,
-      consignor: consignor
+      consignor: consignor,
+      sendAddress: true
     })
   },
 
@@ -304,17 +265,14 @@ Page({
     this.setData({
       receiptList: this.data.receiptList,
       receiptIndex: index,
-      consignee: consignee
+      consignee: consignee,
+      receiptAddress: true
     })
   },
 
   //选择物流公司
   async changeCP(e) {
-    console.log("e=============================", e)
     let index = e.detail.value
-    console.log("index==========================", index)
-    console.log("this.data.companyList=======================", this.data.companyList)
-    console.log("this.data.companyList[e.detail.value]=======================", this.data.companyList[e.detail.value])
     this.setData({
       companyList: this.data.companyList,
       companyIndex: e.detail.value
@@ -322,9 +280,7 @@ Page({
 
     //根据物流公司id 选择对应车辆
     let companyId = this.data.companyIndexList[index]
-    // console.log("companyId==========================", companyId)
     let vehicleTypeList = await ToolServer.vehicleType(companyId)
-    console.log("vehicleTypeList===============================", vehicleTypeList)
     this.setData({
       operationTeam: companyId,
       vehicleTypeList: vehicleTypeList
@@ -393,6 +349,26 @@ Page({
     let state = this.data.state
     let receiveAt = this.data.receiveAt
 
+    //需要判断用户有没有选择寄件收件地址
+    let sendAddress = this.data.sendAddress
+    let receiptAddress = this.data.receiptAddress
+    if (sendAddress == false) {
+      wx.showToast({
+        title: '请选择寄件地址',
+        icon: 'none',
+        duration: 1000
+      });
+      return
+    }
+    if (receiptAddress == false) {
+      wx.showToast({
+        title: '请选择收件地址',
+        icon: 'none',
+        duration: 1000
+      });
+      return
+    }
+
     console.log("consignor================================", consignor)
     console.log("consignee================================", consignee)
     console.log("freightMonthly================================", freightMonthly)
@@ -456,6 +432,7 @@ Page({
       async success(res) {
         if (res.confirm) {
           let result = await ToolServer.merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, receiveAt)
+
           console.log("result===================================", result)
         }
       }

@@ -1,5 +1,7 @@
 import regeneratorRuntime from "regenerator-runtime";
 var ToolServer = require('../utils/ToolServer');
+var QQMapWX = require('../utils/qqmap-wx-jssdk.js');
+var qqmapsdk;
 Page({
 
   data: {
@@ -19,6 +21,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
+    qqmapsdk = new QQMapWX({
+      key: 'V3WBZ-I5TW6-2NASU-MOSRJ-MMOIF-AFFGG'
+    });
+
     let id = options.id
     if (id != undefined) {
       //根据地址簿id查询地址簿信息
@@ -40,6 +46,35 @@ Page({
         door: door,
         longitude: longitude,
         latitude: latitude
+      })
+    } else {
+      let that = this
+      wx.getLocation({
+        type: 'gcj02',
+        altitude: true,
+        //定位成功，更新定位结果      
+        success: function (res) {
+          that.data.latitude = res.latitude
+          that.data.longitude = res.longitude
+          qqmapsdk.reverseGeocoder({
+            success: function (res) {
+              var add = res.result.address;
+              that.setData({
+                latitude: that.data.latitude,
+                longitude: that.data.longitude,
+                address: add
+              })
+            }
+          })
+        },
+        //定位失败回调      
+        fail: function () {
+          wx.hideLoading();
+        },
+        complete: function () {
+          //隐藏定位中信息进度       
+          wx.hideLoading()
+        }
       })
     }
   },

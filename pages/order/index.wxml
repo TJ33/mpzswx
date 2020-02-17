@@ -8,7 +8,7 @@
 						</view>
 						<view class="right">
 								<picker bindchange="changeSend" value="{{sendIndex}}" range="{{sendList}}">
-										<view class="address">{{sendList[sendIndex]!=''?sendList[sendIndex]:'请选择寄件地址'}}</view>
+										<view class="address">{{sendAddress==true?sendList[sendIndex]:'请选择寄件地址'}}</view>
 								</picker>
 						</view>
 						<i class="iconfont icon-qianjin" />
@@ -19,9 +19,7 @@
 						</view>
 						<view class="right">
 								<picker bindchange="changeReceipt" value="{{receiptIndex}}" range="{{receiptList}}">
-										<view class="address">
-												{{receiptList[receiptIndex]!=''?receiptList[receiptIndex]:'请选择收件地址'}}
-										</view>
+										<view class="address">{{receiptAddress==true?receiptList[receiptIndex]:'请选择收件地址'}}</view>
 								</picker>
 						</view>
 						<i class="iconfont icon-qianjin" />
