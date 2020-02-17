@@ -1,5 +1,12 @@
 <!-- pages/cancel/index.wxml -->
 <text>pages/cancel/index.wxml</text>
-<text>对勾</text>
-<text>订单已取消</text>
-<text>请告诉我们取消原因,我们会努力改进!</text>
+<view>对勾</view>
+<view>订单已取消</view>
+<view>请告诉我们取消原因,我们会努力改进!</view>
+<view>
+  <radio-group class="radio-group" bindchange="radioChange">
+    <radio class="radio" wx:for-items="{{reason}}" wx:key="name" value="{{item.name}}">
+      <text>{{item.name}}</text>
+    </radio>
+  </radio-group>
+</view>
