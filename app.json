@@ -1,9 +1,9 @@
 {
   "pages": [
     "pages/wait/index",
-    "pages/cancel/index",
     "pages/order/index",
     "pages/address/index",
+    "pages/cancel/index",
     "pages/me/index",
     "pages/addressBook/index",
     "pages/waybill/index",

@@ -1,11 +1,11 @@
 {
   "name": "mipei_zs",
   "version": "1.0.0",
-  "description": "",
   "main": "app.js",
   "dependencies": {
     "moment": "^2.24.0",
-    "regenerator-runtime": "^0.13.3"
+    "regenerator-runtime": "^0.13.3",
+    "weapp.socket.io": "^2.0.1"
   },
   "devDependencies": {},
   "scripts": {
@@ -20,5 +20,6 @@
   "bugs": {
     "url": "https://github.com/TJ33/-/issues"
   },
-  "homepage": "https://github.com/TJ33/-#readme"
+  "homepage": "https://github.com/TJ33/-#readme",
+  "description": ""
 }

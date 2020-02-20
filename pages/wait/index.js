@@ -1,4 +1,6 @@
 // pages/wait/index.js
+import io from 'weapp.socket.io'
+
 Page({
 
   /**
@@ -67,6 +69,37 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: async function () {
+    let user = wx.getStorageSync('USER')
+    let id = user.id
+    console.log("user=======================", user)
+    console.log("id=======================", id)
+    var socket = io('http://192.168.1.4:8011/mpzs', {
+      transports: ['websocket']
+    });
+
+    //连接监听
+    socket.on('connect', () => {
+      console.log("成功")
+
+      //向服务器发送注册信息
+      socket.emit('ZS:MERCHANTLOGIN',
+        { id: id, latitude: this.data.latitude, longitude: this.data.longitude }
+      );
+    })
+
+    //接受服务器注册信息
+    socket.on("ZS:RECEIVED", (data) => {
+      console.log('接收数据', data);
+    });
+
+    //更改定位
+    socket.on("ZS:MERCHANTPOSITIONING", (data) => {
+      console.log('更改定位', data);
+    });
+
+    socket.connect();
+
+
     let that = this
     await wx.getLocation({
       type: 'gcj02',
@@ -79,7 +112,6 @@ Page({
         // that.moveToLocation()
         console.log("that.data.latitude=================", that.data.latitude)
         console.log("that.data.longitude=================", that.data.longitude)
-
         let markers = [{
           iconPath: "/images/me.png",
           id: 0,
@@ -202,9 +234,9 @@ Page({
   //   })
   // },
 
-  //   close() {
+  // close() {
   //   console.log("关闭长连接")
-  //     wx.onSocketOpen(function () {
+  //   wx.onSocketOpen(function () {
   //     wx.closeSocket({
   //       code: 1000,
   //       reason: '连接被关闭',
