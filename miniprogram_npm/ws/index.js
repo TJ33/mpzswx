@@ -4,7 +4,7 @@ var __DEFINE__ = function(modId, func, req) { var m = { exports: {} }; __MODS__[
 var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return require(source); if(!__MODS__[modId].status) { var m = { exports: {} }; __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); if(typeof m.exports === "object") { __MODS__[modId].m.exports.__proto__ = m.exports.__proto__; Object.keys(m.exports).forEach(function(k) { __MODS__[modId].m.exports[k] = m.exports[k]; var desp = Object.getOwnPropertyDescriptor(m.exports, k); if(desp && desp.configurable) Object.defineProperty(m.exports, k, { set: function(val) { __MODS__[modId].m.exports[k] = val; }, get: function() { return __MODS__[modId].m.exports[k]; } }); }); if(m.exports.__esModule) Object.defineProperty(__MODS__[modId].m.exports, "__esModule", { value: true }); } else { __MODS__[modId].m.exports = m.exports; } } return __MODS__[modId].m.exports; };
 var __REQUIRE_WILDCARD__ = function(obj) { if(obj && obj.__esModule) { return obj; } else { var newObj = {}; if(obj != null) { for(var k in obj) { if (Object.prototype.hasOwnProperty.call(obj, k)) newObj[k] = obj[k]; } } newObj.default = obj; return newObj; } };
 var __REQUIRE_DEFAULT__ = function(obj) { return obj && obj.__esModule ? obj.default : obj; };
-__DEFINE__(1582165630283, function(require, module, exports) {
+__DEFINE__(1582297632546, function(require, module, exports) {
 
 
 const WebSocket = require('./lib/websocket');
@@ -15,8 +15,8 @@ WebSocket.Sender = require('./lib/sender');
 
 module.exports = WebSocket;
 
-}, function(modId) {var map = {"./lib/websocket":1582165630284,"./lib/websocket-server":1582165630293,"./lib/receiver":1582165630290,"./lib/sender":1582165630292}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630284, function(require, module, exports) {
+}, function(modId) {var map = {"./lib/websocket":1582297632547,"./lib/websocket-server":1582297632556,"./lib/receiver":1582297632553,"./lib/sender":1582297632555}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1582297632547, function(require, module, exports) {
 
 
 const EventEmitter = require('events');
@@ -870,8 +870,8 @@ function socketOnError() {
   }
 }
 
-}, function(modId) { var map = {"./permessage-deflate":1582165630285,"./event-target":1582165630288,"./extension":1582165630289,"./constants":1582165630287,"./receiver":1582165630290,"./sender":1582165630292}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630285, function(require, module, exports) {
+}, function(modId) { var map = {"./permessage-deflate":1582297632548,"./event-target":1582297632551,"./extension":1582297632552,"./constants":1582297632550,"./receiver":1582297632553,"./sender":1582297632555}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1582297632548, function(require, module, exports) {
 
 
 const Limiter = require('async-limiter');
@@ -1375,8 +1375,8 @@ function inflateOnError(err) {
   this[kCallback](err);
 }
 
-}, function(modId) { var map = {"./buffer-util":1582165630286,"./constants":1582165630287}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630286, function(require, module, exports) {
+}, function(modId) { var map = {"./buffer-util":1582297632549,"./constants":1582297632550}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1582297632549, function(require, module, exports) {
 
 
 /**
@@ -1451,7 +1451,7 @@ try {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630287, function(require, module, exports) {
+__DEFINE__(1582297632550, function(require, module, exports) {
 
 
 module.exports = {
@@ -1464,7 +1464,7 @@ module.exports = {
 };
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630288, function(require, module, exports) {
+__DEFINE__(1582297632551, function(require, module, exports) {
 
 
 /**
@@ -1637,7 +1637,7 @@ const EventTarget = {
 module.exports = EventTarget;
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630289, function(require, module, exports) {
+__DEFINE__(1582297632552, function(require, module, exports) {
 
 
 //
@@ -1862,7 +1862,7 @@ function format(extensions) {
 module.exports = { format, parse };
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630290, function(require, module, exports) {
+__DEFINE__(1582297632553, function(require, module, exports) {
 
 
 const stream = require('stream');
@@ -2379,8 +2379,8 @@ function toArrayBuffer(buf) {
   return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
 }
 
-}, function(modId) { var map = {"./permessage-deflate":1582165630285,"./buffer-util":1582165630286,"./validation":1582165630291,"./constants":1582165630287}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630291, function(require, module, exports) {
+}, function(modId) { var map = {"./permessage-deflate":1582297632548,"./buffer-util":1582297632549,"./validation":1582297632554,"./constants":1582297632550}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1582297632554, function(require, module, exports) {
 
 
 try {
@@ -2413,7 +2413,7 @@ exports.isValidStatusCode = (code) => {
 };
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630292, function(require, module, exports) {
+__DEFINE__(1582297632555, function(require, module, exports) {
 
 
 const crypto = require('crypto');
@@ -2831,8 +2831,8 @@ function viewToBuffer(view) {
   return buf;
 }
 
-}, function(modId) { var map = {"./permessage-deflate":1582165630285,"./buffer-util":1582165630286,"./validation":1582165630291,"./constants":1582165630287}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630293, function(require, module, exports) {
+}, function(modId) { var map = {"./permessage-deflate":1582297632548,"./buffer-util":1582297632549,"./validation":1582297632554,"./constants":1582297632550}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1582297632556, function(require, module, exports) {
 
 
 const EventEmitter = require('events');
@@ -3223,7 +3223,7 @@ function abortHandshake(socket, code, message, headers) {
   socket.destroy();
 }
 
-}, function(modId) { var map = {"./permessage-deflate":1582165630285,"./extension":1582165630289,"./constants":1582165630287,"./websocket":1582165630284}; return __REQUIRE__(map[modId], modId); })
-return __REQUIRE__(1582165630283);
+}, function(modId) { var map = {"./permessage-deflate":1582297632548,"./extension":1582297632552,"./constants":1582297632550,"./websocket":1582297632547}; return __REQUIRE__(map[modId], modId); })
+return __REQUIRE__(1582297632546);
 })()
 //# sourceMappingURL=index.js.map

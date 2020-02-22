@@ -1,6 +1,8 @@
 {
   "pages": [
+    "pages/single/index",
     "pages/wait/index",
+    "pages/map/index",
     "pages/order/index",
     "pages/address/index",
     "pages/cancel/index",
@@ -8,7 +10,6 @@
     "pages/addressBook/index",
     "pages/waybill/index",
     "pages/register/index",
-    "pages/map/index",
     "pages/index/index"
   ],
   "permission": {

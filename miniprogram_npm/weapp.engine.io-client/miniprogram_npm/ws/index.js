@@ -4,7 +4,7 @@ var __DEFINE__ = function(modId, func, req) { var m = { exports: {} }; __MODS__[
 var __REQUIRE__ = function(modId, source) { if(!__MODS__[modId]) return require(source); if(!__MODS__[modId].status) { var m = { exports: {} }; __MODS__[modId].status = 1; __MODS__[modId].func(__MODS__[modId].req, m, m.exports); if(typeof m.exports === "object") { __MODS__[modId].m.exports.__proto__ = m.exports.__proto__; Object.keys(m.exports).forEach(function(k) { __MODS__[modId].m.exports[k] = m.exports[k]; var desp = Object.getOwnPropertyDescriptor(m.exports, k); if(desp && desp.configurable) Object.defineProperty(m.exports, k, { set: function(val) { __MODS__[modId].m.exports[k] = val; }, get: function() { return __MODS__[modId].m.exports[k]; } }); }); if(m.exports.__esModule) Object.defineProperty(__MODS__[modId].m.exports, "__esModule", { value: true }); } else { __MODS__[modId].m.exports = m.exports; } } return __MODS__[modId].m.exports; };
 var __REQUIRE_WILDCARD__ = function(obj) { if(obj && obj.__esModule) { return obj; } else { var newObj = {}; if(obj != null) { for(var k in obj) { if (Object.prototype.hasOwnProperty.call(obj, k)) newObj[k] = obj[k]; } } newObj.default = obj; return newObj; } };
 var __REQUIRE_DEFAULT__ = function(obj) { return obj && obj.__esModule ? obj.default : obj; };
-__DEFINE__(1582165630268, function(require, module, exports) {
+__DEFINE__(1582297632531, function(require, module, exports) {
 /*!
  * ws: a node.js websocket client
  * Copyright(c) 2011 Einar Otto Stangvik <einaros@gmail.com>
@@ -21,8 +21,8 @@ WebSocket.Sender = require('./lib/Sender');
 
 module.exports = WebSocket;
 
-}, function(modId) {var map = {"./lib/WebSocket":1582165630269,"./lib/WebSocketServer":1582165630280,"./lib/Receiver":1582165630276,"./lib/Sender":1582165630279}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630269, function(require, module, exports) {
+}, function(modId) {var map = {"./lib/WebSocket":1582297632532,"./lib/WebSocketServer":1582297632543,"./lib/Receiver":1582297632539,"./lib/Sender":1582297632542}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1582297632532, function(require, module, exports) {
 /*!
  * ws: a node.js websocket client
  * Copyright(c) 2011 Einar Otto Stangvik <einaros@gmail.com>
@@ -741,8 +741,8 @@ function initAsClient (address, protocols, options) {
   });
 }
 
-}, function(modId) { var map = {"./PerMessageDeflate":1582165630270,"./EventTarget":1582165630273,"./Extensions":1582165630274,"./Constants":1582165630275,"./Receiver":1582165630276,"./Sender":1582165630279}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630270, function(require, module, exports) {
+}, function(modId) { var map = {"./PerMessageDeflate":1582297632533,"./EventTarget":1582297632536,"./Extensions":1582297632537,"./Constants":1582297632538,"./Receiver":1582297632539,"./Sender":1582297632542}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1582297632533, function(require, module, exports) {
 
 
 const safeBuffer = require('safe-buffer');
@@ -1251,8 +1251,8 @@ function inflateOnError (err) {
   this[kCallback](err);
 }
 
-}, function(modId) { var map = {"./BufferUtil":1582165630271}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630271, function(require, module, exports) {
+}, function(modId) { var map = {"./BufferUtil":1582297632534}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1582297632534, function(require, module, exports) {
 /*!
  * ws: a node.js websocket client
  * Copyright(c) 2011 Einar Otto Stangvik <einaros@gmail.com>
@@ -1325,8 +1325,8 @@ try {
   module.exports = { concat, mask, unmask };
 }
 
-}, function(modId) { var map = {"bufferutil":1582165630272}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630272, function(require, module, exports) {
+}, function(modId) { var map = {"bufferutil":1582297632535}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1582297632535, function(require, module, exports) {
 /*!
  * ws: a node.js websocket client
  * Copyright(c) 2011 Einar Otto Stangvik <einaros@gmail.com>
@@ -1399,8 +1399,8 @@ try {
   module.exports = { concat, mask, unmask };
 }
 
-}, function(modId) { var map = {"bufferutil":1582165630272}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630273, function(require, module, exports) {
+}, function(modId) { var map = {"bufferutil":1582297632535}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1582297632536, function(require, module, exports) {
 
 
 /**
@@ -1554,7 +1554,7 @@ const EventTarget = {
 module.exports = EventTarget;
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630274, function(require, module, exports) {
+__DEFINE__(1582297632537, function(require, module, exports) {
 
 
 //
@@ -1760,7 +1760,7 @@ function format (value) {
 module.exports = { format, parse };
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630275, function(require, module, exports) {
+__DEFINE__(1582297632538, function(require, module, exports) {
 
 
 const safeBuffer = require('safe-buffer');
@@ -1773,7 +1773,7 @@ exports.EMPTY_BUFFER = Buffer.alloc(0);
 exports.NOOP = () => {};
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630276, function(require, module, exports) {
+__DEFINE__(1582297632539, function(require, module, exports) {
 /*!
  * ws: a node.js websocket client
  * Copyright(c) 2011 Einar Otto Stangvik <einaros@gmail.com>
@@ -2328,8 +2328,8 @@ function toArrayBuffer (buf) {
   return buf.buffer.slice(buf.byteOffset, buf.byteOffset + buf.byteLength);
 }
 
-}, function(modId) { var map = {"./PerMessageDeflate":1582165630270,"./Validation":1582165630277,"./BufferUtil":1582165630271,"./ErrorCodes":1582165630278,"./Constants":1582165630275}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630277, function(require, module, exports) {
+}, function(modId) { var map = {"./PerMessageDeflate":1582297632533,"./Validation":1582297632540,"./BufferUtil":1582297632534,"./ErrorCodes":1582297632541,"./Constants":1582297632538}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1582297632540, function(require, module, exports) {
 /*!
  * ws: a node.js websocket client
  * Copyright(c) 2011 Einar Otto Stangvik <einaros@gmail.com>
@@ -2349,7 +2349,7 @@ try {
 }
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630278, function(require, module, exports) {
+__DEFINE__(1582297632541, function(require, module, exports) {
 /*!
  * ws: a node.js websocket client
  * Copyright(c) 2011 Einar Otto Stangvik <einaros@gmail.com>
@@ -2380,7 +2380,7 @@ module.exports = {
 };
 
 }, function(modId) { var map = {}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630279, function(require, module, exports) {
+__DEFINE__(1582297632542, function(require, module, exports) {
 /*!
  * ws: a node.js websocket client
  * Copyright(c) 2011 Einar Otto Stangvik <einaros@gmail.com>
@@ -2794,8 +2794,8 @@ function viewToBuffer (view) {
   return buf;
 }
 
-}, function(modId) { var map = {"./PerMessageDeflate":1582165630270,"./BufferUtil":1582165630271,"./ErrorCodes":1582165630278,"./Constants":1582165630275}; return __REQUIRE__(map[modId], modId); })
-__DEFINE__(1582165630280, function(require, module, exports) {
+}, function(modId) { var map = {"./PerMessageDeflate":1582297632533,"./BufferUtil":1582297632534,"./ErrorCodes":1582297632541,"./Constants":1582297632538}; return __REQUIRE__(map[modId], modId); })
+__DEFINE__(1582297632543, function(require, module, exports) {
 /*!
  * ws: a node.js websocket client
  * Copyright(c) 2011 Einar Otto Stangvik <einaros@gmail.com>
@@ -3123,7 +3123,7 @@ function abortConnection (socket, code, message) {
   socket.destroy();
 }
 
-}, function(modId) { var map = {"./PerMessageDeflate":1582165630270,"./Extensions":1582165630274,"./Constants":1582165630275,"./WebSocket":1582165630269}; return __REQUIRE__(map[modId], modId); })
-return __REQUIRE__(1582165630268);
+}, function(modId) { var map = {"./PerMessageDeflate":1582297632533,"./Extensions":1582297632537,"./Constants":1582297632538,"./WebSocket":1582297632532}; return __REQUIRE__(map[modId], modId); })
+return __REQUIRE__(1582297632531);
 })()
 //# sourceMappingURL=index.js.map

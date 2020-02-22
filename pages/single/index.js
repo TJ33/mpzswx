@@ -1,5 +1,6 @@
-// pages/wait/index.js
+// pages/single/index.js
 import io from 'weapp.socket.io'
+let init
 
 Page({
 
@@ -7,6 +8,15 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //小程序倒计时
+    minute: 0,
+    second: 0,
+    timecount: '0:0',
+    cost: 0,
+    flag: 1,
+    endtime: "",
+
+
     latitude: 0.0,
     longitude: 0.0,
     markers: [{
@@ -62,7 +72,39 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    clearInterval(init);
+    let that = this;
+    that.setData({
+      minute: 0,
+      second: 0,
+    })
+    init = setInterval(function () {
+      that.timer()
+    }, 1000)
 
+    console.log("that.data.minute111==============", that.data.minute)
+  },
+
+  timer: function () {
+    let that = this;
+    that.setData({
+      second: that.data.second + 1
+    })
+
+    if (that.data.second >= 60) {
+      that.setData({
+        second: 0,
+        minute: that.data.minute + 1
+      })
+    }
+    that.setData({
+      timecount: that.data.minute + ":" + that.data.second
+    })
+
+    console.log("that.data.minute222==============", that.data.minute)
+    if (that.data.minute == 2) {
+      clearInterval(init);
+    }
   },
 
   /**
@@ -73,7 +115,7 @@ Page({
     let id = user.id
     console.log("user=======================", user)
     console.log("id=======================", id)
-    var socket = io('http://192.168.1.4:8011/mpzs', {
+    let socket = io('http://192.168.1.4:8011/mpzs', {
       transports: ['websocket']
     });
 
@@ -156,7 +198,7 @@ Page({
 
   //移动选点
   moveToLocation: function (type) {
-    var that = this;
+    let that = this;
     wx.chooseLocation({
       success: function (res) {
         let chooseAddress = res.address
