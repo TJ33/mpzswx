@@ -10,35 +10,75 @@ Page({
     latitude: 0.0,
     longitude: 0.0,
     markers: [{
-      iconPath: "/images/me.png",
+      // iconPath: "/images/me.png",
       id: 0,
       latitude: 23.099994,
       longitude: 113.324520,
       width: 50,
-      height: 50
+      height: 50,
+
+      //气泡label (可与callout 2选1)
+      label: {
+        content: '已为您通知0名司机',  //文本
+        color: '#000000',  //文本颜色
+        borderRadius: 3,  //边框圆角
+        borderWidth: 1,  //边框宽度
+        borderColor: '#ffffff',  //边框颜色
+        bgColor: '#ffffff',  //背景色
+        padding: 5,  //文本边缘留白
+        textAlign: 'center'  //文本对齐方式。有效值: left, right, center
+      },
+
+      callout: {
+        content: '已为您通知0名司机',  //文本
+        color: '#000000',  //文本颜色
+        borderRadius: 3,  //边框圆角
+        borderWidth: 1,  //边框宽度
+        borderColor: '#ffffff',  //边框颜色
+        bgColor: '#ffffff',  //背景色
+        padding: 5,  //文本边缘留白
+        textAlign: 'center'  //文本对齐方式。有效值: left, right, center
+      }
+
     }],
+    // polyline: [{
+    //   points: [{
+    //     longitude: 113.3245211,
+    //     latitude: 23.10229
+    //   }, {
+    //     longitude: 113.324520,
+    //     latitude: 23.21229
+    //   }],
+    //   color: "#FF0000DD",
+    //   width: 2,
+    //   dottedLine: true
+    // }],
+    // controls: [{
+    //   id: 1,
+    //   iconPath: '/images/bg.jpg',
+    //   position: {
+    //     left: 0,
+    //     top: 300 - 50,
+    //     width: 50,
+    //     height: 50
+    //   },
+    //   clickable: true
+    // }],
+
     polyline: [{
       points: [{
-        longitude: 113.3245211,
-        latitude: 23.10229
+        longitude: 23.10229,
+        latitude: 113.3245211
       }, {
-        longitude: 113.324520,
-        latitude: 23.21229
+        longitude: 113.701855,
+        latitude: 34.779778
       }],
-      color: "#FF0000DD",
+      color: "#ff6600",
       width: 2,
-      dottedLine: true
-    }],
-    controls: [{
-      id: 1,
-      iconPath: '/images/bg.jpg',
-      position: {
-        left: 0,
-        top: 300 - 50,
-        width: 50,
-        height: 50
-      },
-      clickable: true
+      dottedLine: false,
+      arrowLine: true,
+      borderColor: "#000",
+      borderWidth: 5
     }],
     allMessage: [{ icon: '/images/order/police.png', message: '一键报警' }, { icon: '/images/order/share.png', message: '行程分享' }, { icon: '/images/order/message.png', message: '发送消息' }, { icon: '/images/order/more.png', message: '更多操作' }]
   },
@@ -112,26 +152,63 @@ Page({
         // that.moveToLocation()
         console.log("that.data.latitude=================", that.data.latitude)
         console.log("that.data.longitude=================", that.data.longitude)
+
         let markers = [{
-          iconPath: "/images/me.png",
+          // iconPath: "/images/me.png",
           id: 0,
           latitude: that.data.latitude,
           longitude: that.data.longitude,
           width: 50,
-          height: 50
+          height: 50,
+
+          //气泡label (可与callout 2选1)
+          label: {
+            content: '距离发货地还有7.1公里&#10预计17分钟到达',  //文本
+            color: '#000000',  //文本颜色
+            borderRadius: 3,  //边框圆角
+            borderWidth: 1,  //边框宽度
+            borderColor: '#ffffff',  //边框颜色
+            bgColor: '#ffffff',  //背景色
+            padding: 5,  //文本边缘留白
+            textAlign: 'center'  //文本对齐方式。有效值: left, right, center
+          }
         }]
         let polyline = [{
           points: [{
-            latitude: that.data.latitude,
-            longitude: that.data.longitude
+            longitude: 23.10229,
+            latitude: 113.3245211
           }, {
-            latitude: that.data.latitude,
-            longitude: that.data.longitude
+            longitude: 113.701855,
+            latitude: 34.779778
           }],
-          color: "#FF0000DD",
+          color: "#ff6600",
           width: 2,
-          dottedLine: true
+          dottedLine: false,
+          arrowLine: true,
+          borderColor: "#000",
+          borderWidth: 5
         }]
+
+        // let markers = [{
+        //   iconPath: "/images/me.png",
+        //   id: 0,
+        //   latitude: that.data.latitude,
+        //   longitude: that.data.longitude,
+        //   width: 50,
+        //   height: 50
+        // }]
+        // let polyline = [{
+        //   points: [{
+        //     latitude: that.data.latitude,
+        //     longitude: that.data.longitude
+        //   }, {
+        //     latitude: that.data.latitude,
+        //     longitude: that.data.longitude
+        //   }],
+        //   color: "#FF0000DD",
+        //   width: 2,
+        //   dottedLine: true
+        // }]
 
         that.setData({
           latitude: that.data.latitude,
@@ -140,7 +217,7 @@ Page({
           polyline: polyline
         })
 
-        console.log("that.data.markers================", that.data.markers)
+        // console.log("that.data.markers================", that.data.markers)
         console.log("that.data.polyline================", that.data.polyline)
       },
       //定位失败回调      

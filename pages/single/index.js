@@ -19,14 +19,14 @@ Page({
 
     latitude: 0.0,
     longitude: 0.0,
-    markers: [{
-      iconPath: "/images/me.png",
-      id: 0,
-      latitude: 23.099994,
-      longitude: 113.324520,
-      width: 50,
-      height: 50
-    }],
+    // markers: [{
+    //   iconPath: "/images/me.png",
+    //   id: 0,
+    //   latitude: 23.099994,
+    //   longitude: 113.324520,
+    //   width: 50,
+    //   height: 50
+    // }],
     polyline: [{
       points: [{
         longitude: 113.3245211,
@@ -39,17 +39,17 @@ Page({
       width: 2,
       dottedLine: true
     }],
-    controls: [{
-      id: 1,
-      iconPath: '/images/bg.jpg',
-      position: {
-        left: 0,
-        top: 300 - 50,
-        width: 50,
-        height: 50
-      },
-      clickable: true
-    }],
+    // controls: [{
+    //   id: 1,
+    //   // iconPath: '/images/bg.jpg',
+    //   position: {
+    //     left: 0,
+    //     top: 300 - 50,
+    //     width: 50,
+    //     height: 50
+    //   },
+    //   clickable: true
+    // }],
     allMessage: ['一键报警', '行程分享', '发送消息', '更多操作']
   },
 
@@ -155,12 +155,25 @@ Page({
         console.log("that.data.latitude=================", that.data.latitude)
         console.log("that.data.longitude=================", that.data.longitude)
         let markers = [{
-          iconPath: "/images/me.png",
+          // iconPath: "/images/me.png",
           id: 0,
           latitude: that.data.latitude,
           longitude: that.data.longitude,
           width: 50,
-          height: 50
+          height: 50,
+
+
+          //气泡label (可与callout 2选1)
+          label: {
+            content: '已为您通知0名司机',  //文本
+            color: '#000000',  //文本颜色
+            borderRadius: 3,  //边框圆角
+            borderWidth: 1,  //边框宽度
+            borderColor: '#ffffff',  //边框颜色
+            bgColor: '#ffffff',  //背景色
+            padding: 5,  //文本边缘留白
+            textAlign: 'center'  //文本对齐方式。有效值: left, right, center
+          }
         }]
         let polyline = [{
           points: [{
