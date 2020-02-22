@@ -1,12 +1,29 @@
 <!-- pages/cancel/index.wxml -->
-<text>pages/cancel/index.wxml</text>
-<view>对勾</view>
-<view>订单已取消</view>
-<view>请告诉我们取消原因,我们会努力改进!</view>
-<view>
-  <radio-group class="radio-group" bindchange="radioChange">
-    <radio class="radio" wx:for-items="{{reason}}" wx:key="name" value="{{item.name}}">
-      <text>{{item.name}}</text>
-    </radio>
-  </radio-group>
-</view>
+<map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" show-location style="width: 100%; height: 1200rpx;">
+  <cover-view class="cover-view-two">
+    <cover-view class="order">
+      <cover-view class="order-one">
+        <cover-view class="order-one-message">用车时间</cover-view>
+        <cover-view class="order-one-time">2020-02-11 11:56</cover-view>
+      </cover-view>
+      <cover-view class="order-two">
+        <cover-view class="order-two-message">始发地</cover-view>
+        <cover-view class="order-two-place">XXX地点</cover-view>
+      </cover-view>
+      <cover-view class="order-three">
+        <cover-view class="order-three-message">目的地</cover-view>
+        <cover-view class="order-three-place">XXX地点</cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-view class="message">
+      <cover-view wx:for="{{allMessage}}" wx:index="{{index}}" class="icon-message">
+        <cover-image class="img-one" src="{{item.icon}}" />
+        <cover-view class="message-one">{{item.message}}</cover-view>
+      </cover-view>
+    </cover-view>
+    <cover-view class="cancel">
+      <image src="/images/order/surprised.png" class="picture" />
+      <cover-view class="cancel-message">订单已取消</cover-view>
+    </cover-view>
+  </cover-view>
+</map>

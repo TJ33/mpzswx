@@ -40,7 +40,7 @@ Page({
       },
       clickable: true
     }],
-    allMessage: ['一键报警', '行程分享', '发送消息', '更多操作']
+    allMessage: [{ icon: '/images/order/police.png', message: '一键报警' }, { icon: '/images/order/share.png', message: '行程分享' }, { icon: '/images/order/message.png', message: '发送消息' }, { icon: '/images/order/more.png', message: '更多操作' }]
   },
 
 

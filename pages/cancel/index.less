@@ -1,11 +1,106 @@
-.radio-group{
-  display: flex;
-  flex-direction: column;
-  width:  1000rpx;
-  height: 500rpx;
+.cover-view-two{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 600rpx;
+    width: 600rpx;
+    height: 500rpx;
+    background-color: #ffffff;
+    margin-left: 75rpx;
 
-  .radio{
-    background-color: #a0a0a0;
-    margin-top: 20rpx;
+    .order{
+      display: flex;
+      flex-direction: column;
+      padding-left: 20rpx;
+      padding-right: 80rpx;
+      padding-bottom: 20rpx;
+      border-bottom: 1px solid #e4eaec;
+
+      .order-one{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        .order-one-message{
+          color: #aaaaaa;
+          padding-right: 30rpx;
+        }
+
+        .order-one-time{
+
+        }
+      }
+      .order-two{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        .order-two-message{
+          color: #aaaaaa;
+          padding-right: 30rpx;
+        }
+        .order-two-place{
+
+        }
+      }
+      .order-three{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        .order-three-message{
+          color: #aaaaaa;
+          padding-right: 30rpx;
+        }
+        .order-three-place{
+
+        }
+      }
+    }
+
+    .message{
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      background-color: #ffffff;
+      width: 100%;
+      border-bottom: 1px solid #e4eaec;
+      padding-bottom: 20rpx;
+      padding-top: 20rpx;
+
+      .icon-message{
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        .img-one{
+          width: 40rpx;
+          height: 40rpx;
+        }
+        .message-one{
+          border-right: 1rpx solid rgba(242,242,242,1);
+          font-size: 28rpx;
+        } 
+      }
+
+    }
+
+    .cancel{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin-top: 50rpx;
+      margin-bottom: 50rpx;
+      .picture{
+        width: 100rpx;
+        height:100rpx;
+        padding-bottom: 20rpx;
+      }
+
+      .cancel-message{
+        font-size: 30rpx;
+        color: #aaaaaa;
+      }
+    }
   }
-}
+
+
