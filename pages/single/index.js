@@ -15,10 +15,12 @@ Page({
     cost: 0,
     flag: 1,
     endtime: "",
-
-
+    //地图组件
+    //纬度
     latitude: 0.0,
+    //经度
     longitude: 0.0,
+    //标记位置
     // markers: [{
     //   iconPath: "/images/me.png",
     //   id: 0,
@@ -27,6 +29,19 @@ Page({
     //   width: 50,
     //   height: 50
     // }],
+    //显示控件，控件不随着地图移动  图标  用cover-view替代
+    // controls: [{
+    //   id: 1,
+    //   // iconPath: '/images/bg.jpg',
+    //   position: {
+    //     left: 0,
+    //     top: 300 - 50,
+    //     width: 50,
+    //     height: 50
+    //   },
+    //   clickable: true
+    // }],
+    //在地图上显示路线
     polyline: [{
       points: [{
         longitude: 113.3245211,
@@ -39,29 +54,28 @@ Page({
       width: 2,
       dottedLine: true
     }],
-    // controls: [{
-    //   id: 1,
-    //   // iconPath: '/images/bg.jpg',
-    //   position: {
-    //     left: 0,
-    //     top: 300 - 50,
-    //     width: 50,
-    //     height: 50
-    //   },
-    //   clickable: true
-    // }],
-    allMessage: ['一键报警', '行程分享', '发送消息', '更多操作']
+    //在地图上显示圆
+    circles: [{
+      latitude: '23.02067',
+      longitude: '113.75179',
+      // color: '#F5FFFA',
+      fillColor: '#FFEBCD',
+      radius: 500,
+      strokeWidth: 2
+    }],
   },
 
-
+  //视野变化事件 拖动地图触发
   regionchange(e) {
     console.log("regionchange e===", e)
     console.log("e.type===", e.type)
   },
+  //点击 marker 标记点时触发
   markertap(e) {
     console.log("markertap e===", e)
     console.log("e.markerId===", e.markerId)
   },
+  //点击控件时触发
   controltap(e) {
     console.log("controltap e===", e)
     console.log("e.controlId===", e.controlId)
@@ -194,7 +208,7 @@ Page({
           markers: markers,
           polyline: polyline
         })
-
+        console.log("that.data.circles================", that.data.circles)
         console.log("that.data.markers================", that.data.markers)
         console.log("that.data.polyline================", that.data.polyline)
       },

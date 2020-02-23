@@ -22,7 +22,7 @@
       </cover-view>
     </cover-view>
     <cover-view class="cancel">
-      <image src="/images/order/surprised.png" class="picture" />
+      <cover-image src="/images/order/surprised.png" class="picture" />
       <cover-view class="cancel-message">订单已取消</cover-view>
     </cover-view>
   </cover-view>

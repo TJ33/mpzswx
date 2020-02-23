@@ -7,12 +7,45 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //纬度
     latitude: 0.0,
+    //经度
     longitude: 0.0,
+    //标记点标记位置
     markers: [{
       // iconPath: "/images/me.png",
       id: 0,
-      latitude: 23.099994,
+      latitude: 23.10229,
+      longitude: 113.3245211,
+      width: 50,
+      height: 50,
+
+      //气泡label (可与callout 2选1)  markers上面固定悬浮的气泡
+      label: {
+        content: '已为您通知0名司机',  //文本
+        color: '#000000',  //文本颜色
+        borderRadius: 3,  //边框圆角
+        borderWidth: 1,  //边框宽度
+        borderColor: '#ffffff',  //边框颜色
+        bgColor: '#ffffff',  //背景色
+        padding: 5,  //文本边缘留白
+        textAlign: 'center'  //文本对齐方式。有效值: left, right, center
+      },
+      //markers上面固定悬浮的气泡  同label
+      callout: {
+        content: '已为您通知0名司机',  //文本
+        color: '#000000',  //文本颜色
+        borderRadius: 3,  //边框圆角
+        borderWidth: 1,  //边框宽度
+        borderColor: '#ffffff',  //边框颜色
+        bgColor: '#ffffff',  //背景色
+        padding: 5,  //文本边缘留白
+        textAlign: 'center'  //文本对齐方式。有效值: left, right, center
+      }
+    }, {
+      // iconPath: "/images/me.png",
+      id: 0,
+      latitude: 23.21229,
       longitude: 113.324520,
       width: 50,
       height: 50,
@@ -39,8 +72,18 @@ Page({
         padding: 5,  //文本边缘留白
         textAlign: 'center'  //文本对齐方式。有效值: left, right, center
       }
-
-    }],
+    }
+    ],
+    //缩放视野以包含所有给定的坐标点
+    includePoints: [{
+      latitude: 23.10229,
+      longitude: 113.3245211
+    },
+    {
+      latitude: 23.21229,
+      longitude: 113.324520
+    }
+    ],
     // polyline: [{
     //   points: [{
     //     longitude: 113.3245211,
@@ -64,7 +107,7 @@ Page({
     //   },
     //   clickable: true
     // }],
-
+    //指定一系列坐标点，从数组第一项连线至最后一项  显示路线
     polyline: [{
       points: [{
         longitude: 23.10229,
@@ -80,18 +123,21 @@ Page({
       borderColor: "#000",
       borderWidth: 5
     }],
+    //底部消息栏
     allMessage: [{ icon: '/images/order/police.png', message: '一键报警' }, { icon: '/images/order/share.png', message: '行程分享' }, { icon: '/images/order/message.png', message: '发送消息' }, { icon: '/images/order/more.png', message: '更多操作' }]
   },
 
-
+  //拖动地图触发
   regionchange(e) {
     console.log("regionchange e===", e)
     console.log("e.type===", e.type)
   },
+  //标记点时触发
   markertap(e) {
     console.log("markertap e===", e)
     console.log("e.markerId===", e.markerId)
   },
+  //点击控件时触发
   controltap(e) {
     console.log("controltap e===", e)
     console.log("e.controlId===", e.controlId)
@@ -152,7 +198,7 @@ Page({
         // that.moveToLocation()
         console.log("that.data.latitude=================", that.data.latitude)
         console.log("that.data.longitude=================", that.data.longitude)
-
+        //标记点标记位置
         let markers = [{
           // iconPath: "/images/me.png",
           id: 0,
@@ -173,6 +219,7 @@ Page({
             textAlign: 'center'  //文本对齐方式。有效值: left, right, center
           }
         }]
+        //路线显示
         let polyline = [{
           points: [{
             longitude: 23.10229,
