@@ -1,9 +1,9 @@
 {
   "pages": [
-    "pages/wait/index",
-    "pages/cancelReason/index",
-    "pages/cancel/index",
     "pages/single/index",
+    "pages/cancel/index",
+    "pages/cancelReason/index",
+    "pages/wait/index",
     "pages/map/index",
     "pages/order/index",
     "pages/address/index",
