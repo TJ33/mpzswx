@@ -13,16 +13,16 @@ Page({
     longitude: 0.0,
     //标记点标记位置
     markers: [{
-      // iconPath: "/images/me.png",
+      iconPath: "/images/order/start.png",
       id: 0,
-      latitude: 23.10229,
-      longitude: 113.3245211,
+      latitude: 23.02067,
+      longitude: 113.75179,
       width: 50,
       height: 50,
 
       //气泡label (可与callout 2选1)  markers上面固定悬浮的气泡
       label: {
-        content: '已为您通知0名司机',  //文本
+        // content: '距离发货地还有7.1公里&#10预计17分钟到达',  //文本
         color: '#000000',  //文本颜色
         borderRadius: 3,  //边框圆角
         borderWidth: 1,  //边框宽度
@@ -33,7 +33,7 @@ Page({
       },
       //markers上面固定悬浮的气泡  同label
       callout: {
-        content: '已为您通知0名司机',  //文本
+        // content: '距离发货地还有7.1公里&#10预计17分钟到达',  //文本
         color: '#000000',  //文本颜色
         borderRadius: 3,  //边框圆角
         borderWidth: 1,  //边框宽度
@@ -43,16 +43,16 @@ Page({
         textAlign: 'center'  //文本对齐方式。有效值: left, right, center
       }
     }, {
-      // iconPath: "/images/me.png",
+      iconPath: "/images/order/car.png",
       id: 0,
-      latitude: 23.21229,
-      longitude: 113.324520,
+      latitude: 23.09057,
+      longitude: 113.15179,
       width: 50,
       height: 50,
 
       //气泡label (可与callout 2选1)
       label: {
-        content: '已为您通知0名司机',  //文本
+        content: '距离发货地还有7.1公里&#10预计17分钟到达',  //文本
         color: '#000000',  //文本颜色
         borderRadius: 3,  //边框圆角
         borderWidth: 1,  //边框宽度
@@ -63,7 +63,7 @@ Page({
       },
 
       callout: {
-        content: '已为您通知0名司机',  //文本
+        content: '距离发货地还有7.1公里&#10预计17分钟到达',  //文本
         color: '#000000',  //文本颜色
         borderRadius: 3,  //边框圆角
         borderWidth: 1,  //边框宽度
@@ -76,12 +76,12 @@ Page({
     ],
     //缩放视野以包含所有给定的坐标点
     includePoints: [{
-      latitude: 23.10229,
-      longitude: 113.3245211
+      latitude: 23.02067,
+      longitude: 113.75179
     },
     {
-      latitude: 23.21229,
-      longitude: 113.324520
+      latitude: 23.09057,
+      longitude: 113.15179
     }
     ],
     // polyline: [{
@@ -110,14 +110,14 @@ Page({
     //指定一系列坐标点，从数组第一项连线至最后一项  显示路线
     polyline: [{
       points: [{
-        longitude: 23.10229,
-        latitude: 113.3245211
+        longitude: 113.75179,
+        latitude: 23.02067
       }, {
-        longitude: 113.701855,
-        latitude: 34.779778
+        longitude: 113.15179,
+        latitude: 23.09057
       }],
       color: "#ff6600",
-      width: 2,
+      width: 10,
       dottedLine: false,
       arrowLine: true,
       borderColor: "#000",
@@ -200,7 +200,27 @@ Page({
         console.log("that.data.longitude=================", that.data.longitude)
         //标记点标记位置
         let markers = [{
-          // iconPath: "/images/me.png",
+          iconPath: "/images/order/start.png",
+          id: 0,
+          latitude: that.data.latitude,
+          longitude: that.data.longitude,
+          width: 50,
+          height: 50,
+
+          //气泡label (可与callout 2选1)
+          label: {
+            // content: '距离发货地还有7.1公里&#10预计17分钟到达',  //文本
+            color: '#000000',  //文本颜色
+            borderRadius: 3,  //边框圆角
+            borderWidth: 1,  //边框宽度
+            borderColor: '#ffffff',  //边框颜色
+            bgColor: '#ffffff',  //背景色
+            padding: 5,  //文本边缘留白
+            textAlign: 'center'  //文本对齐方式。有效值: left, right, center
+          }
+        },
+        {
+          iconPath: "/images/order/car.png",
           id: 0,
           latitude: that.data.latitude,
           longitude: that.data.longitude,
@@ -218,18 +238,20 @@ Page({
             padding: 5,  //文本边缘留白
             textAlign: 'center'  //文本对齐方式。有效值: left, right, center
           }
-        }]
+        }
+
+        ]
         //路线显示
         let polyline = [{
           points: [{
-            longitude: 23.10229,
-            latitude: 113.3245211
+            longitude: 113.75179,
+            latitude: 23.10229
           }, {
-            longitude: 113.701855,
-            latitude: 34.779778
+            longitude: 113.15179,
+            latitude: 23.09057
           }],
           color: "#ff6600",
-          width: 2,
+          width: 10,
           dottedLine: false,
           arrowLine: true,
           borderColor: "#000",
@@ -260,8 +282,8 @@ Page({
         that.setData({
           latitude: that.data.latitude,
           longitude: that.data.longitude,
-          markers: markers,
-          polyline: polyline
+          // markers: markers,
+          // polyline: polyline
         })
 
         // console.log("that.data.markers================", that.data.markers)

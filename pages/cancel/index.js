@@ -10,14 +10,14 @@ Page({
     latitude: 0.0,
     longitude: 0.0,
     //标记位置
-    // markers: [{
-    //   iconPath: "/images/me.png",
-    //   id: 0,
-    //   latitude: 23.099994,
-    //   longitude: 113.324520,
-    //   width: 50,
-    //   height: 50
-    // }],
+    markers: [{
+      iconPath: "/images/order/start.png",
+      id: 0,
+      latitude: 23.099994,
+      longitude: 113.324520,
+      width: 50,
+      height: 50
+    }],
     //在地图上显示路线
     // polyline: [{
     //   points: [{
@@ -119,14 +119,14 @@ Page({
         console.log("that.data.latitude=================", that.data.latitude)
         console.log("that.data.longitude=================", that.data.longitude)
         //标记位置
-        // let markers = [{
-        //   iconPath: "/images/me.png",
-        //   id: 0,
-        //   latitude: that.data.latitude,
-        //   longitude: that.data.longitude,
-        //   width: 50,
-        //   height: 50
-        // }]
+        let markers = [{
+          iconPath: "/images/order/start.png",
+          id: 0,
+          latitude: that.data.latitude,
+          longitude: that.data.longitude,
+          width: 50,
+          height: 50
+        }]
         //显示路线
         // let polyline = [{
         //   points: [{
@@ -144,7 +144,7 @@ Page({
         that.setData({
           latitude: that.data.latitude,
           longitude: that.data.longitude,
-          // markers: markers,
+          markers: markers,
           // polyline: polyline
         })
 
