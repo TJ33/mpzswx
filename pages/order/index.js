@@ -3,6 +3,7 @@ var ToolServer = require('../utils/ToolServer');
 var dateTimePicker = require('../utils/DateTimePicker.js');
 // var TimeServer = require('../utils/TimeServer');
 import moment from 'moment';
+import io from 'weapp.socket.io'
 
 Page({
 
@@ -90,7 +91,13 @@ Page({
     startYear: 2000,
     endYear: 2050,
     isNow: false,
-    haveTime: true
+    haveTime: true,
+
+    //长链接相关
+    //纬度
+    latitude: 0.0,
+    //经度
+    longitude: 0.0,
   },
 
 
@@ -369,17 +376,17 @@ Page({
       return
     }
 
-    console.log("consignor================================", consignor)
-    console.log("consignee================================", consignee)
-    console.log("freightMonthly================================", freightMonthly)
-    console.log("cargoMoney================================", cargoMoney)
-    console.log("distance================================", distance)
-    console.log("remark================================", remark)
-    console.log("vehicleType================================", vehicleType)
-    console.log("freight================================", freight)
-    console.log("operationTeam================================", operationTeam)
-    console.log("state================================", state)
-    console.log("receiveAt================================", receiveAt)
+    // console.log("consignor================================", consignor)
+    // console.log("consignee================================", consignee)
+    // console.log("freightMonthly================================", freightMonthly)
+    // console.log("cargoMoney================================", cargoMoney)
+    // console.log("distance================================", distance)
+    // console.log("remark================================", remark)
+    // console.log("vehicleType================================", vehicleType)
+    // console.log("freight================================", freight)
+    // console.log("operationTeam================================", operationTeam)
+    // console.log("state================================", state)
+    // console.log("receiveAt================================", receiveAt)
 
     if (vehicleType == "") {
       wx.showToast({
@@ -432,8 +439,10 @@ Page({
       async success(res) {
         if (res.confirm) {
           let result = await ToolServer.merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, receiveAt)
-
           console.log("result===================================", result)
+          wx.redirectTo({
+            url: '../single/index'
+          })
         }
       }
     })

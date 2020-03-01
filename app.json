@@ -1,13 +1,13 @@
 {
   "pages": [
+    "pages/wait/index",
     "pages/single/index",
     "pages/cancel/index",
     "pages/cancelReason/index",
-    "pages/wait/index",
-    "pages/map/index",
     "pages/order/index",
-    "pages/address/index",
     "pages/me/index",
+    "pages/map/index",
+    "pages/address/index",
     "pages/addressBook/index",
     "pages/waybill/index",
     "pages/register/index",

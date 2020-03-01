@@ -79,9 +79,12 @@ Page({
     let id = user.id
     console.log("user=======================", user)
     console.log("id=======================", id)
-    var socket = io('http://192.168.1.4:8011/mpzs', {
+    var socket = io('http://zs.51qp.top', {
       transports: ['websocket']
     });
+    // var socket = io('http://192.168.1.4:8011/mpzs', {
+    //   transports: ['websocket']
+    // });
 
     //连接监听
     socket.on('connect', () => {

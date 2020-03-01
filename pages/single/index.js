@@ -63,72 +63,27 @@ Page({
       radius: 500,
       strokeWidth: 2
     }],
-  },
 
-  //视野变化事件 拖动地图触发
-  regionchange(e) {
-    console.log("regionchange e===", e)
-    console.log("e.type===", e.type)
-  },
-  //点击 marker 标记点时触发
-  markertap(e) {
-    console.log("markertap e===", e)
-    console.log("e.markerId===", e.markerId)
-  },
-  //点击控件时触发
-  controltap(e) {
-    console.log("controltap e===", e)
-    console.log("e.controlId===", e.controlId)
-  },
-
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-    clearInterval(init);
-    let that = this;
-    that.setData({
-      minute: 0,
-      second: 0,
-    })
-    init = setInterval(function () {
-      that.timer()
-    }, 1000)
-
-    console.log("that.data.minute111==============", that.data.minute)
-  },
-
-  timer: function () {
-    let that = this;
-    that.setData({
-      second: that.data.second + 1
-    })
-
-    if (that.data.second >= 60) {
-      that.setData({
-        second: 0,
-        minute: that.data.minute + 1
-      })
-    }
-    that.setData({
-      timecount: that.data.minute + ":" + that.data.second
-    })
-
-    console.log("that.data.minute222==============", that.data.minute)
-    if (that.data.minute == 2) {
-      clearInterval(init);
-    }
+    //模态弹框
+    showModal: false,
+    items: [
+      { name: 'wait', value: '继续等待', checked: 'true' },
+      { name: 'reset', value: '重新下单' }
+    ],
+    chance: 'wait'
   },
 
   /**
-   * 生命周期函数--监听页面显示
-   */
+ * 生命周期函数--监听页面显示
+ */
   onShow: async function () {
     let user = wx.getStorageSync('USER')
     let id = user.id
     console.log("user=======================", user)
     console.log("id=======================", id)
+    // let socket = io('http://zs.51qp.top/mpzs', {
+    //   transports: ['websocket']
+    // });
     let socket = io('http://192.168.1.4:8011/mpzs', {
       transports: ['websocket']
     });
@@ -145,7 +100,13 @@ Page({
 
     //接受服务器注册信息
     socket.on("ZS:RECEIVED", (data) => {
-      console.log('接收数据', data);
+      console.log('接收数据data===========================', data);
+      let deliveryman = data.deliveryman
+      if (data.deliveryman != null) {
+        wx.redirectTo({
+          url: '../wait/index'
+        })
+      }
     });
 
     //更改定位
@@ -223,6 +184,66 @@ Page({
     })
   },
 
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+    clearInterval(init);
+    let that = this;
+    that.setData({
+      minute: 0,
+      second: 0,
+    })
+    init = setInterval(function () {
+      that.timer()
+    }, 1000)
+
+    console.log("that.data.minute111==============", that.data.minute)
+  },
+
+
+  //视野变化事件 拖动地图触发
+  regionchange(e) {
+    console.log("regionchange e===", e)
+    console.log("e.type===", e.type)
+  },
+  //点击 marker 标记点时触发
+  markertap(e) {
+    console.log("markertap e===", e)
+    console.log("e.markerId===", e.markerId)
+  },
+  //点击控件时触发
+  controltap(e) {
+    console.log("controltap e===", e)
+    console.log("e.controlId===", e.controlId)
+  },
+
+  timer: function () {
+    let that = this;
+    that.setData({
+      second: that.data.second + 1
+    })
+
+    if (that.data.second >= 60) {
+      that.setData({
+        second: 0,
+        minute: that.data.minute + 1
+      })
+    }
+    that.setData({
+      timecount: that.data.minute + ":" + that.data.second
+    })
+
+    console.log("that.data.minute222==============", that.data.minute)
+    if (that.data.minute != null) {
+      clearInterval(init);
+      this.setData({
+        showModal: true
+      })
+    }
+  },
+
   //移动选点
   moveToLocation: function (type) {
     let that = this;
@@ -238,6 +259,62 @@ Page({
           address: chooseName
         })
       }
+    })
+  },
+
+  //模态框
+  /**
+   * 隐藏模态对话框
+   */
+  hideModal: function () {
+    this.setData({
+      showModal: false
+    });
+  },
+  /**
+   * 对话框取消按钮点击事件
+   */
+  onCancel: function (e) {
+    this.hideModal();
+    console.log("取消e===========================", e)
+  },
+  /**
+   * 对话框确认按钮点击事件
+   */
+  onConfirm: function (e) {
+    let that = this
+    that.hideModal();
+    console.log("确定e===========================", e)
+    let value = that.data.chance
+    console.log("value===========================", value)
+    if (value == "wait") {
+      init = setInterval(function () {
+        that.setData({
+          second: that.data.second + 1
+        })
+
+        if (that.data.second >= 60) {
+          that.setData({
+            second: 0,
+            minute: that.data.minute + 1
+          })
+        }
+        that.setData({
+          timecount: that.data.minute + ":" + that.data.second
+        })
+      }, 1000)
+    } else {
+      wx.redirectTo({
+        url: '../order/index'
+      })
+    }
+
+  },
+  //单选框
+  radioChange: function (e) {
+    let value = e.detail.value
+    this.setData({
+      chance: value
     })
   }
 

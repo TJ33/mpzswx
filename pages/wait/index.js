@@ -159,6 +159,9 @@ Page({
     let id = user.id
     console.log("user=======================", user)
     console.log("id=======================", id)
+    // var socket = io('http://zs.51qp.top/mpzs', {
+    //   transports: ['websocket']
+    // });
     var socket = io('http://192.168.1.4:8011/mpzs', {
       transports: ['websocket']
     });
@@ -175,7 +178,29 @@ Page({
 
     //接受服务器注册信息
     socket.on("ZS:RECEIVED", (data) => {
-      console.log('接收数据', data);
+      console.log('接收数据data==========================', data);
+      let deliveryman = data.deliveryman
+      console.log('接收数据deliveryman==========================', deliveryman);
+      let name = deliveryman.name                             //司机姓名
+      let licensePlate = deliveryman.licensePlate             //车牌号码   
+      let stat = deliveryman.stat                             //统计数据  totalPushWaybillCount总推送运单数 totalWaybillCount总运单数 totalIncome总收入 totalMileage总运输里程 successRate接单成功率 avgRespTime平均运单响应时间
+      let vehicleType = deliveryman.vehicleType               //车辆类型
+      let photos = deliveryman.photos                         //相关证件照片 idcardPositivePic身份证正面 idcardPOppositePic身份证反面 vehiclePic车辆照片 vehicleLicense1Pic主页 vehicleLicense2Pic副页
+
+      let id = deliveryman.id                                 //deliveryman id
+      let birthdate = deliveryman.birthdate                   //出生日期
+      let config = deliveryman.config                         //配置 accept是否开启接单 crossCity是否接跨域的单                         
+      let nature = deliveryman.nature                         //员工性质   INTERNAL:内部员工   EXTERNAL:外聘员工 
+      let operationTeam = deliveryman.operationTeam           //所属运营团队
+      let ownVehicle = deliveryman.ownVehicle                 //是否自带车辆
+      let phone = deliveryman.phone                           //手机号
+      let registerStatus = deliveryman.registerStatus         //注册状态     [WAITCONFIRM：待审核  INREVIEW:审核中  PASS：审核通过  FILL_AGAIN: 回退重填]
+      let sex = deliveryman.sex                               // 性别   MALE:男性  FEMALE:女性
+      let status = deliveryman.status                         //状态     [NORMAL:正常  DISABLED：禁用]    
+      let updatedAt = deliveryman.updatedAt
+      let createdAt = deliveryman.createdAt
+
+
     });
 
     //更改定位

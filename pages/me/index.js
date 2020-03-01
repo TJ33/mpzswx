@@ -135,5 +135,37 @@ Page({
         }
       }
     })
+  },
+  //退出登录
+  bindOut(e) {
+    let that = this
+    wx.showModal({
+      title: '提示',
+      content: '是否退出登陆',
+      success(res) {
+        if (res.confirm) {
+          wx.clearStorage()
+          wx.clearStorageSync()
+          wx.showLoading({
+            title: '正在退出',
+          })
+
+          setTimeout(function () {
+            wx.showToast({
+              title: '退出成功',
+              icon: 'success',
+              duration: 1000
+            })
+            wx.hideLoading()
+            // wx.reLaunch({
+            //   url: './me'
+            // })
+            that.onLoad()
+          }, 2000)
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
   }
 })
