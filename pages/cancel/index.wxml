@@ -15,8 +15,22 @@
         <cover-view class="order-three-place">XXX地点</cover-view>
       </cover-view>
     </cover-view>
+    <!-- <cover-view class="order">
+      <cover-view class="order-one">
+        <cover-view class="order-one-message">用车时间</cover-view>
+        <cover-view class="order-one-time">{{time}}</cover-view>
+      </cover-view>
+      <cover-view class="order-two">
+        <cover-view class="order-two-message">始发地</cover-view>
+        <cover-view class="order-two-place">{{sendAddress}}</cover-view>
+      </cover-view>
+      <cover-view class="order-three">
+        <cover-view class="order-three-message">目的地</cover-view>
+        <cover-view class="order-three-place">{{receiptAddress}}</cover-view>
+      </cover-view>
+    </cover-view> -->
     <cover-view class="message">
-      <cover-view wx:for="{{allMessage}}" wx:index="{{index}}" class="icon-message">
+      <cover-view wx:for="{{allMessage}}" wx:index="{{index}}" class="icon-message" id="{{index}}" bindtap="chooseUrl">
         <cover-image class="img-one" src="{{item.icon}}" />
         <cover-view class="message-one">{{item.message}}</cover-view>
       </cover-view>

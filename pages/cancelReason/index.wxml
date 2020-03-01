@@ -15,6 +15,6 @@
     </radio-group>
   </view>
   <view class="subButton">
-    <button class="submit">提交</button>
+    <button class="submit" bindtap="submit">提交</button>
   </view>
 </view>

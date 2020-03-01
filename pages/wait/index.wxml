@@ -7,7 +7,10 @@
 								</cover-view>
 						</cover-view>
 						<cover-view class="second">
-								<cover-view class="second-one">粤L958UG</cover-view>
+								<cover-view class="second-one">
+										<cover-view class="second-one-one">粤L958UG</cover-view>
+										<cover-view class="second-one-two">车辆照片</cover-view>
+								</cover-view>
 								<cover-view class="second-two">
 										<cover-view class="second-two-one">王师傅</cover-view>
 										<cover-view class="second-two-two">5.0分</cover-view>
@@ -18,9 +21,29 @@
 										<cover-view class="second-three-size">1.7*1.1*1m</cover-view>
 								</cover-view>
 						</cover-view>
+						<!-- <cover-view class="first">
+				<cover-view class="first-one">
+					<cover-image src="{{idcardPositivePic}}" class="first-img" />
+				</cover-view>
+			</cover-view> -->
+						<!-- <cover-view class="second">
+				<cover-view class="second-one">
+					<cover-view class="second-one-one">{{licensePlate}}</cover-view>
+					<cover-view class="second-one-two">{{vehiclePic}}</cover-view>
+				</cover-view>
+				<cover-view class="second-two">
+					<cover-view class="second-two-one">{{name}}</cover-view>
+					<cover-view class="second-two-two">接单成功率:{{successRate}}</cover-view>
+					<cover-view class="second-two-three">总运单数:{{totalWaybillCount}}</cover-view>
+				</cover-view>
+				<cover-view class="second-three">
+					<cover-view class="second-three-name">{{vehicleTypeName}}</cover-view>
+					<cover-view class="second-three-size">{{vehicleTypeSize}}</cover-view>
+				</cover-view>
+			</cover-view> -->
 				</cover-view>
 				<cover-view class="message">
-						<cover-view wx:for="{{allMessage}}" wx:index="{{index}}" class="icon-message">
+						<cover-view wx:for="{{allMessage}}" wx:index="{{index}}" class="icon-message" bindtap="chooseUrl" id="{{index}}">
 								<cover-image class="img-one" src="{{item.icon}}" />
 								<cover-view class="message-one">{{item.message}}</cover-view>
 						</cover-view>

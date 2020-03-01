@@ -140,7 +140,7 @@ Page({
 
           //气泡label (可与callout 2选1)
           label: {
-            content: '已为您通知到0名司机',  //文本
+            content: '已为您通知到1名司机',  //文本
             color: '#000000',  //文本颜色
             borderRadius: 3,  //边框圆角
             borderWidth: 1,  //边框宽度
@@ -236,7 +236,7 @@ Page({
     })
 
     console.log("that.data.minute222==============", that.data.minute)
-    if (that.data.minute != null) {
+    if (that.data.minute == 2) {
       clearInterval(init);
       this.setData({
         showModal: true

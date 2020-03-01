@@ -7,6 +7,11 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //需要交互的数据
+    time: '',     //用车时间
+    sendAddress: '',      //始发地
+    receiptAddress: '',   //目的地
+
     latitude: 0.0,
     longitude: 0.0,
     //标记位置
@@ -79,12 +84,12 @@ Page({
     let id = user.id
     console.log("user=======================", user)
     console.log("id=======================", id)
-    var socket = io('http://zs.51qp.top', {
-      transports: ['websocket']
-    });
-    // var socket = io('http://192.168.1.4:8011/mpzs', {
+    // var socket = io('http://zs.51qp.top', {
     //   transports: ['websocket']
     // });
+    var socket = io('http://192.168.1.4:8011/mpzs', {
+      transports: ['websocket']
+    });
 
     //连接监听
     socket.on('connect', () => {
@@ -181,6 +186,28 @@ Page({
         })
       }
     })
+  },
+
+  //选择下面三个消息
+  chooseUrl(e) {
+    let id = e.currentTarget.id
+    switch (id) {
+      //联系客服
+      case "0":
+        console.log('联系客服=======')
+        break;
+      //再来一单  
+      case "1":
+        console.log('再来一单=======')
+        break;
+      //订单信息  
+      case "2":
+        console.log('订单信息=======')
+        break;
+      default:
+        break;
+    }
+    console.log("id=========================", id)
   }
 
 })

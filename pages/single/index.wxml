@@ -13,7 +13,6 @@
 <!-- 弹窗 -->
 <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}" />
 <view class="modal-dialog" wx:if="{{showModal}}">
-  <view class="modal-title">添加数量</view>
   <view class="modal-content">
     <radio-group class="radio-group" bindchange="radioChange">
       <label class="radio" wx:for="{{items}}">

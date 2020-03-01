@@ -7,6 +7,17 @@ Page({
    * 页面的初始数据
    */
   data: {
+    //需要交互的信息
+    idcardPositivePic: '',     //身份证正面
+    licensePlate: '',          //车牌号码
+    vehiclePic: '',            //车辆照片
+    name: '',                  //司机姓名
+    successRate: 0,           //接单成功率   
+    totalWaybillCount: 0,     //总运单数
+    vehicleTypeName: '',       //车辆类型名字  
+    vehicleTypeSize: '',       //长宽高
+
+
     //纬度
     latitude: 0.0,
     //经度
@@ -201,6 +212,33 @@ Page({
       let createdAt = deliveryman.createdAt
 
 
+      //需要用到的数据
+      //idcardPositivePic 身份证正面
+      let idcardPositivePic = photos.idcardPositivePic
+      //licensePlate 车牌号码
+      //vehiclePic 车辆照片
+      let vehiclePic = photos.vehiclePic
+      //name  司机姓名
+      //successRate 接单成功率
+      let successRate = stat.successRate
+      //totalWaybillCount 总运单数
+      let totalWaybillCount = stat.totalWaybillCount
+      //vehicleType 车辆类型 需要显示名字  长宽高也需要(这两个没有)
+      let vehicleTypeName = '小型面包'
+      let vehicleTypeSize = '1.7*1.1*1m'
+      this.setData({
+        idcardPositivePic: idcardPositivePic,
+        licensePlate: licensePlate,
+        vehiclePic: vehiclePic,
+        name: name,
+        successRate: successRate,
+        totalWaybillCount: totalWaybillCount,
+        vehicleTypeName: vehicleTypeName,
+        vehicleTypeSize: vehicleTypeSize
+      })
+
+
+
     });
 
     //更改定位
@@ -341,6 +379,34 @@ Page({
         })
       }
     })
+  },
+
+  //下面消息的四个方法
+  chooseUrl(e) {
+    let id = e.currentTarget.id
+    switch (id) {
+      //一键报警
+      case "0":
+        console.log('一键报警=======')
+        break;
+      //行程分享  
+      case "1":
+        console.log('行程分享=======')
+        break;
+      //发送消息  
+      case "2":
+        console.log('发送消息=======')
+        break;
+      //更多操作  
+      case "3":
+        console.log('更多操作=======')
+        break;
+      default:
+        break;
+    }
+
+
+    console.log("id=====================================", id)
   }
 
 })
