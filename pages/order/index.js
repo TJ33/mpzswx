@@ -38,17 +38,17 @@ Page({
     distance: '',          //配送距离
     remark: '',            //商家备注
     vehicleTypeList: [{        //车辆类型
-      id: '111',
-      name: '小型面包'
+      id: '',
+      name: ''
     }, {
-      id: '222',
-      name: '金杯/微厢'
+      id: '',
+      name: ''
     }, {
-      id: '333',
-      name: '小型厢货'
+      id: '',
+      name: ''
     }, {
-      id: '444',
-      name: '大型厢货'
+      id: '',
+      name: ''
     }],
     vehicleType: '',
     freight: '',           //运费
@@ -84,8 +84,8 @@ Page({
     //useCoupon:'',        //优惠卷
 
     //时间选择相关
-    date: '2018-10-01',
-    time: '12:00',
+    date: '',
+    time: '',
     dateTimeArray: null,
     dateTime: null,
     startYear: 2000,
@@ -209,7 +209,6 @@ Page({
     }
     //查询运费
     let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
-    console.log('result===========================', result)
     let distance = result.distance
     let price = result.price
     let active = this.data.TopicTitleActive
@@ -346,6 +345,7 @@ Page({
 
   //立即下单
   async bindOrder() {
+
     let consignor = this.data.consignor
     let consignee = this.data.consignee
     let freightMonthly = this.data.freightMonthly
@@ -357,10 +357,11 @@ Page({
     let operationTeam = this.data.operationTeam
     let state = this.data.state
     let receiveAt = this.data.receiveAt
-
     //需要判断用户有没有选择寄件收件地址
     let sendAddress = this.data.sendAddress
     let receiptAddress = this.data.receiptAddress
+
+
     if (sendAddress == false) {
       wx.showToast({
         title: '请选择寄件地址',
@@ -377,18 +378,6 @@ Page({
       });
       return
     }
-
-    // console.log("consignor================================", consignor)
-    // console.log("consignee================================", consignee)
-    // console.log("freightMonthly================================", freightMonthly)
-    // console.log("cargoMoney================================", cargoMoney)
-    // console.log("distance================================", distance)
-    // console.log("remark================================", remark)
-    // console.log("vehicleType================================", vehicleType)
-    // console.log("freight================================", freight)
-    // console.log("operationTeam================================", operationTeam)
-    // console.log("state================================", state)
-    // console.log("receiveAt================================", receiveAt)
 
     if (vehicleType == "") {
       wx.showToast({
@@ -417,14 +406,15 @@ Page({
       return
     }
 
-    // if (freightMonthly == "") {
-    //   wx.showToast({
-    //     title: '请选择是否月结',
-    //     icon: 'none',
-    //     duration: 1000
-    //   });
-    //   return
-    // }
+    if (freightMonthly === '') {
+      wx.showToast({
+        title: '请选择是否月结',
+        icon: 'none',
+        duration: 1000
+      });
+      return
+    }
+
 
     if (cargoMoney == "") {
       wx.showToast({
@@ -441,7 +431,6 @@ Page({
       async success(res) {
         if (res.confirm) {
           let result = await ToolServer.merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, receiveAt)
-          console.log("result===================================", result)
           wx.redirectTo({
             url: '../waitOrder/single/index'
           })
