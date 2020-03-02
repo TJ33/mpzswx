@@ -1,17 +1,17 @@
 {
   "pages": [
-    "pages/single/index",
-    "pages/cancelReason/index",
-    "pages/cancel/index",
-    "pages/wait/index",
-    "pages/order/index",
+        "pages/order/index",
+    "pages/addressList/address/index",
+    "pages/addressList/addressBook/index",
     "pages/me/index",
-    "pages/map/index",
-    "pages/address/index",
-    "pages/addressBook/index",
-    "pages/waybill/index",
     "pages/register/index",
-    "pages/index/index"
+    "pages/index/index",
+    "pages/waitOrder/single/index",
+    "pages/waitOrder/wait/index",
+    "pages/waitOrder/cancelReason/index",
+    "pages/waitOrder/cancel/index",
+    "pages/map/index",
+    "pages/waybill/index"
   ],
   "permission": {
     "scope.userLocation": {

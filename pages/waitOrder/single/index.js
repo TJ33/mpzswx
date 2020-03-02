@@ -77,45 +77,6 @@ Page({
  * 生命周期函数--监听页面显示
  */
   onShow: async function () {
-    let user = wx.getStorageSync('USER')
-    let id = user.id
-    console.log("user=======================", user)
-    console.log("id=======================", id)
-    // let socket = io('http://zs.51qp.top/mpzs', {
-    //   transports: ['websocket']
-    // });
-    let socket = io('http://192.168.1.4:8011/mpzs', {
-      transports: ['websocket']
-    });
-
-    //连接监听
-    socket.on('connect', () => {
-      console.log("成功")
-
-      //向服务器发送注册信息
-      socket.emit('ZS:MERCHANTLOGIN',
-        { id: id, latitude: this.data.latitude, longitude: this.data.longitude }
-      );
-    })
-
-    //接受服务器注册信息
-    socket.on("ZS:RECEIVED", (data) => {
-      console.log('接收数据data===========================', data);
-      let deliveryman = data.deliveryman
-      if (data.deliveryman != null) {
-        wx.redirectTo({
-          url: '../wait/index'
-        })
-      }
-    });
-
-    //更改定位
-    socket.on("ZS:MERCHANTPOSITIONING", (data) => {
-      console.log('更改定位', data);
-    });
-
-    socket.connect();
-
 
     let that = this
     await wx.getLocation({
@@ -182,6 +143,52 @@ Page({
         wx.hideLoading()
       }
     })
+
+
+    let user = wx.getStorageSync('USER')
+    let id = user.id
+    console.log("user=======================", user)
+    console.log("id=======================", id)
+    let socket = io('http://zs.51qp.top/mpzs', {
+      transports: ['websocket']
+    });
+    //家
+    // var socket = io('http://192.168.1.4:8011/mpzs', {
+    //   transports: ['websocket']
+    // });
+    //公司
+    // var socket = io('http://192.168.7.119:8011/mpzs', {
+    //   transports: ['websocket']
+    // });
+
+    //连接监听
+    socket.on('connect', () => {
+      console.log("成功")
+
+      //向服务器发送注册信息
+      socket.emit('ZS:MERCHANTLOGIN',
+        { id: id, latitude: this.data.latitude, longitude: this.data.longitude }
+      );
+    })
+
+    //接受服务器注册信息
+    socket.on("ZS:RECEIVED", (data) => {
+      console.log('接收数据data===========================', data);
+      let deliveryman = data.deliveryman
+      if (data.deliveryman != null) {
+        wx.redirectTo({
+          url: '../wait/index'
+        })
+      }
+    });
+
+    //更改定位
+    socket.on("ZS:MERCHANTPOSITIONING", (data) => {
+      console.log('更改定位', data);
+    });
+
+    socket.connect();
+
   },
 
 

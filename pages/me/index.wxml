@@ -18,7 +18,7 @@
 		</view>
 </view>
 <view class="box">
-		<navigator wx:if="{{Myhead!=''}}" class="content" url="../addressBook/index">
+		<navigator wx:if="{{Myhead!=''}}" class="content" url="../addressList/addressBook/index">
 				<view class=" left">
 						<view class="icon">
 								<i class="iconfont iconyuyuexinxi" />

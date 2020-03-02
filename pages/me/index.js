@@ -17,7 +17,7 @@ Page({
       {
         icon: 'iconfont icon-xiaoxi1',
         centent: '店铺地址',
-        url: '../addressBook/index',
+        url: '../addressList/addressBook/index',
       }
     ],
     user: {

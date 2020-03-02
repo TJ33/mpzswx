@@ -1,6 +1,6 @@
-// pages/addressBook/index.js
+// pages/addressBookList/addressBook/index.js
 import regeneratorRuntime from "regenerator-runtime";
-var ToolServer = require('../utils/ToolServer');
+var ToolServer = require('../../utils/ToolServer');
 Page({
 
   /**

@@ -207,7 +207,9 @@ Page({
       longitude: receipteCoordinates[0],
       latitude: receipteCoordinates[1]
     }
+    //查询运费
     let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
+    console.log('result===========================', result)
     let distance = result.distance
     let price = result.price
     let active = this.data.TopicTitleActive
@@ -441,14 +443,11 @@ Page({
           let result = await ToolServer.merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, receiveAt)
           console.log("result===================================", result)
           wx.redirectTo({
-            url: '../single/index'
+            url: '../waitOrder/single/index'
           })
         }
       }
     })
-
-
-
 
   },
 

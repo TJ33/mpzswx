@@ -1,6 +1,6 @@
 import regeneratorRuntime from "regenerator-runtime";
-var ToolServer = require('../utils/ToolServer');
-var QQMapWX = require('../utils/qqmap-wx-jssdk.js');
+var ToolServer = require('../../utils/ToolServer');
+var QQMapWX = require('../../utils/qqmap-wx-jssdk.js');
 var qqmapsdk;
 Page({
 
