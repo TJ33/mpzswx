@@ -31,6 +31,13 @@ Page({
     let list2 = await ToolServer.findWayBill(this.data.waybill, 'DELIVERING')
     let list3 = await ToolServer.findWayBill(this.data.waybill, 'SIGN_IN')
     let list4 = await ToolServer.findWayBill(this.data.waybill, 'COMPLETE')
+
+
+    console.log("list1======================", list1)
+    console.log("list2======================", list2)
+    console.log("list3======================", list3)
+    console.log("list4======================", list4)
+
     if (list1 && list2 && list3 && list4) {
       this.reviseTr(list1)
       this.reviseTr(list2)
@@ -47,10 +54,7 @@ Page({
         list4: list4,
       })
     }
-    console.log("list1======================", list1)
-    console.log("list2======================", list2)
-    console.log("list3======================", list3)
-    console.log("list4======================", list4)
+
   },
   async onPullDownRefresh() {
     setTimeout(function () {
@@ -146,7 +150,8 @@ Page({
     })
     if (this.data.TopicTitleActive == 0) {
       this.data.flag = 'SEND'
-      this.data.list1 = await ToolServer.searchOrder(e.detail.value, this.data.flag, this.data.pageNum, '', '')
+      this.data.list1 = await ToolServer.findWayBill(this.data.waybill, 'CREATED')
+      console.log("this.data.list1==========================", this.data.list1)
       this.data.list1.rows = await this.createTime(this.data.list1.rows)
       this.reviseTr(this.data.list1)
       this.setData({ 'list1': this.data.list1, 'pageNum': 1 })
