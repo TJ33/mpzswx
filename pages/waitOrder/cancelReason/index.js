@@ -1,4 +1,4 @@
-// pages/cancelReason/index.js
+// pages/waitOrder/cancelReason/index.js
 Page({
 
   /**

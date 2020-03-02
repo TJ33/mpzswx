@@ -1,4 +1,4 @@
-// pages/wait/index.js
+// pages/waitOrder/wait/index.js
 import io from 'weapp.socket.io'
 
 Page({

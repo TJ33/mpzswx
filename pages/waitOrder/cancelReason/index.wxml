@@ -1,4 +1,4 @@
-<!-- pages/cancelReason/index.wxml -->
+<!-- pages/waitOrder/cancelReason/index.wxml -->
 <view class="all">
   <view class="top">
     <view>

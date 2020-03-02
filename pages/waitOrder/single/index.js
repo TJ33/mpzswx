@@ -1,4 +1,4 @@
-// pages/single/index.js
+// pages/waitOrder/single/index.js
 import io from 'weapp.socket.io'
 let init
 

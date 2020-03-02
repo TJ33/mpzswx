@@ -1,4 +1,4 @@
-// pages/cancel/index.js
+// pages/waitOrder/cancel/index.js
 import io from 'weapp.socket.io'
 
 Page({

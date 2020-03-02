@@ -1,4 +1,4 @@
-<!-- pages/single/index.wxml -->
+<!-- pages/waitOrder/single/index.wxml -->
 <view class="top">
   <view class="left">{{timecount}}</view>
   <view class="right">

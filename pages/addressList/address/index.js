@@ -108,6 +108,8 @@ Page({
       success: function (res) {
         that.data.latitude = res.latitude
         that.data.longitude = res.longitude
+        console.log("latitude============================", that.data.latitude)
+        console.log("longitude============================", that.data.longitude)
         that.moveToLocation()
       }, //定位失败回调      
       fail: function () {
@@ -129,10 +131,17 @@ Page({
         let chooseErrMsg = res.errMsg
         let chooseLatitude = res.latitude
         let chooseLongitude = res.longitude
+        console.log("chooseAddress-------------------------------", chooseAddress)
+        console.log("chooseErrMsg-------------------------------", chooseErrMsg)
+        console.log("chooseLatitude-------------------------------", chooseLatitude)
+        console.log("chooseLongitude-------------------------------", chooseLongitude)
         let chooseName = res.name
         //选择地点之后返回的结果
         that.setData({
-          address: chooseName
+          // address: chooseName
+          address: chooseAddress,
+          latitude: chooseLatitude,
+          longitude: chooseLongitude
         })
       }
     })
@@ -147,6 +156,8 @@ Page({
     let phone = this.data.phone
     let address = this.data.address
     let coordinates = this.data.longitude + ',' + this.data.latitude
+    console.log("this.data.longitude------------------------------------------", this.data.longitude)
+    console.log("this.data.latitude------------------------------------------", this.data.latitude)
     let door = this.data.door
     let id = this.data.id
 

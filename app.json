@@ -1,8 +1,8 @@
 {
   "pages": [
-        "pages/order/index",
-    "pages/addressList/address/index",
+    "pages/order/index",
     "pages/addressList/addressBook/index",
+    "pages/addressList/address/index",
     "pages/me/index",
     "pages/register/index",
     "pages/index/index",
