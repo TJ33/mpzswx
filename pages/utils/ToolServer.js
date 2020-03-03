@@ -30,7 +30,16 @@ class ToolServer {
       transportStatus: transportStatus,
       sn: sn
     }
-    return this.post(url)
+    return this.post(url, data)
+  }
+
+  //查询运单详情
+  async findWayBillDetails(id) {
+    let url = `${domain}/api/wxapp/find_waybill_details`
+    let data = {
+      id: id
+    }
+    return this.post(url, data)
   }
 
   //查询地址簿列表
@@ -234,7 +243,6 @@ class ToolServer {
         method: 'POST',
         data: data,
         success: async function (res) {
-          console.log('res-------------------------------------------------', res)
           if (res.data == 'Internal Server Error') {
             wx.showToast({
               title: '服务器连接异常',
@@ -299,7 +307,6 @@ class ToolServer {
         method: 'GET',
         data: data,
         success: async function (res) {
-          console.log("res-------------------------------------", res)
           if (res.data == 'Internal Server Error') {
             wx.showToast({
               title: '服务器连接异常',

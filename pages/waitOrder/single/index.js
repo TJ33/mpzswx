@@ -20,40 +20,6 @@ Page({
     latitude: 0.0,
     //经度
     longitude: 0.0,
-    //标记位置
-    // markers: [{
-    //   iconPath: "/images/me.png",
-    //   id: 0,
-    //   latitude: 23.099994,
-    //   longitude: 113.324520,
-    //   width: 50,
-    //   height: 50
-    // }],
-    //显示控件，控件不随着地图移动  图标  用cover-view替代
-    // controls: [{
-    //   id: 1,
-    //   // iconPath: '/images/bg.jpg',
-    //   position: {
-    //     left: 0,
-    //     top: 300 - 50,
-    //     width: 50,
-    //     height: 50
-    //   },
-    //   clickable: true
-    // }],
-    //在地图上显示路线
-    polyline: [{
-      points: [{
-        longitude: 113.3245211,
-        latitude: 23.10229
-      }, {
-        longitude: 113.324520,
-        latitude: 23.21229
-      }],
-      color: "#FF0000DD",
-      width: 2,
-      dottedLine: true
-    }],
     //在地图上显示圆
     circles: [{
       latitude: '23.02067',
@@ -87,7 +53,6 @@ Page({
         console.log("res===============", res)
         that.data.latitude = res.latitude
         that.data.longitude = res.longitude
-        // that.moveToLocation()
         console.log("that.data.latitude=================", that.data.latitude)
         console.log("that.data.longitude=================", that.data.longitude)
         let markers = [{
@@ -97,7 +62,6 @@ Page({
           longitude: that.data.longitude,
           width: 50,
           height: 50,
-
 
           //气泡label (可与callout 2选1)
           label: {
@@ -111,28 +75,14 @@ Page({
             textAlign: 'center'  //文本对齐方式。有效值: left, right, center
           }
         }]
-        let polyline = [{
-          points: [{
-            latitude: that.data.latitude,
-            longitude: that.data.longitude
-          }, {
-            latitude: that.data.latitude,
-            longitude: that.data.longitude
-          }],
-          color: "#FF0000DD",
-          width: 2,
-          dottedLine: true
-        }]
 
         that.setData({
           latitude: that.data.latitude,
           longitude: that.data.longitude,
-          markers: markers,
-          polyline: polyline
+          markers: markers
         })
         console.log("that.data.circles================", that.data.circles)
         console.log("that.data.markers================", that.data.markers)
-        console.log("that.data.polyline================", that.data.polyline)
       },
       //定位失败回调      
       fail: function () {
@@ -249,24 +199,6 @@ Page({
         showModal: true
       })
     }
-  },
-
-  //移动选点
-  moveToLocation: function (type) {
-    let that = this;
-    wx.chooseLocation({
-      success: function (res) {
-        let chooseAddress = res.address
-        let chooseErrMsg = res.errMsg
-        let chooseLatitude = res.latitude
-        let chooseLongitude = res.longitude
-        let chooseName = res.name
-        //选择地点之后返回的结果
-        that.setData({
-          address: chooseName
-        })
-      }
-    })
   },
 
   //模态框

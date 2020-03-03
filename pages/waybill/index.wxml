@@ -12,22 +12,22 @@
 <swiper duration="{{duration}}" style="height:calc(100vh - 102px);" current="{{TopicTitleActive}}" bindchange="bindtransition">
   <block>
     <swiper-item>
-      <scroll-view scroll-y="{{true}}" style="height:calc(100vh - 102px);" bindscrolltolower="bindscrolltolower1" wx:if="{{list1.rows.length > 0 }}">
-        <view class="list" wx:for="{{list1.rows}}" wx:key="" data-index="0" data-id="{{item.id}}" bindtap="bindDes">
+      <scroll-view scroll-y="{{true}}" style="height:calc(100vh - 102px);" bindscrolltolower="bindscrolltolower1" wx:if="{{createdList.length > 0 }}">
+        <view class="list" wx:for="{{createdList.rows}}" wx:key="" data-index="0" data-id="{{item.id}}" bindtap="bindDes">
           <view class="list_dh">
             <view>
               <i wx:if="{{!item.consignee._id}}" class="iconfont icon-kuaisukaidian" />
               运单编号：{{item.sn}}
             </view>
-            <view class="{{item.transportStatus == '已签收'?'st_2':'st_1'}}">
+            <view class="{{item.transportStatus == '已下单'?'st_2':'st_1'}}">
               {{item.transportStatus}}
             </view>
           </view>
           <view class="list_box">
             <view class="box_1">收件人</view>
             <view class="box_2">
-              {{item.consignee.nickname}}
-              <text>{{item.consignee.contact.name}}</text>
+              {{item.consignee.region.name}}
+              <text>{{item.consignee.contactName}}</text>
             </view>
           </view>
           <view class="list_box">
@@ -37,7 +37,7 @@
             </view>
             <view class="box_3">
               代收货款
-              <text>￥{{item.cost.cargoMoney}}</text>
+              <text>￥{{item.cargoMoney}}</text>
             </view>
           </view>
         </view>
@@ -45,37 +45,27 @@
       <miss wx:else></miss>
     </swiper-item>
     <swiper-item>
-      <scroll-view scroll-y="{{true}}" style="height:calc(100vh - 102px);" bindscrolltolower="bindscrolltolower2" wx:if="{{list2.rows.length > 0 }}">
-        <view class="list" wx:for="{{list2.rows}}" wx:key="" data-index="1" data-id="{{item.id}}" bindtap="bindDes">
+      <scroll-view scroll-y="{{true}}" style="height:calc(100vh - 102px);" bindscrolltolower="bindscrolltolower2" wx:if="{{deliveringList.length > 0 }}">
+        <view class="list" wx:for="{{deliveringList}}" wx:key="" data-index="1" data-id="{{item.id}}" bindtap="bindDes">
           <view class="list_dh">
             <view>运单编号：{{item.sn}}</view>
-            <view class="{{item.transportStatus == '已签收'?'st_2':'st_1'}}">
-              {{item.transportStatus}}
-            </view>
+            <view class="{{item.transportStatus == 'DELIVERING'?'st_2':'st_1'}}">已揽件</view>
           </view>
           <view class="list_box">
             <view class="box_1">收件人</view>
             <view class="box_2">
-              {{item.consignee.nickname}}
-              <text>{{item.consignee.contact.name}}</text>
+              {{item.consignee.region.name}}
+              <text>{{item.consignee.contactName}}</text>
             </view>
           </view>
-          <!-- <view class="list_box">
-						<view class="box_1">包裹数</view>
-						<view class="box_2">{{item.packageInfo.packageCount}}件</view>
-					</view> -->
           <view class="list_box">
             <view class="box_1">下单时间</view>
             <view class="box_2">
-              <view>
-                {{item.time.createAt}}
-                <!-- 2019-02-25
-                    <text>17:25</text> -->
-              </view>
+              <view>{{item.time.createAt}}</view>
             </view>
             <view class="box_3">
               代收货款
-              <text>￥{{item.cost.cargoMoney}}</text>
+              <text>￥{{item.cargoMoney}}</text>
             </view>
           </view>
         </view>
@@ -83,37 +73,27 @@
       <miss wx:else></miss>
     </swiper-item>
     <swiper-item>
-      <scroll-view scroll-y="{{true}}" style="height:calc(100vh - 102px);" bindscrolltolower="bindscrolltolower2" wx:if="{{list3.rows.length > 0 }}">
-        <view class="list" wx:for="{{list3.rows}}" wx:key="" data-index="1" data-id="{{item.id}}" bindtap="bindDes">
+      <scroll-view scroll-y="{{true}}" style="height:calc(100vh - 102px);" bindscrolltolower="bindscrolltolower2" wx:if="{{signInList.length > 0 }}">
+        <view class="list" wx:for="{{signInList.rows}}" wx:key="" data-index="1" data-id="{{item.id}}" bindtap="bindDes">
           <view class="list_dh">
             <view>运单编号：{{item.sn}}</view>
-            <view class="{{item.transportStatus == '已签收'?'st_2':'st_1'}}">
-              {{item.transportStatus}}
-            </view>
+            <view class="{{item.transportStatus == 'SIGN_IN'?'st_2':'st_1'}}">已签收</view>
           </view>
           <view class="list_box">
             <view class="box_1">收件人</view>
             <view class="box_2">
-              {{item.consignee.nickname}}
-              <text>{{item.consignee.contact.name}}</text>
+              {{item.consignee.region.name}}
+              <text>{{item.consignee.contactName}}</text>
             </view>
           </view>
-          <!-- <view class="list_box">
-						<view class="box_1">包裹数</view>
-						<view class="box_2">{{item.packageInfo.packageCount}}件</view>
-					</view> -->
           <view class="list_box">
             <view class="box_1">下单时间</view>
             <view class="box_2">
-              <view>
-                {{item.time.createAt}}
-                <!-- 2019-02-25
-                    <text>17:25</text> -->
-              </view>
+              <view>{{item.time.createAt}}</view>
             </view>
             <view class="box_3">
               代收货款
-              <text>￥{{item.cost.cargoMoney}}</text>
+              <text>￥{{item.cargoMoney}}</text>
             </view>
           </view>
         </view>
@@ -121,37 +101,27 @@
       <miss wx:else></miss>
     </swiper-item>
     <swiper-item>
-      <scroll-view scroll-y="{{true}}" style="height:calc(100vh - 102px);" bindscrolltolower="bindscrolltolower2" wx:if="{{list4.rows.length > 0 }}">
-        <view class="list" wx:for="{{list4.rows}}" wx:key="" data-index="1" data-id="{{item.id}}" bindtap="bindDes">
+      <scroll-view scroll-y="{{true}}" style="height:calc(100vh - 102px);" bindscrolltolower="bindscrolltolower2" wx:if="{{completeList.length > 0 }}">
+        <view class="list" wx:for="{{completeList.rows}}" wx:key="" data-index="1" data-id="{{item.id}}" bindtap="bindDes">
           <view class="list_dh">
             <view>运单编号：{{item.sn}}</view>
-            <view class="{{item.transportStatus == '已签收'?'st_2':'st_1'}}">
-              {{item.transportStatus}}
-            </view>
+            <view class="{{item.transportStatus == 'COMPLETE'?'st_2':'st_1'}}">已完成</view>
           </view>
           <view class="list_box">
             <view class="box_1">收件人</view>
             <view class="box_2">
-              {{item.consignee.nickname}}
-              <text>{{item.consignee.contact.name}}</text>
+              {{item.consignee.region.name}}
+              <text>{{item.consignee.contactName}}</text>
             </view>
           </view>
-          <!-- <view class="list_box">
-						<view class="box_1">包裹数</view>
-						<view class="box_2">{{item.packageInfo.packageCount}}件</view>
-					</view> -->
           <view class="list_box">
             <view class="box_1">下单时间</view>
             <view class="box_2">
-              <view>
-                {{item.time.createAt}}
-                <!-- 2019-02-25
-                    <text>17:25</text> -->
-              </view>
+              <view>{{item.time.createAt}}</view>
             </view>
             <view class="box_3">
               代收货款
-              <text>￥{{item.cost.cargoMoney}}</text>
+              <text>￥{{item.cargoMoney}}</text>
             </view>
           </view>
         </view>

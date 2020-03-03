@@ -1,0 +1,190 @@
+<!-- pages/waybillDetail/index.wxml -->
+<view class="content_active">
+	<view class="content">
+		<view class="cbox_1" bindtap="{{waybill.transportStatus !='CREATED' ?'bindMap':''}}">
+			<view class="left">
+				<i class="iconfont icon-ic_tomap" />
+			</view>
+			<view class="right">
+				<view class="name" wx:if="{{transportStatus=='CREATED'}}">订单状态: 已下单</view>
+				<view class="name" wx:if="{{transportStatus=='DELIVERING'}}">订单状态: 已揽件</view>
+				<view class="name" wx:if="{{transportStatus=='SIGN_IN'}}">订单状态: 已签收</view>
+				<view class="name" wx:if="{{transportStatus=='COMPLETE'}}">订单状态: 已完成</view>
+				<view class="ads">到达时间 {{time.receiveAt}}</view>
+			</view>
+			<i class="iconfont icon-qianjin" />
+		</view>
+		<view class="cbox_2" wx:if="{{waybill.transportStatus !='CREATED'}}">
+			<view class="left">
+				<i class="iconfont icon-huabanfuben" />
+			</view>
+			<view class="right">
+				<view>{{first.deliveryman.name}}</view>
+				<view class="phoneBs">
+					<i class="iconfont icon-dianhua" bindtap="phoneDeliveryman" />
+				</view>
+			</view>
+		</view>
+	</view>
+	<!-- <view class="box_2" wx:if="{{waybill.consignee._id}}">
+				<view class="contents">
+						<view class="right">
+								<view class="js top">
+										<view class="send">寄</view>
+								</view>
+								<view class="shop">{{consignor.address}}</view>
+								<view class="user">
+										{{consignor.name}}
+										<text selectable="true" class="phone">{{consignor.phone}}</text>
+								</view>
+						</view>
+				</view>
+				<view class="contents">
+						<view class="right">
+								<view class="js bottom">
+										<view class="collect">收</view>
+								</view>
+								<view class="shop">{{consignee.address}}</view>
+								<view class="user">
+										{{consignee.name}}
+										<text selectable="true" class="phone">{{consignee.phone}}</text>
+								</view>
+						</view>
+						<view class="phone">
+								<view class="phoneBs">
+										<i class="iconfont icon-dianhua" bindtap="phoneConsignee" />
+								</view>
+						</view>
+				</view>
+		</view> -->
+	<!-- <view class="box_2" wx:else>
+				<view class="contents">
+						<view class="right">
+								<view class="js top">
+										<view class="send">寄</view>
+								</view>
+								<view class="shop">{{waybill.consignor.contact.name}}</view>
+								<view class="user">{{waybill.consignor.contact.phone}}</view>
+						</view>
+				</view>
+				<view class="contents">
+						<view class="right">
+								<view class="js bottom">
+										<view class="collect">收</view>
+								</view>
+								<view class="shop">{{waybill.consignee.contact.name}}</view>
+								<view class="user">{{waybill.consignee.contact.phone}}</view>
+						</view>
+						<view class="phone">
+								<view class="phoneBs">
+										<i class="iconfont icon-dianhua" bindtap="phoneConsignee" />
+								</view>
+						</view>
+				</view>
+		</view> -->
+	<view class="box_2">
+		<view class="contents">
+			<view class="right">
+				<view class="js top">
+					<view class="send">寄</view>
+				</view>
+				<view class="shop">{{consignor.address}}</view>
+				<view class="user">
+					{{consignor.name}}
+					<text selectable="true" class="phone">{{consignor.phone}}</text>
+				</view>
+			</view>
+		</view>
+		<view class="contents">
+			<view class="right">
+				<view class="js bottom">
+					<view class="collect">收</view>
+				</view>
+				<view class="shop">{{consignee.address}}</view>
+				<view class="user">
+					{{consignee.name}}
+					<text selectable="true" class="phone">{{consignee.phone}}</text>
+				</view>
+			</view>
+			<view class="phone">
+				<view class="phoneBs">
+					<i class="iconfont icon-dianhua" bindtap="phoneConsignee" />
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="box_3">
+		<view class="contents">
+			<view>运单编号</view>
+			<view>{{sn}}</view>
+			<view bindtap="bindTm">查看条码</view>
+		</view>
+		<!-- <view class="contents">
+						<view>配送费用</view>
+						<view>{{waybill.cost.freight}}元</view>
+				</view> -->
+		<view class="contents">
+			<view>下单时间</view>
+			<view>{{time.createAt}}</view>
+		</view>
+		<view class="contents">
+			<view>代收货款</view>
+			<view>{{waybill.cost.cargoMoney}}元</view>
+			<!-- <view bindtap="bindHk" wx:if="{{waybill.transportStatus !='SIGN_IN' && waybill.transportStatus !='RETURN' && waybill.transportStatus !='LOSE' && waybill.transportStatus !='RETURN_STORAGE' && waybill.transportStatus !='RETURN_TAKES'}}">
+				修改货款
+			</view> -->
+		</view>
+		<!-- <view class="contents">
+						<view>应收金额</view>
+						<view>{{waybill.cost.cargoMoney + waybill.cost.freight}}元</view>
+				</view> -->
+	</view>
+	<!-- <view class="box_1 {{!other?'':'box_1_active'}}">
+				<view class="tos">
+						<view class="top"> -->
+	<!-- <view class="left">
+					<view class="line_1" />
+					<view class="monst" />
+					<view class="line" />
+				</view> -->
+	<!-- <view class="right">
+										<view class="yq">
+												<view class="monst" />
+										</view>
+										<view class="name">{{first.message}}</view>
+										<view class="ads">{{first.time}}</view>
+								</view>
+						</view>
+						<view class="top {{!other?'tos_hidden':'tos_active'}}" wx:for="{{rest}}" wx:key=""> -->
+	<!-- <view class="left">
+					<view class="line_2" />
+					<view class="monst" />
+					<view class="line {{!other?'left_hidden':''}}" />
+				</view> -->
+	<!-- <view class="right">
+										<view class="yq">
+												<view class="monst2" />
+										</view>
+										<view class="name">{{item.message}}</view>
+										<view class="ads">{{item.time}}</view>
+								</view>
+						</view>
+				</view>
+				<view class="bottom tos_active" wx:if="{{!other}}" bindtap="other_bt">查看更多物流信息</view>
+				<view class="bottom" wx:else bindtap="other_bt">收起物流信息</view>
+				<view />
+		</view> -->
+</view>
+<!-- 遮罩图层 -->
+<!-- <view class="dialog_Bl" wx:if="{{dialog}}" bindtap="bindClose" />
+<view class="dialog" wx:if="{{dialog}}">
+	<view class="contents">
+		<view>代收货款</view>
+		<input value="{{cargoMoney}}" placeholder="请输入代收货款" bindinput="bindCargoMoney" />
+	</view>
+	<view class="bt">
+		<view data-index='0' bindtap="bindClose">保存</view>
+		<view data-index='1' bindtap="bindClose">取消</view>
+	</view>
+</view> -->
+

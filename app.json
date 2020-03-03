@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/waybill/index",
+    "pages/waybillDetail/index",
     "pages/order/index",
     "pages/waitOrder/single/index",
     "pages/waitOrder/wait/index",
@@ -10,8 +12,7 @@
     "pages/me/index",
     "pages/register/index",
     "pages/index/index",
-    "pages/map/index",
-    "pages/waybill/index"
+    "pages/map/index"
   ],
   "permission": {
     "scope.userLocation": {

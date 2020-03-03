@@ -183,20 +183,20 @@ Page({
     // });
 
     //连接监听
-    socket.on('connect', () => {
-      console.log("成功")
+    // socket.on('connect', () => {
+    //   console.log("成功")
 
-      //向服务器发送注册信息
-      socket.emit('ZS:MERCHANTLOGIN',
-        { id: id, latitude: this.data.latitude, longitude: this.data.longitude }
-      );
-    })
+    //   //向服务器发送注册信息
+    //   socket.emit('ZS:MERCHANTLOGIN',
+    //     { id: id, latitude: this.data.latitude, longitude: this.data.longitude }
+    //   );
+    // })
 
     //接受服务器注册信息
     socket.on("ZS:RECEIVED", (data) => {
-      console.log('接收数据data==========================', data);
+      console.log('wait接收数据data==========================', data);
       let deliveryman = data.deliveryman
-      console.log('接收数据deliveryman==========================', deliveryman);
+      console.log('wait接收数据deliveryman==========================', deliveryman);
       let name = deliveryman.name                             //司机姓名
       let licensePlate = deliveryman.licensePlate             //车牌号码   
       let stat = deliveryman.stat                             //统计数据  totalPushWaybillCount总推送运单数 totalWaybillCount总运单数 totalIncome总收入 totalMileage总运输里程 successRate接单成功率 avgRespTime平均运单响应时间
@@ -220,6 +220,7 @@ Page({
       //需要用到的数据
       //idcardPositivePic 身份证正面
       let idcardPositivePic = photos.idcardPositivePic
+      console.log('idcardPositivePic===========================', idcardPositivePic)
       //licensePlate 车牌号码
       //vehiclePic 车辆照片
       let vehiclePic = photos.vehiclePic
@@ -229,8 +230,8 @@ Page({
       //totalWaybillCount 总运单数
       let totalWaybillCount = stat.totalWaybillCount
       //vehicleType 车辆类型 需要显示名字  长宽高也需要(这两个没有)
-      let vehicleTypeName = '小型面包'
-      let vehicleTypeSize = '1.7*1.1*1m'
+      let vehicleTypeName = vehicleType.size
+      let vehicleTypeSize = vehicleType.size
       this.setData({
         idcardPositivePic: idcardPositivePic,
         licensePlate: licensePlate,

@@ -10,13 +10,14 @@ Page({
     duration: 500,
     animation: '',
     TopicTitleActive: 0,
+    // CREATED：已下单  DELIVERING：已揽件  SIGN_IN：已签收   COMPLETE: 已完成
     type: ['已下单', '已揽件', '已签收', '已完成'],
     waybill: '',
     pageNum: 1,
-    list1: [],
-    list2: [],
-    list3: [],
-    list4: [],
+    createdList: [],
+    deliveringList: [],
+    signInList: [],
+    completeList: [],
   },
 
   /**
@@ -27,31 +28,38 @@ Page({
   },
 
   async onShow() {
-    let list1 = await ToolServer.findWayBill(this.data.waybill, 'CREATED')
-    let list2 = await ToolServer.findWayBill(this.data.waybill, 'DELIVERING')
-    let list3 = await ToolServer.findWayBill(this.data.waybill, 'SIGN_IN')
-    let list4 = await ToolServer.findWayBill(this.data.waybill, 'COMPLETE')
+    let createdList = await ToolServer.findWayBill('CREATED', '')
+    let deliveringList = await ToolServer.findWayBill('DELIVERING', '')
+    let signInList = await ToolServer.findWayBill('SIGN_IN', '')
+    let completeList = await ToolServer.findWayBill('COMPLETE', '')
 
 
-    console.log("list1======================", list1)
-    console.log("list2======================", list2)
-    console.log("list3======================", list3)
-    console.log("list4======================", list4)
+    console.log("createdList111======================", createdList)
+    console.log("deliveringList111======================", deliveringList)
+    console.log("signInList111=====================", signInList)
+    console.log("completeList111======================", completeList)
 
-    if (list1 && list2 && list3 && list4) {
-      this.reviseTr(list1)
-      this.reviseTr(list2)
-      this.reviseTr(list3)
-      this.reviseTr(list4)
-      list1.rows = await this.createTime(list1.rows)
-      list2.rows = await this.createTime(list2.rows)
-      list3.rows = await this.createTime(list3.rows)
-      list4.rows = await this.createTime(list4.rows)
+    if (createdList && deliveringList && signInList && completeList) {
+      this.reviseTr(createdList)
+      this.reviseTr(deliveringList)
+      this.reviseTr(signInList)
+      this.reviseTr(completeList)
+      createdList = await this.createTime(createdList)
+      deliveringList = await this.createTime(deliveringList)
+      signInList = await this.createTime(signInList)
+      completeList = await this.createTime(completeList)
+
+      console.log("createdList222======================", createdList)
+      console.log("deliveringList222======================", deliveringList)
+      console.log("signInList222=====================", signInList)
+      console.log("completeList222======================", completeList)
+
+
       this.setData({
-        list1: list1,
-        list2: list2,
-        list3: list3,
-        list4: list4,
+        createdList: createdList,
+        deliveringList: deliveringList,
+        signInList: signInList,
+        completeList: completeList,
       })
     }
 
@@ -72,53 +80,29 @@ Page({
 
   //转换日期
   async createTime(e) {
+    console.log("日期e111====================================================", e)
     if (e != '') {
       e = await TimeServer.createAtFormatLLL(e)
     }
+
+    console.log("日期e222====================================================", e)
     return e
   },
   reviseTr(e) {
     let list = e
-    for (let i in list.rows) {
+    for (let i in list) {
       switch (true) {
-        case list.rows[i].transportStatus == 'CREATED':
-          list.rows[i].transportStatus = '下单'
+        case list[i].transportStatus == 'CREATED':
+          list[i].transportStatus = '已下单'
           break;
-        case list.rows[i].transportStatus == 'IN_LANSHOU':
-          list.rows[i].transportStatus = '揽件中'
+        case list[i].transportStatus == 'DELIVERING':
+          list[i].transportStatus = '已揽件'
           break;
-        case list.rows[i].transportStatus == 'RECEIVED':
-          list.rows[i].transportStatus = '已揽件'
+        case list[i].transportStatus == 'SIGN_IN':
+          list[i].transportStatus = '已签收'
           break;
-        case list.rows[i].transportStatus == 'DOOR_RECEIVE':
-          list.rows[i].transportStatus = '上门收件'
-          break;
-        case list.rows[i].transportStatus == 'ALLOCATING':
-          list.rows[i].transportStatus = '分拨'
-          break;
-        case list.rows[i].transportStatus == 'TRANSPORT':
-          list.rows[i].transportStatus = '运输中'
-          break;
-        case list.rows[i].transportStatus == 'TO_INTRA_CITY':
-          list.rows[i].transportStatus = '到达同城配送点'
-          break;
-        case list.rows[i].transportStatus == 'DELIVERING':
-          list.rows[i].transportStatus = '配送中'
-          break;
-        case list.rows[i].transportStatus == 'SIGN_IN':
-          list.rows[i].transportStatus = '已签收'
-          break;
-        case list.rows[i].transportStatus == 'RETURN':
-          list.rows[i].transportStatus = '退回'
-          break;
-        case list.rows[i].transportStatus == 'LOSE':
-          list.rows[i].transportStatus = '货物丢失'
-          break;
-        case list.rows[i].transportStatus == 'RETURN_STORAGE':
-          list.rows[i].transportStatus = '退回入库'
-          break;
-        case list.rows[i].transportStatus == 'RETURN_TAKES':
-          list.rows[i].transportStatus = '退回取走'
+        case list[i].transportStatus == 'COMPLETE':
+          list[i].transportStatus = '已完成'
           break;
       }
     }
@@ -143,25 +127,46 @@ Page({
       'animation': animation.export()
     })
 
+    console.log("TopicTitleActive=======================", this.data.TopicTitleActive)
+
   },
   async waybillInput(e) {
+    console.log("e==============================", e.detail.value)
     this.setData({
       'waybill': e.detail.value
     })
     if (this.data.TopicTitleActive == 0) {
-      this.data.flag = 'SEND'
-      this.data.list1 = await ToolServer.findWayBill(this.data.waybill, 'CREATED')
-      console.log("this.data.list1==========================", this.data.list1)
-      this.data.list1.rows = await this.createTime(this.data.list1.rows)
-      this.reviseTr(this.data.list1)
-      this.setData({ 'list1': this.data.list1, 'pageNum': 1 })
+      this.data.flag = 'CREATED'
+      this.data.createdList = await ToolServer.findWayBill('CREATED', this.data.waybill)
+      console.log("this.data.createdList==========================", this.data.createdList)
+      this.data.createdList = await this.createTime(this.data.createdList)
+      this.reviseTr(this.data.createdList)
+      this.setData({ 'createdList': this.data.createdList, 'pageNum': 1 })
+    } else if (this.data.TopicTitleActive == 1) {
+      this.data.flag = 'DELIVERING'
+      this.data.deliveringList = await ToolServer.findWayBill('DELIVERING', this.data.waybill)
+      console.log("this.data.deliveringList==========================", this.data.deliveringList)
+      this.data.deliveringList = await this.createTime(this.data.deliveringList)
+      this.reviseTr(this.data.deliveringList)
+      this.setData({ 'deliveringList': this.data.deliveringList, 'pageNum': 1 })
+    } else if (this.data.TopicTitleActive == 2) {
+      this.data.flag = 'SIGN_IN'
+      this.data.signInList = await ToolServer.findWayBill('SIGN_IN', this.data.waybill)
+      console.log("this.data.signInList==========================", this.data.signInList)
+      this.data.signInList = await this.createTime(this.data.signInList)
+      this.reviseTr(this.data.signInList)
+      this.setData({ 'signInList': this.data.signInList, 'pageNum': 1 })
     } else {
-      this.data.flag = 'RECEIVE'
-      this.data.list2 = await ToolServer.searchOrder(e.detail.value, this.data.flag, this.data.pageNum, '', '')
-      this.data.list2.rows = await this.createTime(this.data.list2.rows)
-      this.reviseTr(this.data.list2)
-      this.setData({ 'list2': this.data.list2, 'pageNum': 1 })
+      this.data.flag = 'COMPLETE'
+      this.data.completeList = await ToolServer.findWayBill('COMPLETE', this.data.waybill)
+      console.log("this.data.completeList==========================", this.data.completeList)
+      this.data.completeList = await this.createTime(this.data.completeList)
+      this.reviseTr(this.data.completeList)
+      this.setData({ 'completeList': this.data.completeList, 'pageNum': 1 })
     }
+
+
+
   },
   async bindQx() {
     this.setData({
@@ -172,8 +177,9 @@ Page({
   //跳转到详情页
   bindDes(e) {
     let id = e.currentTarget.dataset.id
+    console.log("waybillDetail  id=================================", id)
     wx.navigateTo({
-      url: '../waybill_other/details/index?id=' + id
+      url: '../waybillDetail/index?id=' + id
     })
   },
   //扫码
@@ -184,7 +190,7 @@ Page({
         console.log(res)
         that.data.list = await ToolServer.searchOrder(res.result, '', that.data.pageNum)
         that.reviseTr(that.data.list)
-        that.data.list.rows = await that.createTime(that.data.list.rows)
+        that.data.list = await that.createTime(that.data.list)
         that.setData({ 'list': that.data.list })
       }
     })
@@ -205,37 +211,56 @@ Page({
       'TopicTitleActive': index,
       'animation': animation.export()
     })
+    console.log("index++++++++++++++++++++++++++++++++++++++++++++++++", index)
     if (index == 0) {
-      this.data.flag = 'SEND'
-      this.data.list1 = await ToolServer.searchOrder(this.data.waybill, this.data.flag, this.data.pageNum, '', '')
-      this.data.list1.rows = await this.createTime(this.data.list1.rows)
-      this.reviseTr(this.data.list1)
-      this.setData({ 'list1': this.data.list1, 'pageNum': 1 })
+      this.data.flag = 'CREATED'
+      this.data.createdList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
+      console.log("this.data.createdList++++++++++++++++++++++++++++++++++++++++++++++++", this.data.createdList)
+      this.data.createdList = await this.createTime(this.data.createdList)
+      this.reviseTr(this.data.createdList)
+      this.setData({ 'createdList': this.data.createdList, 'pageNum': 1 })
+    } else if (index == 1) {
+      this.data.flag = 'DELIVERING'
+      this.data.deliveringList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
+      console.log("this.data.deliveringList111++++++++++++++++++++++++++++++++++++++++++++++++", this.data.deliveringList)
+      this.data.deliveringList = await this.createTime(this.data.deliveringList)
+      console.log("this.data.deliveringList222++++++++++++++++++++++++++++++++++++++++++++++++", this.data.deliveringList)
+      this.reviseTr(this.data.deliveringList)
+      console.log("this.data.deliveringList333------------------------------------------------------------------", this.data.deliveringList)
+      this.setData({ 'deliveringList': this.data.deliveringList, 'pageNum': 1 })
+    } else if (index == 2) {
+      this.data.flag = 'SIGN_IN'
+      this.data.signInList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
+      console.log("this.data.signInList++++++++++++++++++++++++++++++++++++++++++++++++", this.data.signInList)
+      this.data.signInList = await this.createTime(this.data.signInList)
+      this.reviseTr(this.data.signInList)
+      this.setData({ 'signInList': this.data.signInList, 'pageNum': 1 })
     } else {
-      this.data.flag = 'RECEIVE'
-      this.data.list2 = await ToolServer.searchOrder(this.data.waybill, this.data.flag, this.data.pageNum, '', '')
-      this.data.list2.rows = await this.createTime(this.data.list2.rows)
-      this.reviseTr(this.data.list2)
-      this.setData({ 'list2': this.data.list2, 'pageNum': 1 })
+      this.data.flag = 'COMPLETE'
+      this.data.completeList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
+      console.log("this.data.completeList++++++++++++++++++++++++++++++++++++++++++++++++", this.data.completeList)
+      this.data.completeList = await this.createTime(this.data.completeList)
+      this.reviseTr(this.data.completeList)
+      this.setData({ 'completeList': this.data.completeList, 'pageNum': 1 })
     }
   },
   //分页加载
   async bindscrolltolower1() {
-    await this.tolower(this.data.list1)
-    this.setData({ list1: this.data.list1 })
+    await this.tolower(this.data.createdList)
+    this.setData({ createdList: this.data.createdList })
 
   },
   async bindscrolltolower2() {
-    await this.tolower(this.data.list2)
-    this.setData({ list2: this.data.list2 })
+    await this.tolower(this.data.deliveringList)
+    this.setData({ deliveringList: this.data.deliveringList })
   },
   async tolower(e) {
     if (e.total > this.data.pageNum * e.pageSize) {
       this.data.pageNum++
-      let item = await ToolServer.searchOrder(this.data.waybill, this.data.flag, this.data.pageNum, '', '')
-      e.rows = e.rows.concat(item.rows)
+      let item = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
+      e = e.concat(item)
       this.reviseTr(e)
-      e.rows = await this.createTime(e.rows)
+      e = await this.createTime(e)
       this.setData({
         pageNum: this.data.pageNum,
       })
