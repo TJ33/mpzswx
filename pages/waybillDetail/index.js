@@ -60,9 +60,8 @@ Page({
     console.log("createAt111==============================", createAt)
 
     newTime.createAt = moment(createAt).format("YYYY-MM-DD HH:mm")
-    console.log("createAt222==============================", createAt)
-    newTime.OrderAt = await TimeServer.signInAtYMD(OrderAt)
-    newTime.receiveAt = await TimeServer.signInAtYMD(receiveAt)
+    newTime.OrderAt = moment(OrderAt).format("YYYY-MM-DD HH:mm")
+    newTime.receiveAt = moment(receiveAt).format("YYYY-MM-DD HH:mm")
 
     //寄件人信息 店铺名 姓名 电话
     let consignor = waybill.consignor
@@ -86,6 +85,7 @@ Page({
     let sn = waybill.sn
     //代收货款   
     let cargoMoney = waybill.cargoMoney
+    console.log("cargoMoney==============================", cargoMoney)
 
     this.setData({
       transportStatus: transportStatus,
