@@ -12,7 +12,7 @@ Page({
     TopicTitleActive: 0,
     // CREATED：已下单  DELIVERING：已揽件  SIGN_IN：已签收   COMPLETE: 已完成
     type: ['已下单', '已揽件', '已签收', '已完成'],
-    waybill: '',
+    waybill: '',     //运单编号
     pageNum: 1,
     createdList: [],
     deliveringList: [],
@@ -185,86 +185,109 @@ Page({
   //扫码
   async scanCode() {
     let that = this
-    wx.scanCode({
-      success: async function (res) {
-        console.log(res)
-        that.data.list = await ToolServer.searchOrder(res.result, '', that.data.pageNum)
-        that.reviseTr(that.data.list)
-        that.data.list = await that.createTime(that.data.list)
-        that.setData({ 'list': that.data.list })
-      }
-    })
-  },
-  //滑动切换
-  async bindtransition(e) {
-    let index = e.detail.current;
-    let active = this.data.TopicTitleActive
-    let animation = wx.createAnimation({
-      duration: 300,
-    });
-    for (var i in this.data.type) {
-      if (index == i && index != active) {
-        animation.left(i * 50 + 22 + '%').step()
-      }
-    }
-    this.setData({
-      'TopicTitleActive': index,
-      'animation': animation.export()
-    })
-    console.log("index++++++++++++++++++++++++++++++++++++++++++++++++", index)
-    if (index == 0) {
-      this.data.flag = 'CREATED'
-      this.data.createdList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
-      console.log("this.data.createdList++++++++++++++++++++++++++++++++++++++++++++++++", this.data.createdList)
-      this.data.createdList = await this.createTime(this.data.createdList)
-      this.reviseTr(this.data.createdList)
-      this.setData({ 'createdList': this.data.createdList, 'pageNum': 1 })
-    } else if (index == 1) {
-      this.data.flag = 'DELIVERING'
-      this.data.deliveringList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
-      console.log("this.data.deliveringList111++++++++++++++++++++++++++++++++++++++++++++++++", this.data.deliveringList)
-      this.data.deliveringList = await this.createTime(this.data.deliveringList)
-      console.log("this.data.deliveringList222++++++++++++++++++++++++++++++++++++++++++++++++", this.data.deliveringList)
-      this.reviseTr(this.data.deliveringList)
-      console.log("this.data.deliveringList333------------------------------------------------------------------", this.data.deliveringList)
-      this.setData({ 'deliveringList': this.data.deliveringList, 'pageNum': 1 })
-    } else if (index == 2) {
-      this.data.flag = 'SIGN_IN'
-      this.data.signInList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
-      console.log("this.data.signInList++++++++++++++++++++++++++++++++++++++++++++++++", this.data.signInList)
-      this.data.signInList = await this.createTime(this.data.signInList)
-      this.reviseTr(this.data.signInList)
-      this.setData({ 'signInList': this.data.signInList, 'pageNum': 1 })
-    } else {
-      this.data.flag = 'COMPLETE'
-      this.data.completeList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
-      console.log("this.data.completeList++++++++++++++++++++++++++++++++++++++++++++++++", this.data.completeList)
-      this.data.completeList = await this.createTime(this.data.completeList)
-      this.reviseTr(this.data.completeList)
-      this.setData({ 'completeList': this.data.completeList, 'pageNum': 1 })
-    }
-  },
-  //分页加载
-  async bindscrolltolower1() {
-    await this.tolower(this.data.createdList)
-    this.setData({ createdList: this.data.createdList })
 
-  },
-  async bindscrolltolower2() {
-    await this.tolower(this.data.deliveringList)
-    this.setData({ deliveringList: this.data.deliveringList })
-  },
-  async tolower(e) {
-    if (e.total > this.data.pageNum * e.pageSize) {
-      this.data.pageNum++
-      let item = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
-      e = e.concat(item)
-      this.reviseTr(e)
-      e = await this.createTime(e)
+    let TopicTitleActive = that.data.TopicTitleActive
+    let waybill = that.data.waybill
+    let status = ''
+    switch TopicTitleActive:
+      case 0:
+        status = 'CREATED'
+        break;
+      case 1:
+        status = 'DELIVERING'
+        break;
+      case 2:
+        status = 'SIGN_IN'
+        break;
+      case 3:
+        status = 'COMPLETE'
+        break;
+      default:
+        status = ''
+
+        wx.scanCode({
+          success: async function (res) {
+            console.log(res)
+            that.data.list = await ToolServer.findWayBill(status, waybill)
+
+
+            that.reviseTr(that.data.list)
+
+            that.data.list = await that.createTime(that.data.list)
+            that.setData({ 'list': that.data.list })
+          }
+        })
+    },
+    //滑动切换
+    async bindtransition(e) {
+      let index = e.detail.current;
+      let active = this.data.TopicTitleActive
+      let animation = wx.createAnimation({
+        duration: 300,
+      });
+      for (var i in this.data.type) {
+        if (index == i && index != active) {
+          animation.left(i * 50 + 22 + '%').step()
+        }
+      }
       this.setData({
-        pageNum: this.data.pageNum,
+        'TopicTitleActive': index,
+        'animation': animation.export()
       })
-    }
-  },
+      console.log("index++++++++++++++++++++++++++++++++++++++++++++++++", index)
+      if (index == 0) {
+        this.data.flag = 'CREATED'
+        this.data.createdList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
+        console.log("this.data.createdList++++++++++++++++++++++++++++++++++++++++++++++++", this.data.createdList)
+        this.data.createdList = await this.createTime(this.data.createdList)
+        this.reviseTr(this.data.createdList)
+        this.setData({ 'createdList': this.data.createdList, 'pageNum': 1 })
+      } else if (index == 1) {
+        this.data.flag = 'DELIVERING'
+        this.data.deliveringList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
+        console.log("this.data.deliveringList111++++++++++++++++++++++++++++++++++++++++++++++++", this.data.deliveringList)
+        this.data.deliveringList = await this.createTime(this.data.deliveringList)
+        console.log("this.data.deliveringList222++++++++++++++++++++++++++++++++++++++++++++++++", this.data.deliveringList)
+        this.reviseTr(this.data.deliveringList)
+        console.log("this.data.deliveringList333------------------------------------------------------------------", this.data.deliveringList)
+        this.setData({ 'deliveringList': this.data.deliveringList, 'pageNum': 1 })
+      } else if (index == 2) {
+        this.data.flag = 'SIGN_IN'
+        this.data.signInList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
+        console.log("this.data.signInList++++++++++++++++++++++++++++++++++++++++++++++++", this.data.signInList)
+        this.data.signInList = await this.createTime(this.data.signInList)
+        this.reviseTr(this.data.signInList)
+        this.setData({ 'signInList': this.data.signInList, 'pageNum': 1 })
+      } else {
+        this.data.flag = 'COMPLETE'
+        this.data.completeList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
+        console.log("this.data.completeList++++++++++++++++++++++++++++++++++++++++++++++++", this.data.completeList)
+        this.data.completeList = await this.createTime(this.data.completeList)
+        this.reviseTr(this.data.completeList)
+        this.setData({ 'completeList': this.data.completeList, 'pageNum': 1 })
+      }
+    },
+    //分页加载
+    async bindscrolltolower1() {
+      await this.tolower(this.data.createdList)
+      this.setData({ createdList: this.data.createdList })
 
-})
+    },
+    async bindscrolltolower2() {
+      await this.tolower(this.data.deliveringList)
+      this.setData({ deliveringList: this.data.deliveringList })
+    },
+    async tolower(e) {
+      if (e.total > this.data.pageNum * e.pageSize) {
+        this.data.pageNum++
+        let item = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
+        e = e.concat(item)
+        this.reviseTr(e)
+        e = await this.createTime(e)
+        this.setData({
+          pageNum: this.data.pageNum,
+        })
+      }
+    },
+
+  })

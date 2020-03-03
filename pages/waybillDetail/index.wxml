@@ -14,7 +14,7 @@
 						</view>
 						<i class="iconfont icon-qianjin" />
 				</view>
-				<view class="cbox_2" wx:if="{{waybill.transportStatus !='CREATED'}}">
+				<!-- <view class="cbox_2" wx:if="{{waybill.transportStatus !='CREATED'}}">
 						<view class="left">
 								<i class="iconfont icon-huabanfuben" />
 						</view>
@@ -24,7 +24,7 @@
 										<i class="iconfont icon-dianhua" bindtap="phoneDeliveryman" />
 								</view>
 						</view>
-				</view>
+				</view> -->
 		</view>
 		<!-- <view class="box_2" wx:if="{{waybill.consignee._id}}">
 				<view class="contents">
@@ -106,18 +106,18 @@
 										<text selectable="true" class="phone">{{consignee.phone}}</text>
 								</view>
 						</view>
-						<view class="phone">
-								<view class="phoneBs">
-										<i class="iconfont icon-dianhua" bindtap="phoneConsignee" />
-								</view>
-						</view>
+						<!-- <view class="phone">
+				<view class="phoneBs">
+					<i class="iconfont icon-dianhua" bindtap="phoneConsignee" />
+				</view>
+			</view> -->
 				</view>
 		</view>
 		<view class="box_3">
 				<view class="contents">
 						<view>运单编号</view>
 						<view>{{sn}}</view>
-						<view bindtap="bindTm">查看条码</view>
+						<!-- <view bindtap="bindTm">查看条码</view> -->
 				</view>
 				<!-- <view class="contents">
 						<view>配送费用</view>

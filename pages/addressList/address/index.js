@@ -21,6 +21,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
+    console.log('111111111')
     qqmapsdk = new QQMapWX({
       key: 'V3WBZ-I5TW6-2NASU-MOSRJ-MMOIF-AFFGG'
     });

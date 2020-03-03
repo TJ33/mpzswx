@@ -53,8 +53,6 @@ Page({
       altitude: true,
       //定位成功，更新定位结果      
       success: function (res) {
-        var latitude = res.latitude
-        var longitude = res.longitude
         that.moveToLocation()
       }, //定位失败回调      
       fail: function () {
