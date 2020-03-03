@@ -171,8 +171,10 @@ Page({
       consigneeList.push(consigneeObject)
     }
 
+
     //车辆
     let vehicleTypeList = await ToolServer.vehicleType(companyIndexList[0])
+
     this.setData({
       companyList: companyList,
       companyIndexList: companyIndexList,
@@ -199,6 +201,8 @@ Page({
     //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离
     let sendCoordinates = this.data.consignorObject.coordinates
     let receipteCoordinates = this.data.consigneeObject.coordinates
+
+
     let send = {
       longitude: sendCoordinates[0],
       latitude: sendCoordinates[1]
@@ -258,11 +262,13 @@ Page({
   changeSend(e) {
     let index = e.detail.value
     let consignor = this.data.consignorList[index].id
+    let consignorObject = this.data.consignorList[index]
     this.setData({
       sendList: this.data.sendList,
       sendIndex: index,
       consignor: consignor,
-      sendAddress: true
+      sendAddress: true,
+      consignorObject: consignorObject
     })
   },
 
@@ -270,11 +276,13 @@ Page({
   changeReceipt(e) {
     let index = e.detail.value
     let consignee = this.data.consigneeList[index].id
+    let consigneeObject = this.data.consigneeList[index]
     this.setData({
       receiptList: this.data.receiptList,
       receiptIndex: index,
       consignee: consignee,
-      receiptAddress: true
+      receiptAddress: true,
+      consigneeObject: consigneeObject
     })
   },
 
