@@ -23,31 +23,7 @@ Page({
       width: 50,
       height: 50
     }],
-    //在地图上显示路线
-    // polyline: [{
-    //   points: [{
-    //     longitude: 113.3245211,
-    //     latitude: 23.10229
-    //   }, {
-    //     longitude: 113.324520,
-    //     latitude: 23.21229
-    //   }],
-    //   color: "#FF0000DD",
-    //   width: 2,
-    //   dottedLine: true
-    // }],
-    //显示控件，控件不随着地图移动  图标  用cover-view替代
-    // controls: [{
-    //   id: 1,
-    //   iconPath: '/images/bg.jpg',
-    //   position: {
-    //     left: 0,
-    //     top: 300 - 50,
-    //     width: 50,
-    //     height: 50
-    //   },
-    //   clickable: true
-    // }],
+
     //底部消息栏
     allMessage: [{ icon: '/images/order/headset.png', message: '联系客服' }, { icon: '/images/order/order.png', message: '再来一单' }, { icon: '/images/order/the_order.png', message: '订单信息' }]
   },
@@ -140,25 +116,11 @@ Page({
           width: 50,
           height: 50
         }]
-        //显示路线
-        // let polyline = [{
-        //   points: [{
-        //     latitude: that.data.latitude,
-        //     longitude: that.data.longitude
-        //   }, {
-        //     latitude: that.data.latitude,
-        //     longitude: that.data.longitude
-        //   }],
-        //   color: "#FF0000DD",
-        //   width: 2,
-        //   dottedLine: true
-        // }]
 
         that.setData({
           latitude: that.data.latitude,
           longitude: that.data.longitude,
           markers: markers,
-          // polyline: polyline
         })
 
         console.log("that.data.markers================", that.data.markers)

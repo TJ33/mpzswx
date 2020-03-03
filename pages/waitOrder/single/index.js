@@ -94,6 +94,9 @@ Page({
       }
     })
 
+    console.log("this.data.latitude======================================", this.data.latitude)
+    console.log("this.data.longitude======================================", this.data.longitude)
+
 
     let user = wx.getStorageSync('USER')
     let id = user.id

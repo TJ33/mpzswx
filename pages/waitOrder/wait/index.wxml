@@ -1,4 +1,4 @@
-<map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" circles="{{circles}}" bindregionchange="regionchange" include-points="{{includePoints}}" show-location style="width: 100%; height: 1200rpx;">
+<map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" circles="{{circles}}" bindregionchange="regionchange" include-points="{{includePoints}}" show-location style="width: 100%; height: 1200rpx;">
 		<cover-view class="cover-view-one">
 				<cover-view class="driver">
 						<!-- <cover-view class="first">
