@@ -37,20 +37,10 @@ Page({
     cargoMoney: '',        //代收货款金额
     distance: '',          //配送距离
     remark: '',            //商家备注
-    vehicleTypeList: [{        //车辆类型
-      id: '',
-      name: ''
-    }, {
-      id: '',
-      name: ''
-    }, {
-      id: '',
-      name: ''
-    }, {
-      id: '',
-      name: ''
-    }],
-    vehicleType: '',
+    vehicleTypeIndexList: '',   //车辆下标集合  
+    vehicleTypeList: [],        //车辆集合
+    vehicleTypeIndex: 0,        //车辆类型下标
+    vehicleType: '',             //车辆id
     freight: '',           //运费
     haveFreight: true,
     operationTeam: '',     //物流公司id
@@ -174,10 +164,19 @@ Page({
 
     //车辆
     let vehicleTypeList = await ToolServer.vehicleType(companyIndexList[0])
+    let vehicleTypeIndexList = []
+    let newVehicleTypeList = []
+    for (let i = 0; i < vehicleTypeList.length; i++) {
+      let id = vehicleTypeList[i].id
+      let name = vehicleTypeList[i].name
+      newVehicleTypeList.push(name)
+      vehicleTypeIndexList.push(id)
+    }
 
     this.setData({
       companyList: companyList,
       companyIndexList: companyIndexList,
+      operationTeam: companyIndexList[0],
       sendList: sendList,
       sendIndexList: sendIndexList,
       receiptList: receiptList,
@@ -188,56 +187,57 @@ Page({
       consigneeObject: consigneeList[0],
       consignor: consignorList[0].id,
       consignee: consigneeList[0].id,
-      vehicleTypeList: vehicleTypeList,
-      operationTeam: companyIndexList[0]
+      vehicleTypeList: newVehicleTypeList,
+      vehicleTypeIndexList: vehicleTypeIndexList,
+      vehicleType: vehicleTypeIndexList[0]
     })
   },
 
   //导航栏
-  async titleTab(e) {
-    let index = e.currentTarget.dataset.index;
-    //选择车辆
-    let vehicleId = this.data.vehicleTypeList[index].id
-    //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离
-    let sendCoordinates = this.data.consignorObject.coordinates
-    let receipteCoordinates = this.data.consigneeObject.coordinates
+  // async titleTab(e) {
+  //   let index = e.currentTarget.dataset.index;
+  //   //选择车辆
+  //   let vehicleId = this.data.vehicleTypeList[index].id
+  //   //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离
+  //   let sendCoordinates = this.data.consignorObject.coordinates
+  //   let receipteCoordinates = this.data.consigneeObject.coordinates
 
 
-    let send = {
-      longitude: sendCoordinates[0],
-      latitude: sendCoordinates[1]
-    }
-    let receipt = {
-      longitude: receipteCoordinates[0],
-      latitude: receipteCoordinates[1]
-    }
-    //查询运费
-    let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
-    let distance = result.distance
-    let price = result.price
-    let active = this.data.TopicTitleActive
+  //   let send = {
+  //     longitude: sendCoordinates[0],
+  //     latitude: sendCoordinates[1]
+  //   }
+  //   let receipt = {
+  //     longitude: receipteCoordinates[0],
+  //     latitude: receipteCoordinates[1]
+  //   }
+  //   //查询运费
+  //   let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
+  //   let distance = result.distance
+  //   let price = result.price
+  //   let active = this.data.TopicTitleActive
 
-    let animation = wx.createAnimation({
-      duration: 300,
-    });
-    for (var i in this.data.type) {
-      if (index == i && index != active) {
-        animation.left(i * 50 + 22 + '%').step()
-      }
-    }
+  //   let animation = wx.createAnimation({
+  //     duration: 300,
+  //   });
+  //   for (var i in this.data.type) {
+  //     if (index == i && index != active) {
+  //       animation.left(i * 50 + 22 + '%').step()
+  //     }
+  //   }
 
-    this.setData({
-      'TopicTitleActive': index,
-      'animation': animation.export(),
-      vehicleType: vehicleId,
-      haveFreight: false,
-      freight: price,
-      distance: distance
-    })
+  // this.setData({
+  //   'TopicTitleActive': index,
+  //   'animation': animation.export(),
+  //   vehicleType: vehicleId,
+  //   haveFreight: false,
+  //   freight: price,
+  //   distance: distance
+  // })
 
-    //导航栏自动带出配送距离 参考运费
+  //   //导航栏自动带出配送距离 参考运费
 
-  },
+  // },
 
   //滑动切换
   async bindtransition(e) {
@@ -256,6 +256,53 @@ Page({
       'animation': animation.export()
     })
 
+  },
+
+  //选择物流公司
+  async changeCP(e) {
+    let index = e.detail.value
+    this.setData({
+      companyList: this.data.companyList,
+      companyIndex: e.detail.value
+    })
+
+    //根据物流公司id 选择对应车辆
+    let companyId = this.data.companyIndexList[index]
+    let vehicleTypeList = await ToolServer.vehicleType(companyId)
+    this.setData({
+      operationTeam: companyId,
+      vehicleTypeList: vehicleTypeList
+    })
+  },
+
+  //选择车辆
+  async changeVT(e) {
+    let index = e.detail.value;
+    let vehicleId = this.data.vehicleTypeIndexList[index]
+
+    //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离
+    let sendCoordinates = this.data.consignorObject.coordinates
+    let receipteCoordinates = this.data.consigneeObject.coordinates
+    let send = {
+      longitude: sendCoordinates[0],
+      latitude: sendCoordinates[1]
+    }
+    let receipt = {
+      longitude: receipteCoordinates[0],
+      latitude: receipteCoordinates[1]
+    }
+    //查询运费
+    let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
+    let distance = result.distance
+    let price = result.price
+    let active = this.data.TopicTitleActive
+
+    this.setData({
+      vehicleType: vehicleId,
+      haveFreight: false,
+      freight: price,
+      distance: distance
+    })
   },
 
   //选择寄件地址
@@ -284,25 +331,6 @@ Page({
       receiptAddress: true,
       consigneeObject: consigneeObject
     })
-  },
-
-  //选择物流公司
-  async changeCP(e) {
-    let index = e.detail.value
-    this.setData({
-      companyList: this.data.companyList,
-      companyIndex: e.detail.value
-    })
-
-    //根据物流公司id 选择对应车辆
-    let companyId = this.data.companyIndexList[index]
-    let vehicleTypeList = await ToolServer.vehicleType(companyId)
-    this.setData({
-      operationTeam: companyId,
-      vehicleTypeList: vehicleTypeList
-    })
-
-
   },
 
   //预约时间的选择

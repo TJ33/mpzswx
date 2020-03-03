@@ -111,18 +111,6 @@ class ToolServer {
     return this.post2(url, data)
   }
 
-  //优惠卷查询
-  async findCoupon(status, startAt, endAt) {
-    let url = `${domain}/api/wxapp/find_coupon`
-    let data = {
-      status: status,
-      startAt: startAt,
-      endAt: endAt
-    }
-    return this.post(url)
-  }
-
-
 
   //商家下单
   async merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, receiveAt) {
@@ -143,6 +131,7 @@ class ToolServer {
     return this.post(url, data)
   }
 
+  //未实现功能
   //商家点击提交取消订单原因
   async cancelReason(value) {
     let url = `${domain}/api/wxapp/cancel_reason`
@@ -150,6 +139,42 @@ class ToolServer {
       value: value
     }
     return this.post(url, data)
+  }
+
+
+  //优惠卷查询
+  async findCoupon(status, startAt, endAt) {
+    let url = `${domain}/api/wxapp/find_coupon`
+    let data = {
+      status: status,
+      startAt: startAt,
+      endAt: endAt
+    }
+    return this.post(url)
+  }
+
+  //默认历史下单商家
+  async historyMerchant(logisticsCompany) {
+    let url = `${domain}/api/mobile/merchant/history_merchant`
+    let data = {
+      pageNum: 1,
+      pageSize: 100,
+      logisticsCompany: logisticsCompany
+    }
+    return this.get(url, data)
+  }
+
+  //搜索联系人信息
+  async searchMerchant(contactName, contactPhone, address, pageNum) {
+    let url = `${domain}/api/mobile/merchant/search_merchant`
+    let data = {
+      contactName: contactName,
+      contactPhone: contactPhone,
+      address: address,
+      pageNum: pageNum,
+      pageSize: 10,
+    }
+    return this.get(url, data)
   }
 
 

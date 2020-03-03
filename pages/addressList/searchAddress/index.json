@@ -1,0 +1,10 @@
+{
+  "usingComponents": {
+    "miss": "../../../component/miss/index"
+  },
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "选择商家",
+  "backgroundColor": "#eeeeee",
+  "backgroundTextStyle": "light"
+}
