@@ -1,5 +1,6 @@
 // pages/waitOrder/wait/index.js
 import io from 'weapp.socket.io'
+var ToolServer = require('../../utils/ToolServer');
 
 Page({
 
@@ -135,7 +136,8 @@ Page({
       borderWidth: 5
     }],
     //底部消息栏
-    allMessage: [{ icon: '/images/order/police.png', message: '一键报警' }, { icon: '/images/order/share.png', message: '行程分享' }, { icon: '/images/order/message.png', message: '发送消息' }, { icon: '/images/order/more.png', message: '更多操作' }]
+    // allMessage: [{ icon: '/images/order/police.png', message: '一键报警' }, { icon: '/images/order/share.png', message: '行程分享' }, { icon: '/images/order/message.png', message: '发送消息' }, { icon: '/images/order/more.png', message: '更多操作' }]
+    allMessage: [{ icon: '/images/order/message.png', message: '查看订单' }, { icon: '/images/order/more.png', message: '再次下单' }]
   },
 
   //拖动地图触发
@@ -166,94 +168,6 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: async function () {
-    let user = wx.getStorageSync('USER')
-    let id = user.id
-    console.log("user=======================", user)
-    console.log("id=======================", id)
-    var socket = io('http://zs.51qp.top/mpzs', {
-      transports: ['websocket']
-    });
-    //家
-    // var socket = io('http://192.168.1.4:8011/mpzs', {
-    //   transports: ['websocket']
-    // });
-    //公司
-    // var socket = io('http://192.168.7.119:8011/mpzs', {
-    //   transports: ['websocket']
-    // });
-
-    //连接监听
-    // socket.on('connect', () => {
-    //   console.log("成功")
-
-    //   //向服务器发送注册信息
-    //   socket.emit('ZS:MERCHANTLOGIN',
-    //     { id: id, latitude: this.data.latitude, longitude: this.data.longitude }
-    //   );
-    // })
-
-    //接受服务器注册信息
-    socket.on("ZS:RECEIVED", (data) => {
-      console.log('wait接收数据data==========================', data);
-      let deliveryman = data.deliveryman
-      console.log('wait接收数据deliveryman==========================', deliveryman);
-      let name = deliveryman.name                             //司机姓名
-      let licensePlate = deliveryman.licensePlate             //车牌号码   
-      let stat = deliveryman.stat                             //统计数据  totalPushWaybillCount总推送运单数 totalWaybillCount总运单数 totalIncome总收入 totalMileage总运输里程 successRate接单成功率 avgRespTime平均运单响应时间
-      let vehicleType = deliveryman.vehicleType               //车辆类型
-      let photos = deliveryman.photos                         //相关证件照片 idcardPositivePic身份证正面 idcardPOppositePic身份证反面 vehiclePic车辆照片 vehicleLicense1Pic主页 vehicleLicense2Pic副页
-
-      let id = deliveryman.id                                 //deliveryman id
-      let birthdate = deliveryman.birthdate                   //出生日期
-      let config = deliveryman.config                         //配置 accept是否开启接单 crossCity是否接跨域的单                         
-      let nature = deliveryman.nature                         //员工性质   INTERNAL:内部员工   EXTERNAL:外聘员工 
-      let operationTeam = deliveryman.operationTeam           //所属运营团队
-      let ownVehicle = deliveryman.ownVehicle                 //是否自带车辆
-      let phone = deliveryman.phone                           //手机号
-      let registerStatus = deliveryman.registerStatus         //注册状态     [WAITCONFIRM：待审核  INREVIEW:审核中  PASS：审核通过  FILL_AGAIN: 回退重填]
-      let sex = deliveryman.sex                               // 性别   MALE:男性  FEMALE:女性
-      let status = deliveryman.status                         //状态     [NORMAL:正常  DISABLED：禁用]    
-      let updatedAt = deliveryman.updatedAt
-      let createdAt = deliveryman.createdAt
-
-
-      //需要用到的数据
-      //idcardPositivePic 身份证正面
-      let idcardPositivePic = photos.idcardPositivePic
-      console.log('idcardPositivePic===========================', idcardPositivePic)
-      //licensePlate 车牌号码
-      //vehiclePic 车辆照片
-      let vehiclePic = photos.vehiclePic
-      //name  司机姓名
-      //successRate 接单成功率
-      let successRate = stat.successRate
-      //totalWaybillCount 总运单数
-      let totalWaybillCount = stat.totalWaybillCount
-      //vehicleType 车辆类型 需要显示名字  长宽高也需要(这两个没有)
-      let vehicleTypeName = vehicleType.size
-      let vehicleTypeSize = vehicleType.size
-      this.setData({
-        idcardPositivePic: idcardPositivePic,
-        licensePlate: licensePlate,
-        vehiclePic: vehiclePic,
-        name: name,
-        successRate: successRate,
-        totalWaybillCount: totalWaybillCount,
-        vehicleTypeName: vehicleTypeName,
-        vehicleTypeSize: vehicleTypeSize
-      })
-
-
-
-    });
-
-    //更改定位
-    socket.on("ZS:MERCHANTPOSITIONING", (data) => {
-      console.log('更改定位', data);
-    });
-
-    socket.connect();
-
 
     let that = this
     await wx.getLocation({
@@ -367,6 +281,96 @@ Page({
         wx.hideLoading()
       }
     })
+
+
+    let user = wx.getStorageSync('USER')
+    let id = user.id
+    console.log("user=======================", user)
+    console.log("id=======================", id)
+    var socket = io('http://zs.51qp.top/mpzs', {
+      transports: ['websocket']
+    });
+    //家
+    // var socket = io('http://192.168.1.4:8011/mpzs', {
+    //   transports: ['websocket']
+    // });
+    //公司
+    // var socket = io('http://192.168.7.119:8011/mpzs', {
+    //   transports: ['websocket']
+    // });
+
+    //连接监听
+    // socket.on('connect', () => {
+    //   console.log("成功")
+
+    //   //向服务器发送注册信息
+    //   socket.emit('ZS:MERCHANTLOGIN',
+    //     { id: id, latitude: this.data.latitude, longitude: this.data.longitude }
+    //   );
+    // })
+
+    //接受服务器注册信息
+    socket.on("ZS:RECEIVED", (data) => {
+      console.log('wait接收数据data==========================', data);
+      let deliveryman = data.deliveryman
+      console.log('wait接收数据deliveryman==========================', deliveryman);
+
+      let name = deliveryman.name                             //司机姓名
+      let licensePlate = deliveryman.licensePlate             //车牌号码   
+      let stat = deliveryman.stat                             //统计数据  totalPushWaybillCount总推送运单数 totalWaybillCount总运单数 totalIncome总收入 totalMileage总运输里程 successRate接单成功率 avgRespTime平均运单响应时间
+      let vehicleType = deliveryman.vehicleType               //车辆类型
+      let photos = deliveryman.photos                         //相关证件照片 idcardPositivePic身份证正面 idcardPOppositePic身份证反面 vehiclePic车辆照片 vehicleLicense1Pic主页 vehicleLicense2Pic副页
+
+      let id = deliveryman.id                                 //deliveryman id
+      let birthdate = deliveryman.birthdate                   //出生日期
+      let config = deliveryman.config                         //配置 accept是否开启接单 crossCity是否接跨域的单                         
+      let nature = deliveryman.nature                         //员工性质   INTERNAL:内部员工   EXTERNAL:外聘员工 
+      let operationTeam = deliveryman.operationTeam           //所属运营团队
+      let ownVehicle = deliveryman.ownVehicle                 //是否自带车辆
+      let phone = deliveryman.phone                           //手机号
+      let registerStatus = deliveryman.registerStatus         //注册状态     [WAITCONFIRM：待审核  INREVIEW:审核中  PASS：审核通过  FILL_AGAIN: 回退重填]
+      let sex = deliveryman.sex                               // 性别   MALE:男性  FEMALE:女性
+      let status = deliveryman.status                         //状态     [NORMAL:正常  DISABLED：禁用]    
+      let updatedAt = deliveryman.updatedAt
+      let createdAt = deliveryman.createdAt
+
+
+      //需要用到的数据
+      //idcardPositivePic 身份证正面
+      let idcardPositivePic = photos.idcardPositivePic
+      console.log('idcardPositivePic===========================', idcardPositivePic)
+      //licensePlate 车牌号码
+      //vehiclePic 车辆照片
+      let vehiclePic = photos.vehiclePic
+      //name  司机姓名
+      //successRate 接单成功率
+      let successRate = stat.successRate
+      //totalWaybillCount 总运单数
+      let totalWaybillCount = stat.totalWaybillCount
+      //vehicleType 车辆类型 需要显示名字  长宽高也需要(这两个没有)
+      let vehicleTypeName = vehicleType.size
+      let vehicleTypeSize = vehicleType.size
+      this.setData({
+        idcardPositivePic: idcardPositivePic,
+        licensePlate: licensePlate,
+        vehiclePic: vehiclePic,
+        name: name,
+        successRate: successRate,
+        totalWaybillCount: totalWaybillCount,
+        vehicleTypeName: vehicleTypeName,
+        vehicleTypeSize: vehicleTypeSize
+      })
+
+
+
+    });
+
+    //更改定位
+    socket.on("ZS:MERCHANTPOSITIONING", (data) => {
+      console.log('更改定位', data);
+    });
+
+    socket.connect();
   },
 
   //移动选点
@@ -387,32 +391,58 @@ Page({
     })
   },
 
+  //请求司机经纬度
+  async getDriverLocation(e) {
+    //请求司机经纬度
+    let locationResult = await ToolServer.findDriverLocation()
+    console.log('locationResult===============================', locationResult)
+  },
+
   //下面消息的四个方法
+  // chooseUrl(e) {
+  //   let id = e.currentTarget.id
+  //   switch (id) {
+  //     //一键报警
+  //     case "0":
+  //       console.log('一键报警=======')
+  //       break;
+  //     //行程分享  
+  //     case "1":
+  //       console.log('行程分享=======')
+  //       break;
+  //     //发送消息  
+  //     case "2":
+  //       console.log('发送消息=======')
+  //       break;
+  //     //更多操作  
+  //     case "3":
+  //       console.log('更多操作=======')
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  //   console.log("id=====================================", id)
+  // }
+
   chooseUrl(e) {
-    let id = e.currentTarget.id
     switch (id) {
-      //一键报警
+      //查看运单  
       case "0":
-        console.log('一键报警=======')
+        console.log('查看运单=======')
+        wx.redirectTo({
+          url: '../wait/index'
+        })
         break;
-      //行程分享  
+      //再次下单  
       case "1":
-        console.log('行程分享=======')
-        break;
-      //发送消息  
-      case "2":
-        console.log('发送消息=======')
-        break;
-      //更多操作  
-      case "3":
-        console.log('更多操作=======')
+        console.log('再次下单=======')
+        wx.redirectTo({
+          url: '../wait/index'
+        })
         break;
       default:
         break;
     }
-
-
-    console.log("id=====================================", id)
   }
 
 })

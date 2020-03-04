@@ -131,6 +131,15 @@ class ToolServer {
     return this.post(url, data)
   }
 
+  //获取司机位置信息
+  async findDriverLocation(sn) {
+    let url = `${domain}/api/wxapp/get_position_deliveryman`
+    let data = {
+      sn: sn
+    }
+    return this.post(url, data)
+  }
+
   //未实现功能
   //商家点击提交取消订单原因
   async cancelReason(value) {

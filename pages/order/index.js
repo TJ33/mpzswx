@@ -25,35 +25,17 @@ Page({
       address: '',
       coordinates: ''
     },
-    freightMonthlyList: [{    //运费是否月结
-      id: true,
-      value: '是',
-    },
-    {
-      id: false,
-      value: '否',
-    }],
     freightMonthly: '',
     cargoMoney: '',        //代收货款金额
     distance: '',          //配送距离
     remark: '',            //商家备注
     vehicleTypeIndexList: '',   //车辆下标集合  
-    vehicleTypeList: [],        //车辆集合
+    vehicleTypeList: [{}],       //车辆集合
     vehicleTypeIndex: 0,        //车辆类型下标
     vehicleType: '',             //车辆id
     freight: '',           //运费
     haveFreight: true,
     operationTeam: '',     //物流公司id
-    stateList: [               //现在 0/预约 1
-      {
-        id: '0',
-        value: '现在'
-      },
-      {
-        id: '1',
-        value: '预约'
-      }
-    ],
     state: '',
     receiveAt: '',         //预约时间
     animation: '',         //
@@ -88,6 +70,30 @@ Page({
     latitude: 0.0,
     //经度
     longitude: 0.0,
+
+    //switch开关相关
+    appointChecked: false,
+    monthChecked: false
+
+    // freightMonthlyList: [{    //运费是否月结
+    //   id: true,
+    //   value: '是',
+    // },
+    // {
+    //   id: false,
+    //   value: '否',
+    // }],
+    // stateList: [               //现在 0/预约 1
+    //   {
+    //     id: '0',
+    //     value: '现在'
+    //   },
+    //   {
+    //     id: '1',
+    //     value: '预约'
+    //   }
+    // ],
+
   },
 
 
@@ -255,7 +261,6 @@ Page({
       'TopicTitleActive': index,
       'animation': animation.export()
     })
-
   },
 
   //选择物流公司
@@ -268,10 +273,22 @@ Page({
 
     //根据物流公司id 选择对应车辆
     let companyId = this.data.companyIndexList[index]
+
+
     let vehicleTypeList = await ToolServer.vehicleType(companyId)
+    let vehicleTypeIndexList = []
+    let newVehicleTypeList = []
+    for (let i = 0; i < vehicleTypeList.length; i++) {
+      let id = vehicleTypeList[i].id
+      let name = vehicleTypeList[i].name
+      newVehicleTypeList.push(name)
+      vehicleTypeIndexList.push(id)
+    }
+
     this.setData({
       operationTeam: companyId,
-      vehicleTypeList: vehicleTypeList
+      vehicleTypeList: newVehicleTypeList,
+      vehicleTypeIndexList: vehicleTypeIndexList
     })
   },
 
@@ -333,14 +350,15 @@ Page({
     })
   },
 
-  //预约时间的选择
-  timeChange(e) {
-    let index = e.detail.value
-    if (index == 0) {
+  //是否预约
+  appointChange(e) {
+    let value = e.detail.value
+    if (value == false) {
       this.setData({
         state: '0',
         isNow: false,
-        receiveAt: moment().format("YYYY-MM-DD HH:mm")
+        receiveAt: moment().format("YYYY-MM-DD HH:mm"),
+        haveTime: true
       })
     } else {
       this.setData({
@@ -351,10 +369,10 @@ Page({
     }
   },
 
-  //运费是否月结
+  //是否月结
   monthChange(e) {
-    let index = e.detail.value
-    if (index == 0) {
+    let value = e.detail.value
+    if (value == false) {
       this.setData({
         freightMonthly: true
       })
@@ -494,4 +512,36 @@ Page({
       haveTime: false
     });
   },
+
+  //预约时间的选择
+  // timeChange(e) {
+  //   let index = e.detail.value
+  //   if (index == 0) {
+  //     this.setData({
+  //       state: '0',
+  //       isNow: false,
+  //       receiveAt: moment().format("YYYY-MM-DD HH:mm")
+  //     })
+  //   } else {
+  //     this.setData({
+  //       state: '1',
+  //       isNow: true,
+  //       receiveAt: ''
+  //     })
+  //   }
+  // },
+
+  //运费是否月结
+  // monthChange(e) {
+  //   let index = e.detail.value
+  //   if (index == 0) {
+  //     this.setData({
+  //       freightMonthly: true
+  //     })
+  //   } else {
+  //     this.setData({
+  //       freightMonthly: false,
+  //     })
+  //   }
+  // },
 })
