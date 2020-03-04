@@ -1,9 +1,8 @@
-// export let domain = "http://localhost:8021"
-// export let domain = "http://172.17.202.161:8011"
 // export let domain = "http://192.168.7.119:9014"
-export let domain = "http://zs.51qp.top"
+// export let domain = "http://zs.51qp.top"
+export let domain = "http://localhost:9014"
 // export let domain = "https://tms.51qp.top"
-// export let domain = "http://localhost:9012"
+
 
 
 export let APPID = "wxccd5f8fd7806fd16"

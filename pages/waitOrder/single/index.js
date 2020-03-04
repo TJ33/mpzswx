@@ -241,6 +241,15 @@ Page({
         let updatedAt = deliveryman.updatedAt
         let createdAt = deliveryman.createdAt
 
+        // idcardPositivePic: '',     //身份证正面
+        // licensePlate: '',          //车牌号码
+        // vehiclePic: '',            //车辆照片
+        // name: '',                  //司机姓名
+        // successRate: 0,           //接单成功率   
+        // totalWaybillCount: 0,     //总运单数
+        // vehicleTypeName: '',       //车辆类型名字  
+        // vehicleTypeSize: '',       //长宽高
+
 
 
 
@@ -259,6 +268,17 @@ Page({
         //vehicleType 车辆类型 需要显示名字  长宽高也需要(这两个没有)
         let vehicleTypeName = vehicleType.size
         let vehicleTypeSize = vehicleType.size
+
+
+        console.log("idcardPositivePic-------------------------------------------------", idcardPositivePic)
+        console.log("licensePlate-------------------------------------------------", licensePlate)
+        console.log("vehiclePic-------------------------------------------------", vehiclePic)
+        console.log("name-------------------------------------------------", name)
+        console.log("successRate-------------------------------------------------", successRate)
+        console.log("totalWaybillCount-------------------------------------------------", totalWaybillCount)
+        console.log("vehicleTypeName-------------------------------------------------", vehicleTypeName)
+        console.log("vehicleTypeSize-------------------------------------------------", vehicleTypeSize)
+
         this.setData({
           idcardPositivePic: idcardPositivePic,
           licensePlate: licensePlate,
