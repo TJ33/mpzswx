@@ -31,17 +31,14 @@ Page({
   //拖动地图触发
   regionchange(e) {
     console.log("regionchange e===", e)
-    console.log("e.type===", e.type)
   },
   //点击 marker 标记点时触发
   markertap(e) {
     console.log("markertap e===", e)
-    console.log("e.markerId===", e.markerId)
   },
   //点击控件时触发
   controltap(e) {
     console.log("controltap e===", e)
-    console.log("e.controlId===", e.controlId)
   },
 
 
@@ -58,8 +55,6 @@ Page({
   onShow: async function () {
     let user = wx.getStorageSync('USER')
     let id = user.id
-    console.log("user=======================", user)
-    console.log("id=======================", id)
     var socket = io('http://zs.51qp.top', {
       transports: ['websocket']
     });
@@ -74,8 +69,6 @@ Page({
 
     //连接监听
     socket.on('connect', () => {
-      console.log("成功")
-
       //向服务器发送注册信息
       socket.emit('ZS:MERCHANTLOGIN',
         { id: id, latitude: this.data.latitude, longitude: this.data.longitude }
@@ -84,12 +77,10 @@ Page({
 
     //接受服务器注册信息
     socket.on("ZS:RECEIVED", (data) => {
-      console.log('接收数据', data);
     });
 
     //更改定位
     socket.on("ZS:MERCHANTPOSITIONING", (data) => {
-      console.log('更改定位', data);
     });
 
     socket.connect();
@@ -101,12 +92,9 @@ Page({
       altitude: true,
       //定位成功，更新定位结果      
       success: function (res) {
-        console.log("res===============", res)
         that.data.latitude = res.latitude
         that.data.longitude = res.longitude
         // that.moveToLocation()
-        console.log("that.data.latitude=================", that.data.latitude)
-        console.log("that.data.longitude=================", that.data.longitude)
         //标记位置
         let markers = [{
           iconPath: "/images/order/start.png",
@@ -123,8 +111,6 @@ Page({
           markers: markers,
         })
 
-        console.log("that.data.markers================", that.data.markers)
-        console.log("that.data.polyline================", that.data.polyline)
       },
       //定位失败回调      
       fail: function () {
@@ -174,7 +160,6 @@ Page({
       default:
         break;
     }
-    console.log("id=========================", id)
   }
 
 })

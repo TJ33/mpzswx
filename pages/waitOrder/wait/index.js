@@ -335,6 +335,8 @@ Page({
       let createdAt = deliveryman.createdAt
 
 
+
+
       //需要用到的数据
       //idcardPositivePic 身份证正面
       let idcardPositivePic = photos.idcardPositivePic
@@ -430,14 +432,14 @@ Page({
       case "0":
         console.log('查看运单=======')
         wx.redirectTo({
-          url: '../wait/index'
+          url: '../../waybill/index'
         })
         break;
       //再次下单  
       case "1":
         console.log('再次下单=======')
         wx.redirectTo({
-          url: '../wait/index'
+          url: '../../order/index'
         })
         break;
       default:

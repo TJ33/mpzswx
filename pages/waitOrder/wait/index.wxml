@@ -23,13 +23,14 @@
 						</cover-view> -->
 						<cover-view class="first">
 								<cover-view class="first-one">
-										<cover-image src="{{idcardPositivePic}}" class="first-img" />
+										<!-- <cover-image src="{{idcardPositivePic}}" class="first-img" /> -->
+										<!-- <cover-image src="http://mp-img.datumol.com/deliveryman/1576651988782.jpg"></cover-image> -->
 								</cover-view>
 						</cover-view>
 						<cover-view class="second">
 								<cover-view class="second-one">
 										<cover-view class="second-one-one">{{licensePlate}}</cover-view>
-										<cover-view class="second-one-two">{{vehiclePic}}</cover-view>
+										<!-- <cover-view class="second-one-two">{{vehiclePic}}</cover-view> -->
 								</cover-view>
 								<cover-view class="second-two">
 										<cover-view class="second-two-one">{{name}}</cover-view>

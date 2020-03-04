@@ -29,15 +29,12 @@ Page({
     this.setData({
       value: value
     })
-    console.log("勾选取消原因===========================", value)
   },
 
   //点击提交按钮
   submit(e) {
 
     let value = this.data.value
-    console.log("点击提交按钮===========================", value)
-
     wx.showModal({
       title: '提示',
       content: '是否确认提交',
