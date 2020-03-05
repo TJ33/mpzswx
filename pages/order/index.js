@@ -36,7 +36,7 @@ Page({
     freight: '',           //运费
     haveFreight: true,
     operationTeam: '',     //物流公司id
-    state: '',
+    state: '0',
     receiveAt: moment().format("YYYY-MM-DD HH:mm"),         //预约时间
     animation: '',         //
     appointment: '',       //

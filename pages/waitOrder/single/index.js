@@ -266,7 +266,7 @@ Page({
         //totalWaybillCount 总运单数
         let totalWaybillCount = stat.totalWaybillCount
         //vehicleType 车辆类型 需要显示名字  长宽高也需要(这两个没有)
-        let vehicleTypeName = vehicleType.size
+        let vehicleTypeName = vehicleType.name
         let vehicleTypeSize = vehicleType.size
 
 
