@@ -30,7 +30,7 @@ Page({
     distance: '',          //配送距离
     remark: '',            //商家备注
     vehicleTypeIndexList: '',   //车辆下标集合  
-    vehicleTypeList: [{}],       //车辆集合
+    vehicleTypeList: [],       //车辆集合
     vehicleTypeIndex: 0,        //车辆类型下标
     vehicleType: '',             //车辆id
     freight: '',           //运费

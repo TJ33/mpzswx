@@ -1,51 +1,38 @@
 <!-- pages/waitOrder/single/index.wxml -->
-<!-- <view id="single" wx:if="{{haveSingle}}" class="single">
-  <view class="top">
-    <view class="left">{{timecount}}</view>
-    <view class="right">
-      <view class="first">系统选择司机</view>
-      <view class="second">倒计时结束后无应答将优先为您叫车</view>
-    </view>
-  </view>
-  <view class="last">
-    <map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" circles="{{circles}}" bindregionchange="regionchange" show-location style="width: 100%; height: 1200rpx;" />
-  </view>
-  <button class="show-btn" bindtap="showDialogBtn">弹窗</button> -->
-<!-- 弹窗 -->
-<!-- <view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}" />
-  <view class="modal-dialog" wx:if="{{showModal}}">
-    <view class="modal-content">
-      <radio-group class="radio-group" bindchange="radioChange">
-        <label class="radio" wx:for="{{items}}">
-          <radio value="{{item.name}}" checked="{{item.checked}}" />
-          {{item.value}}
-        </label>
-      </radio-group>
-    </view>
-    <view class="modal-footer">
-      <view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
-      <view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
-    </view>
-  </view>
-</view> -->
+<view id="single" wx:if="{{haveSingle}}" class="single">
+		<view class="top">
+				<view class="left">{{timecount}}</view>
+				<view class="right">
+						<view class="first">系统选择司机</view>
+						<view class="second">倒计时结束后无应答将优先为您叫车</view>
+				</view>
+		</view>
+		<view class="last">
+				<map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" circles="{{circles}}" bindregionchange="regionchange" show-location style="width: 100%; height: 1200rpx;" />
+		</view>
+		<button class="show-btn" bindtap="showDialogBtn">弹窗</button>
+		<!-- 弹窗 -->
+		<view class="modal-mask" bindtap="hideModal" catchtouchmove="preventTouchMove" wx:if="{{showModal}}" />
+		<view class="modal-dialog" wx:if="{{showModal}}">
+				<view class="modal-content">
+						<radio-group class="radio-group" bindchange="radioChange">
+								<label class="radio" wx:for="{{items}}">
+										<radio value="{{item.name}}" checked="{{item.checked}}" />
+										{{item.value}}
+								</label>
+						</radio-group>
+				</view>
+				<view class="modal-footer">
+						<view class="btn-cancel" bindtap="onCancel" data-status="cancel">取消</view>
+						<view class="btn-confirm" bindtap="onConfirm" data-status="confirm">确定</view>
+				</view>
+		</view>
+</view>
 <view id="wait" class="wait">
-	<map
-	 id="map"
-	 longitude="{{longitude}}"
-	 latitude="{{latitude}}"
-	 scale="14"
-	 bindcontroltap="controltap"
-	 markers="{{markers}}"
-	 bindmarkertap="markertap"
-	 polyline="{{polyline}}"
-	 circles="{{circles}}"
-	 bindregionchange="regionchange"
-	 show-location
-	 style="width: 100%; height: 1200rpx;"
-	>
-		<cover-view class="cover-view-one">
-			<cover-view class="driver">
-				<cover-view class="first">
+		<map id="map" longitude="{{longitude}}" latitude="{{latitude}}" scale="14" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" circles="{{circles}}" bindregionchange="regionchange" show-location style="width: 100%; height: 1200rpx;">
+				<cover-view class="cover-view-one">
+						<cover-view class="driver">
+								<!-- <cover-view class="first">
 					<cover-view class="first-one">
 						<cover-image src="/images/bg.jpg" class="first-img" />
 					</cover-view>
@@ -63,42 +50,35 @@
 						<cover-view class="second-three_c">小型面包</cover-view>
 						<cover-view class="second-three_c">1.7*1.1*1m</cover-view>
 					</cover-view>
+				</cover-view> -->
+								<cover-view class="first">
+										<cover-view class="first-one">
+												<cover-image src="{{idcardPositivePic}}" class="first-img" />
+										</cover-view>
+								</cover-view>
+								<cover-view class="second">
+										<cover-view class="second-one">
+												<cover-view class="second-one-one">{{licensePlate}}</cover-view>
+												<cover-view class="second-one-two">{{vehiclePic}}</cover-view>
+												<!-- <cover-view class="second-one-two">车辆照片</cover-view> -->
+										</cover-view>
+										<cover-view class="second-two">
+												<cover-view class="second-two-one">{{name}}</cover-view>
+												<cover-view class="second-two-two">接单成功率:{{successRate}}</cover-view>
+												<cover-view class="second-two-three">总运单数:{{totalWaybillCount}}</cover-view>
+										</cover-view>
+										<cover-view class="second-three">
+												<cover-view class="second-three-name">{{vehicleTypeName}}</cover-view>
+												<cover-view class="second-three-size">{{vehicleTypeSize}}</cover-view>
+										</cover-view>
+								</cover-view>
+						</cover-view>
+						<cover-view class="message">
+								<cover-view wx:for="{{allMessage}}" wx:index="{{index}}" class="icon-message" bindtap="chooseUrl" id="{{index}}">
+										<cover-image class="img-one" src="{{item.icon}}" />
+										<cover-view class="message-one">{{item.message}}</cover-view>
+								</cover-view>
+						</cover-view>
 				</cover-view>
-				<!-- <cover-view class="first">
-          <cover-view class="first-one">
-            <cover-image src="{{idcardPositivePic}}" class="first-img" />
-          </cover-view>
-        </cover-view> -->
-				<!-- <cover-view class="second">
-          <cover-view class="second-one"> -->
-				<cover-view class="second-one-one">{{licensePlate}}</cover-view>
-				<!-- <cover-view class="second-one-two">{{vehiclePic}}</cover-view> -->
-				<!-- <cover-view class="second-one-two">车辆照片</cover-view> -->
-				<!-- </cover-view>
-          <cover-view class="second-two">
-            <cover-view class="second-two-one">{{name}}</cover-view>
-            <cover-view class="second-two-two">接单成功率:{{successRate}}</cover-view>
-            <cover-view class="second-two-three">总运单数:{{totalWaybillCount}}</cover-view>
-          </cover-view>
-          <cover-view class="second-three">
-            <cover-view class="second-three-name">{{vehicleTypeName}}</cover-view>
-            <cover-view class="second-three-size">{{vehicleTypeSize}}</cover-view>
-          </cover-view>
-        </cover-view> -->
-			</cover-view>
-			<cover-view class="message">
-				<cover-view
-				 wx:for="{{allMessage}}"
-				 wx:index="{{index}}"
-				 class="icon-message"
-				 bindtap="chooseUrl"
-				 id="{{index}}"
-				>
-					<cover-image class="img-one" src="{{item.icon}}" />
-					<cover-view class="message-one">{{item.message}}</cover-view>
-				</cover-view>
-			</cover-view>
-		</cover-view>
-	</map>
+		</map>
 </view>
-
