@@ -1,7 +1,7 @@
 {
   "pages": [
-    "pages/waitOrder/single/index",
     "pages/order/index",
+    "pages/waitOrder/single/index",
     "pages/waitOrder/wait/index",
     "pages/waitOrder/cancelReason/index",
     "pages/waitOrder/cancel/index",

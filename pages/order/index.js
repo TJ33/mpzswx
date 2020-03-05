@@ -25,7 +25,7 @@ Page({
       address: '',
       coordinates: ''
     },
-    freightMonthly: '',
+    freightMonthly: false,
     cargoMoney: '',        //代收货款金额
     distance: '',          //配送距离
     remark: '',            //商家备注
@@ -37,7 +37,7 @@ Page({
     haveFreight: true,
     operationTeam: '',     //物流公司id
     state: '',
-    receiveAt: '',         //预约时间
+    receiveAt: moment().format("YYYY-MM-DD HH:mm"),         //预约时间
     animation: '',         //
     appointment: '',       //
     companyIndexList: [],  //物流公司下标集合
@@ -323,30 +323,59 @@ Page({
   },
 
   //选择寄件地址
-  changeSend(e) {
+  async changeSend(e) {
     let index = e.detail.value
     let consignor = this.data.consignorList[index].id
     let consignorObject = this.data.consignorList[index]
+
+
+    let vehicleId = this.data.vehicleType
+    let sendCoordinates = consignorObject.coordinates
+    let receipteCoordinates = this.data.consigneeObject.coordinates
+    let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
+    let distance = result.distance
+    let price = result.price
+    let active = this.data.TopicTitleActive
+
     this.setData({
       sendList: this.data.sendList,
       sendIndex: index,
       consignor: consignor,
       sendAddress: true,
-      consignorObject: consignorObject
+      consignorObject: consignorObject,
+      //运费相关
+      vehicleType: vehicleId,
+      haveFreight: false,
+      freight: price,
+      distance: distance
     })
   },
 
   //选择收件地址
-  changeReceipt(e) {
+  async changeReceipt(e) {
     let index = e.detail.value
     let consignee = this.data.consigneeList[index].id
     let consigneeObject = this.data.consigneeList[index]
+
+    let vehicleId = this.data.vehicleType
+    let sendCoordinates = this.data.consignorObject.coordinates
+    let receipteCoordinates = consigneeObject.coordinates
+    let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
+    let distance = result.distance
+    let price = result.price
+    let active = this.data.TopicTitleActive
+
     this.setData({
       receiptList: this.data.receiptList,
       receiptIndex: index,
       consignee: consignee,
       receiptAddress: true,
-      consigneeObject: consigneeObject
+      consigneeObject: consigneeObject,
+      //运费相关
+      vehicleType: vehicleId,
+      haveFreight: false,
+      freight: price,
+      distance: distance
     })
   },
 
