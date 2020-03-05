@@ -514,8 +514,10 @@ Page({
       async success(res) {
         if (res.confirm) {
           let result = await ToolServer.merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, receiveAt)
+          console.log('result==========================下单完成====', result)
+          let sn = result.sn
           wx.redirectTo({
-            url: '../waitOrder/single/index'
+            url: '../waitOrder/single/index?sn=' + sn
           })
         }
       }

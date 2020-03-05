@@ -137,7 +137,7 @@ class ToolServer {
     let data = {
       sn: sn
     }
-    return this.post(url, data)
+    return this.post2(url, data)
   }
 
   //未实现功能

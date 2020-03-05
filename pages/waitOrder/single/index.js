@@ -1,6 +1,8 @@
 // pages/waitOrder/single/index.js
-import io from 'weapp.socket.io'
+import io from 'weapp.socket.io';
+var ToolServer = require('../../utils/ToolServer');
 let init
+
 
 Page({
 
@@ -8,11 +10,17 @@ Page({
    * 页面的初始数据
    */
   data: {
+    sn: '',   //运单编号
     //地图组件
-    //纬度
+    //下单 纬度
     latitude: 0.0,
-    //经度
+    //下单 经度
     longitude: 0.0,
+    //配送员 维度
+    deliverLatitude: 0.0,
+    //配送员 经度
+    deliverLongitude: 0.0,
+
     //小程序倒计时
     minute: 0,
     second: 0,
@@ -22,8 +30,8 @@ Page({
     endtime: "",
     //在地图上显示圆
     circles: [{
-      latitude: '23.02067',
-      longitude: '113.75179',
+      latitude: 0.0,
+      longitude: 0.0,
       // color: '#F5FFFA',
       fillColor: '#FFEBCD',
       radius: 500,
@@ -54,8 +62,8 @@ Page({
     markers: [{
       iconPath: "/images/order/start.png",
       id: 0,
-      latitude: 23.02067,
-      longitude: 113.75179,
+      latitude: 0.0,
+      longitude: 0.0,
       width: 50,
       height: 50,
 
@@ -91,7 +99,7 @@ Page({
 
       //气泡label (可与callout 2选1)
       label: {
-        content: '距离发货地还有7.1公里&#10预计17分钟到达',  //文本
+        //content: '距离发货地还有7.1公里&#10预计17分钟到达',  //文本
         color: '#000000',  //文本颜色
         borderRadius: 3,  //边框圆角
         borderWidth: 1,  //边框宽度
@@ -102,7 +110,7 @@ Page({
       },
 
       callout: {
-        content: '距离发货地还有7.1公里&#10预计17分钟到达',  //文本
+        //content: '距离发货地还有7.1公里&#10预计17分钟到达',  //文本
         color: '#000000',  //文本颜色
         borderRadius: 3,  //边框圆角
         borderWidth: 1,  //边框宽度
@@ -113,30 +121,30 @@ Page({
       }
     }],
     //缩放视野以包含所有给定的坐标点
-    includePoints: [{
-      latitude: 23.02067,
-      longitude: 113.75179
-    },
-    {
-      latitude: 23.09057,
-      longitude: 113.15179
-    }],
+    // includePoints: [{
+    //   latitude: 23.02067,
+    //   longitude: 113.75179
+    // },
+    // {
+    //   latitude: 23.09057,
+    //   longitude: 113.15179
+    // }],
     //指定一系列坐标点，从数组第一项连线至最后一项  显示路线
-    polyline: [{
-      points: [{
-        longitude: 113.75179,
-        latitude: 23.02067
-      }, {
-        longitude: 113.15179,
-        latitude: 23.09057
-      }],
-      color: "#ff6600",
-      width: 10,
-      dottedLine: false,
-      arrowLine: true,
-      borderColor: "#000",
-      borderWidth: 5
-    }],
+    // polyline: [{
+    //   points: [{
+    //     longitude: 113.75179,
+    //     latitude: 23.02067
+    //   }, {
+    //     longitude: 113.15179,
+    //     latitude: 23.09057
+    //   }],
+    //   color: "#ff6600",
+    //   width: 10,
+    //   dottedLine: false,
+    //   arrowLine: true,
+    //   borderColor: "#000",
+    //   borderWidth: 5
+    // }],
     //底部消息栏
     allMessage: [{ icon: '/images/order/message.png', message: '查看订单' }, { icon: '/images/order/more.png', message: '再次下单' }]
   },
@@ -175,10 +183,20 @@ Page({
           }
         }]
 
+        let circles = [{
+          latitude: that.data.latitude,
+          longitude: that.data.longitude,
+          fillColor: '#FFEBCD',
+          radius: 500,
+          strokeWidth: 2
+        }]
+
+
         that.setData({
           latitude: that.data.latitude,
           longitude: that.data.longitude,
-          markers: markers
+          markers: markers,
+          circles: circles
         })
       },
       //定位失败回调      
@@ -214,11 +232,23 @@ Page({
     })
 
     //接受服务器注册信息
-    socket.on("ZS:RECEIVED", (data) => {
+    socket.on("ZS:RECEIVED", async (data) => {
       let deliveryman = data.deliveryman
       if (deliveryman != null) {
+
+        //请求司机经纬度
+        let locationResult = await ToolServer.findDriverLocation(that.data.sn)
+        console.log('locationResult===============================', locationResult)
+        let location = locationResult.location
+        let deliverLongitude = location[0]
+        let deliverLatitude = location[1]
+        console.log('deliverLongitude===============================', deliverLongitude)
+        console.log('deliverLatitude===============================', deliverLatitude)
+
         this.setData({
-          haveSingle: false
+          haveSingle: false,
+          deliverLongitude: deliverLongitude,
+          deliverLatitude: deliverLatitude
         })
         console.log("deliveryman--------------------++++++++++++++++++++++", deliveryman)
 
@@ -278,8 +308,8 @@ Page({
         console.log("totalWaybillCount-------------------------------------------------", totalWaybillCount)
         console.log("vehicleTypeName-------------------------------------------------", vehicleTypeName)
         console.log("vehicleTypeSize-------------------------------------------------", vehicleTypeSize)
-
         this.setData({
+          //配送员信息
           idcardPositivePic: idcardPositivePic,
           licensePlate: licensePlate,
           vehiclePic: vehiclePic,
@@ -289,8 +319,6 @@ Page({
           vehicleTypeName: vehicleTypeName,
           vehicleTypeSize: vehicleTypeSize
         })
-
-
         // wx.redirectTo({
         //   url: '../wait/index'
         // })
@@ -326,7 +354,7 @@ Page({
 
         //气泡label (可与callout 2选1)
         label: {
-          content: '距离发货地还有7.1公里&#10预计17分钟到达',  //文本
+          //content: '距离发货地还有7.1公里&#10预计17分钟到达',  //文本
           color: '#000000',  //文本颜色
           borderRadius: 3,  //边框圆角
           borderWidth: 1,  //边框宽度
@@ -340,11 +368,11 @@ Page({
       //路线显示
       let polyline = [{
         points: [{
-          longitude: 113.75179,
-          latitude: 23.10229
+          longitude: that.data.latitude,
+          latitude: that.data.longitude
         }, {
-          longitude: 113.15179,
-          latitude: 23.09057
+          longitude: that.data.deliverLongitude,
+          latitude: that.data.deliverLatitude
         }],
         color: "#ff6600",
         width: 10,
@@ -356,9 +384,8 @@ Page({
 
       this.setData({
         markers: markers,
-        polyline: polyline
+        polyline: polyline,
       })
-
 
     });
 
@@ -375,16 +402,40 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    console.log("options=======================", options)
+    let sn = options.sn
     clearInterval(init);
     let that = this;
     that.setData({
       minute: 0,
       second: 0,
+      sn: sn
     })
     init = setInterval(function () {
       that.timer()
     }, 1000)
 
+  },
+
+  chooseUrl(e) {
+    switch (id) {
+      //查看运单  
+      case "0":
+        console.log('查看运单=======')
+        wx.redirectTo({
+          url: '../../waybill/index'
+        })
+        break;
+      //再次下单  
+      case "1":
+        console.log('再次下单=======')
+        wx.redirectTo({
+          url: '../../order/index'
+        })
+        break;
+      default:
+        break;
+    }
   },
 
 
@@ -399,30 +450,6 @@ Page({
   //点击控件时触发
   controltap(e) {
     console.log("controltap e===", e)
-  },
-
-  timer: function () {
-    let that = this;
-    that.setData({
-      second: that.data.second + 1
-    })
-
-    if (that.data.second >= 60) {
-      that.setData({
-        second: 0,
-        minute: that.data.minute + 1
-      })
-    }
-    that.setData({
-      timecount: that.data.minute + ":" + that.data.second
-    })
-
-    if (that.data.minute == 2) {
-      clearInterval(init);
-      this.setData({
-        showModal: true
-      })
-    }
   },
 
   //模态框
@@ -465,7 +492,7 @@ Page({
       }, 1000)
     } else {
       wx.redirectTo({
-        url: '../order/index'
+        url: '../../order/index'
       })
     }
 
@@ -478,32 +505,28 @@ Page({
     })
   },
 
-  //请求司机经纬度
-  async getDriverLocation(e) {
-    //请求司机经纬度
-    let locationResult = await ToolServer.findDriverLocation()
-    console.log('locationResult===============================', locationResult)
-  },
+  timer: function () {
+    let that = this;
+    that.setData({
+      second: that.data.second + 1
+    })
 
-  chooseUrl(e) {
-    switch (id) {
-      //查看运单  
-      case "0":
-        console.log('查看运单=======')
-        wx.redirectTo({
-          url: '../../waybill/index'
-        })
-        break;
-      //再次下单  
-      case "1":
-        console.log('再次下单=======')
-        wx.redirectTo({
-          url: '../../order/index'
-        })
-        break;
-      default:
-        break;
+    if (that.data.second >= 60) {
+      that.setData({
+        second: 0,
+        minute: that.data.minute + 1
+      })
     }
-  }
+    that.setData({
+      timecount: that.data.minute + ":" + that.data.second
+    })
+
+    if (that.data.minute == 2) {
+      clearInterval(init);
+      this.setData({
+        showModal: true
+      })
+    }
+  },
 
 })
