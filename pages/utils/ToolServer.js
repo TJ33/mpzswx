@@ -48,7 +48,7 @@ class ToolServer {
     let data = {
       keyword: keyword
     }
-    return this.get(url, data)
+    return this.post(url, data)
   }
 
   //添加/编辑 地址簿

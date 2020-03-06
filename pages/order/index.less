@@ -85,8 +85,7 @@
 
   }
 
-
-  .map{
+  .box_2{
     display: flex;
     flex-direction: column;
     background: #fff;
@@ -94,11 +93,9 @@
     margin: 20rpx 30rpx 0 30rpx;
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
     border-radius:2px;
-    .send{
+    .contents{
         display: flex;
-        flex-direction: row;
         justify-content: space-between;
-
         .left{
             flex: 1;
             height: 100%;
@@ -119,8 +116,8 @@
             .line{
                 border-left: 2rpx #979797 dashed;
                 position: relative; 
-                right:-5rpx;
-                height:70rpx;
+                right:-8rpx;
+                height:102rpx;
             }
         }
         .right{
@@ -134,6 +131,7 @@
             .shop{
                 display: flex;
                 align-items: center;
+                
                 .phone{
                     font-size:24rpx;
                     line-height:28rpx;
@@ -141,9 +139,9 @@
                 }
             }
             .address{
-                font-size:28rpx;
+                font-size:20rpx;
                 color:rgba(145,149,153,1);
-                // line-height:28rpx;
+                line-height:28rpx;
                 overflow: hidden;
                 text-overflow:ellipsis;
                 white-space: nowrap;
@@ -158,14 +156,96 @@
             }
         }
     }
-    .send:first-child{
+    .contents:first-child{
         padding-bottom: 52rpx;
     }
-    .send:nth-last-child(1){
+    .contents:nth-last-child(1){
         padding-bottom: 16rpx;
     }
-  
+    
 }
+
+
+//   .map{
+//     display: flex;
+//     flex-direction: column;
+//     background: #fff;
+//     padding: 14rpx 50rpx;
+//     margin: 20rpx 30rpx 0 30rpx;
+//     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.05);
+//     border-radius:2px;
+//     .send{
+//         display: flex;
+//         flex-direction: row;
+//         justify-content: space-between;
+
+//         .left{
+//             flex: 1;
+//             height: 100%;
+//             position: absolute;
+//             padding-top:16rpx;
+//             .monst{
+//                 width:10rpx;
+//                 height:10rpx;
+//                 border:6rpx solid rgba(73,75,77,1);
+//                 border-radius: 50%;
+//             }
+//             .monst2{
+//                 width:10rpx;
+//                 height:10rpx;
+//                 border:6rpx solid rgba(77,191,110,1);
+//                 border-radius: 50%;
+//             }
+//             .line{
+//                 border-left: 2rpx #979797 dashed;
+//                 position: relative; 
+//                 right:-5rpx;
+//                 height:70rpx;
+//             }
+//         }
+//         .right{
+//             display: flex;
+//             flex-direction: column;
+//             margin-left: 86rpx;
+//             font-size:32rpx;
+//             color:rgba(48,50,51,1);
+//             line-height:44rpx;
+//             flex: 1;
+//             .shop{
+//                 display: flex;
+//                 align-items: center;
+//                 .phone{
+//                     font-size:24rpx;
+//                     line-height:28rpx;
+//                     padding-left: 20rpx;
+//                 }
+//             }
+//             .address{
+//                 font-size:28rpx;
+//                 color:rgba(145,149,153,1);
+//                 // line-height:28rpx;
+//                 overflow: hidden;
+//                 text-overflow:ellipsis;
+//                 white-space: nowrap;
+//                 width: 450rpx;
+
+//             }
+
+//             .other{
+//                 font-size:32rpx;
+//                 color:rgba(77,191,110,1);
+//                 line-height:44rpx;
+//             }
+//         }
+//     }
+//     .send:first-child{
+//         padding-bottom: 52rpx;
+//     }
+//     .send:nth-last-child(1){
+//         padding-bottom: 16rpx;
+//     }
+  
+// }
   
   .box_3{
     display: flex;

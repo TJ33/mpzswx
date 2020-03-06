@@ -7,84 +7,81 @@ Page({
    * 页面的初始数据
    */
   data: {
-    phoname: '',
+    id: '',  //0寄件人，1收件人
+    menu: 0,
+    keyword: '',
     pageNum: 1,
     list: [],
-    listOther: [],
-    logisticsCompany: '',
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   async onLoad(e) {
-    console.log(e)
-    let logisticsCompany = e.id
-    let list_other = await ToolServer.historyMerchant(logisticsCompany) //获取历史商家
-    for (var i in list_other.rows) {
-      for (var b in list_other.rows[i].contacts) {
-        if (list_other.rows[i].contacts[b].default == true) {
-          list_other.rows[i].contact = list_other.rows[i].contacts[b]
-        }
-      }
-    }
-    console.log('list_other', list_other)
-    this.setData({ 'listOther': list_other, 'logisticsCompany': logisticsCompany })
-  },
-  async onShow() {
+    let id = e.id
+    let list = await ToolServer.findAddressBook('')
+    this.setData({ 'id': id, 'list': list })
   },
   async bindMerchant(e) {
-    this.data.phoname = e.detail.value
-    let list = await ToolServer.searchMerchant(this.data.contactName, this.data.contactPhone, this.data.address, this.data.pageNum)
-    for (var i in list.list) {
-      for (var b in list.list[i].contacts) {
-        if (list.list[i].contacts[b].default == true) {
-          list.list[i].contact = list.list[i].contacts[b]
-        }
-      }
+    let list
+    this.data.keyword = e.detail.value
+    let keyword = this.data.keyword
+    if (this.data.menu == 0) {
+      list = await ToolServer.findAddressBook(keyword)
     }
-    console.log('list', list)
-    this.setData({
-      'list': list
-    })
+    this.setData({ 'list': list, 'keyword': keyword })
   },
-  //选择收货点
-  bindShopLs(e) {
+  //地址薄收货点
+  bindAddress(e) {
+    let id = this.data.id
     let index = e.currentTarget.dataset.index
-    let shops = this.data.listOther.rows[index]
-
-    for (var i in shops.contacts) {
-      if (shops.contacts[i].default == true) {
-        shops.contact = {
-          name: shops.contacts[i].name,
-          phone: shops.contacts[i].phone,
-        }
+    let shops = this.data.list[index]
+    if (id == '0') {
+      let sendAddress = {
+        _id: shops._id,
+        address: shops.address,
+        anotherNamer: shops.anotherNamer,
+        contactName: shops.contactName,
+        contactPhone: shops.contactPhone,
+        coordinates: shops.coordinates,
+        doorplate: shops.doorplate,
       }
-    }
-    console.log('ShopLs', shops);
-    wx.setStorageSync('shops', shops)
-    wx.switchTab({
-      url: "../../order/index"
-    })
-  },
-  //选择收货点
-  bindShop(e) {
-    let index = e.currentTarget.dataset.index
-    let shops = this.data.list.list[index]
-    for (var i in shops.contacts) {
-      if (shops.contacts[i].default == true) {
-        shops.contact = {
-          name: shops.contacts[i].name,
-          phone: shops.contacts[i].phone,
-        }
+      wx.setStorageSync('sendAddress', sendAddress)
+    } else {
+      let reciveAddress = {
+        _id: shops._id,
+        address: shops.address,
+        anotherNamer: shops.anotherNamer,
+        contactName: shops.contactName,
+        contactPhone: shops.contactPhone,
+        coordinates: shops.coordinates,
+        doorplate: shops.doorplate,
       }
+      wx.setStorageSync('reciveAddress', reciveAddress)
     }
-    console.log('shops', shops);
 
-    wx.setStorageSync('shops', shops)
     wx.switchTab({
-      url: "../../order/index"
+      url: `../../order/index`
     })
   },
 
+  //操作菜单
+  async bindMenu() {
+    let that = this
+    let itemList = ['添加地址薄']
+    wx.showActionSheet({
+      itemList: itemList,
+      success: async function (res) {
+        if (res.tapIndex == 0) {
+          let sp = ''
+          wx.navigateTo({ url: '../address/index' })
+        }
+        that.setData({
+          'menu': res.tapIndex,
+          'list': that.data.list
+        })
+      }
+    })
+
+  }
 })

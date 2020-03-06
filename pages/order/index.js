@@ -73,7 +73,7 @@ Page({
 
     //switch开关相关
     appointChecked: false,
-    monthChecked: false
+    monthChecked: false,
 
     // freightMonthlyList: [{    //运费是否月结
     //   id: true,
@@ -93,6 +93,10 @@ Page({
     //     value: '预约'
     //   }
     // ],
+
+    sendAddress: '',
+    reciveAddress: '',
+    id: '',        //0寄件人，1收件人
 
   },
 
@@ -118,6 +122,17 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: async function () {
+    //选择地址之后跳转的数据
+    let sendAddress = wx.getStorageSync('sendAddress')
+    let reciveAddress = wx.getStorageSync('reciveAddress')
+    console.log("sendAddress----------------------------------------", sendAddress)
+    console.log("reciveAddress----------------------------------------", reciveAddress)
+    this.setData({
+      sendAddress: sendAddress,
+      reciveAddress: reciveAddress
+    })
+
+
     //查询用户关联物流公司
     let companyList = []
     let companyIndexList = []
@@ -136,7 +151,7 @@ Page({
     let receiptIndexList = []
     let consignorList = []
     let consigneeList = []
-    let addressBook = await ToolServer.findAddressBook()
+    let addressBook = await ToolServer.findAddressBook('')
 
     for (let i = 0; i < addressBook.length; i++) {
       let addressName = addressBook[i].address
@@ -196,6 +211,14 @@ Page({
       vehicleTypeList: newVehicleTypeList,
       vehicleTypeIndexList: vehicleTypeIndexList,
       vehicleType: vehicleTypeIndexList[0]
+    })
+  },
+
+  //选择寄件/收件地址
+  bindAdds(e) {
+    let id = e.currentTarget.dataset.id
+    wx.navigateTo({
+      url: `../addressList/searchAddress/index?id=${id}`
     })
   },
 
