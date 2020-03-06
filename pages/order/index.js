@@ -433,6 +433,9 @@ Page({
     let consignee = this.data.consignee
     let freightMonthly = this.data.freightMonthly
     let cargoMoney = this.data.cargoMoney
+    if (cargoMoney == "") {
+      cargoMoney = 0
+    }
     let distance = this.data.distance
     let remark = this.data.remark
     let vehicleType = this.data.vehicleType
@@ -499,14 +502,14 @@ Page({
     }
 
 
-    if (cargoMoney == "") {
-      wx.showToast({
-        title: '代收货款不能为空',
-        icon: 'none',
-        duration: 1000
-      });
-      return
-    }
+    // if (cargoMoney == "") {
+    //   wx.showToast({
+    //     title: '代收货款不能为空',
+    //     icon: 'none',
+    //     duration: 1000
+    //   });
+    //   return
+    // }
 
     wx.showModal({
       title: '提示',
@@ -516,8 +519,9 @@ Page({
           let result = await ToolServer.merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, receiveAt)
           console.log('result==========================下单完成====', result)
           let sn = result.sn
+          let id = result.id
           wx.redirectTo({
-            url: '../waitOrder/single/index?sn=' + sn
+            url: '../waitOrder/single/index?sn=' + sn + '&&id=' + id
           })
         }
       }

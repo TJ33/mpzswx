@@ -1,72 +1,62 @@
 <!-- pages/order/index.wxml -->
 <view class="all">
-	<view class="company">
-		<view class="companyTitle">物流公司</view>
-		<picker
-		 class="companyValue"
-		 bindchange="changeCP"
-		 value="{{company}}"
-		 range="{{companyList}}"
-		>
-			<view class="picker">{{companyList[companyIndex]}}</view>
-		</picker>
-		<i class="iconfont icon-qianjin" />
-	</view>
-	<view class="map">
-		<view class="send" data-id='0' bindtap="bindAdds">
-			<view class="left">
-				<view class="monst" />
-				<view class="line" />
-			</view>
-			<view class="right">
-				<picker bindchange="changeSend" value="{{sendIndex}}" range="{{sendList}}">
-					<view class="address">{{sendAddress==true?sendList[sendIndex]:'请选择寄件地址'}}</view>
+		<view class="company">
+				<view class="companyTitle">物流公司</view>
+				<picker class="companyValue" bindchange="changeCP" value="{{company}}" range="{{companyList}}">
+						<view class="picker">{{companyList[companyIndex]}}</view>
 				</picker>
-			</view>
-			<i class="iconfont icon-qianjin" />
+				<i class="iconfont icon-qianjin" />
 		</view>
-		<view class="send" data-id='1' bindtap="bindAdds">
-			<view class="left">
-				<view class="monst2" />
-			</view>
-			<view class="right">
-				<picker bindchange="changeReceipt" value="{{receiptIndex}}" range="{{receiptList}}">
-					<view class="address">{{receiptAddress==true?receiptList[receiptIndex]:'请选择收件地址'}}</view>
+		<view class="map">
+				<view class="send" data-id='0' bindtap="bindAdds">
+						<view class="left">
+								<view class="monst" />
+								<view class="line" />
+						</view>
+						<view class="right">
+								<picker bindchange="changeSend" value="{{sendIndex}}" range="{{sendList}}">
+										<view class="address">{{sendAddress==true?sendList[sendIndex]:'请选择寄件地址'}}</view>
+								</picker>
+						</view>
+						<i class="iconfont icon-qianjin" />
+				</view>
+				<view class="send" data-id='1' bindtap="bindAdds">
+						<view class="left">
+								<view class="monst2" />
+						</view>
+						<view class="right">
+								<picker bindchange="changeReceipt" value="{{receiptIndex}}" range="{{receiptList}}">
+										<view class="address">{{receiptAddress==true?receiptList[receiptIndex]:'请选择收件地址'}}</view>
+								</picker>
+						</view>
+						<i class="iconfont icon-qianjin" />
+				</view>
+		</view>
+		<view class="company">
+				<view class="companyTitle">选择车辆</view>
+				<picker class="companyValue" bindchange="changeVT" value="{{vehicleType}}" range="{{vehicleTypeList}}">
+						<view class="picker">{{vehicleTypeList[vehicleTypeIndex]}}</view>
 				</picker>
-			</view>
-			<i class="iconfont icon-qianjin" />
+				<i class="iconfont icon-qianjin" />
 		</view>
-	</view>
-	<view class="company">
-		<view class="companyTitle">选择车辆</view>
-		<picker
-		 class="companyValue"
-		 bindchange="changeVT"
-		 value="{{vehicleType}}"
-		 range="{{vehicleTypeList}}"
-		>
-			<view class="picker">{{vehicleTypeList[vehicleTypeIndex]}}</view>
-		</picker>
-		<i class="iconfont icon-qianjin" />
-	</view>
-	<!-- <view class="TopicTitle">
+		<!-- <view class="TopicTitle">
 				<view class="TopicTitleBox" wx:key="{{index}}" wx:for="{{vehicleTypeList}}" value="{{item.id}}" data-index="{{index}}" bindtap="{{TopicTitleActive == index ? '' : 'titleTab'}}">
 						<view class="{{TopicTitleActive == index ? 'TopicTitleActive' : ''}}">{{item.name}}</view>
 				</view>
 		</view> -->
-	<view class="box_3">
-		<view class="time">
-			<view class="left">
-				<i class="iconfont icon-baoguo--" />
-				<view>是否预约</view>
-			</view>
-			<view class="right">
-				<view class="section__title" />
-				<view class="body-view">
-					<switch checked="{{appointChecked}}" bindchange="appointChange" />
-				</view>
-			</view>
-			<!-- <view class="right">
+		<view class="box_3">
+				<view class="time">
+						<view class="left">
+								<i class="iconfont icon-baoguo--" />
+								<view>是否预约</view>
+						</view>
+						<view class="right">
+								<view class="section__title" />
+								<view class="body-view">
+										<switch checked="{{appointChecked}}" bindchange="appointChange" />
+								</view>
+						</view>
+						<!-- <view class="right">
 				<radio-group class="radio-group" bindchange="timeChange">
 					<label class="radio" wx:for="{{stateList}}" wx:key="">
 						<radio value="{{item.id}}" checked="{{item.checked}}" />
@@ -74,41 +64,35 @@
 					</label>
 				</radio-group>
 			</view> -->
-		</view>
-		<view class="time" wx:if="{{isNow}}">
-			<view class="left">
-				<i class="iconfont icon-baoguo--" />
-				<view>具体时间</view>
-			</view>
-			<view class="right">
-				<view class="tui-picker-content">
-					<picker
-					 mode="multiSelector"
-					 value="{{dateTime}}"
-					 bindchange="changeDateTime"
-					 bindtap="changeDateTimeColumn"
-					 range="{{dateTimeArray}}"
-					>
-						<view wx:if="{{haveTime}}">请选择</view>
-						<view class="tui-picker-detail" wx:else>
-							{{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{dateTimeArray[2][dateTime[2]]}} {{dateTimeArray[3][dateTime[3]]}}:{{dateTimeArray[4][dateTime[4]]}}
+				</view>
+				<view class="time" wx:if="{{isNow}}">
+						<view class="left">
+								<i class="iconfont icon-baoguo--" />
+								<view>具体时间</view>
 						</view>
-					</picker>
+						<view class="right">
+								<view class="tui-picker-content">
+										<picker mode="multiSelector" value="{{dateTime}}" bindchange="changeDateTime" bindtap="changeDateTimeColumn" range="{{dateTimeArray}}">
+												<view wx:if="{{haveTime}}">请选择</view>
+												<view class="tui-picker-detail" wx:else>
+														{{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{dateTimeArray[2][dateTime[2]]}} {{dateTimeArray[3][dateTime[3]]}}:{{dateTimeArray[4][dateTime[4]]}}
+												</view>
+										</picker>
+								</view>
+						</view>
 				</view>
-			</view>
-		</view>
-		<view class="month">
-			<view class="left">
-				<i class="iconfont icon-baoguo--" />
-				<view>是否月结</view>
-			</view>
-			<view class="right">
-				<view class="section__title" />
-				<view class="body-view">
-					<switch checked="{{monthChecked}}" bindchange="monthChange" />
-				</view>
-			</view>
-			<!-- <view class="right">
+				<view class="month">
+						<view class="left">
+								<i class="iconfont icon-baoguo--" />
+								<view>是否月结</view>
+						</view>
+						<view class="right">
+								<view class="section__title" />
+								<view class="body-view">
+										<switch checked="{{monthChecked}}" bindchange="monthChange" />
+								</view>
+						</view>
+						<!-- <view class="right">
 								<radio-group class="radio-group" bindchange="monthChange">
 										<label class="radio" wx:for="{{freightMonthlyList}}" wx:key="">
 												<radio value="{{item.id}}" checked="{{item.checked}}" />
@@ -116,54 +100,42 @@
 										</label>
 								</radio-group>
 						</view> -->
-		</view>
-		<view class="content">
-			<view class="left">
-				<i class="iconfont icon-daikuan" />
-				<view>代收货款</view>
-			</view>
-			<view class="right">
-				<view>
-					<input
-					 placeholder="0"
-					 type="number"
-					 value="{{cargoMoney}}"
-					 bindinput="bindCM"
-					/>
 				</view>
-				<i class="iconfont icon-qianjin" />
-			</view>
-		</view>
-		<view class="content">
-			<view class="left">
-				<i class="iconfont icon-yunshu" />
-				<view>参考运费</view>
-			</view>
-			<view class="right">
-				<view class="color" wx:if="{{haveFreight}}">暂无运费信息</view>
-				<view class="color" wx:else>{{freight}}</view>
-				<i class="iconfont icon-qianjin" />
-			</view>
-		</view>
-		<view class="content">
-			<view class="left">
-				<i class="iconfont icon-beizhu" />
-				<view>备注</view>
-			</view>
-			<view class="right">
-				<view>
-					<textarea
-					 placeholder="无"
-					 type="text"
-					 auto-height
-					 value="{{remark}}"
-					 bindinput="bindBlurBz"
-					/>
-					</view>
+				<view class="content">
+						<view class="left">
+								<i class="iconfont icon-daikuan" />
+								<view>代收货款</view>
+						</view>
+						<view class="right">
+								<view>
+										<input placeholder="0" type="digit" value="{{cargoMoney}}" bindinput="bindCM" />
+								</view>
+								<i class="iconfont icon-qianjin" />
+						</view>
+				</view>
+				<view class="content">
+						<view class="left">
+								<i class="iconfont icon-yunshu" />
+								<view>参考运费</view>
+						</view>
+						<view class="right">
+								<view class="color" wx:if="{{haveFreight}}">暂无运费信息</view>
+								<view class="color" wx:else>{{freight}}</view>
+								<i class="iconfont icon-qianjin" />
+						</view>
+				</view>
+				<view class="content">
+						<view class="left">
+								<i class="iconfont icon-beizhu" />
+								<view>备注</view>
+						</view>
+						<view class="right">
+								<view>
+										<textarea placeholder="无" type="text" auto-height value="{{remark}}" bindinput="bindBlurBz" />
+								</view>
 								<i class="iconfont icon-qianjin" />
 						</view>
 				</view>
 		</view>
 		<view class="box_4" bindtap="bindOrder">立即下单</view>
 </view>
-

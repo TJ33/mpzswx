@@ -43,9 +43,12 @@ class ToolServer {
   }
 
   //查询地址簿列表
-  async findAddressBook() {
+  async findAddressBook(keyword) {
     let url = `${domain}/api/wxapp/find_address_book`
-    return this.get(url)
+    let data = {
+      keyword: keyword
+    }
+    return this.get(url, data)
   }
 
   //添加/编辑 地址簿
@@ -141,6 +144,15 @@ class ToolServer {
   }
 
   //未实现功能
+  async cancelOrder(id) {
+    let url = `${domain}/api/wxapp/waybill_del`
+    let data = {
+      id: id
+    }
+    return this.post(url, data)
+  }
+
+
   //商家点击提交取消订单原因
   async cancelReason(value) {
     let url = `${domain}/api/wxapp/cancel_reason`

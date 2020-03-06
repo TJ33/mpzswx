@@ -10,6 +10,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    id: '',    //运单id
     sn: '',   //运单编号
     //地图组件
     //下单 纬度
@@ -39,11 +40,11 @@ Page({
     }],
 
     //模态弹框
-    showModal: false,
-    items: [
-      { name: 'wait', value: '继续等待', checked: 'true' },
-      { name: 'reset', value: '重新下单' }
-    ],
+    // showModal: false,
+    // items: [
+    //   { name: 'wait', value: '继续等待', checked: 'true' },
+    //   { name: 'reset', value: '重新下单' }
+    // ],
     chance: 'wait',
 
 
@@ -146,7 +147,7 @@ Page({
     //   borderWidth: 5
     // }],
     //底部消息栏
-    allMessage: [{ icon: '/images/order/message.png', message: '查看订单' }, { icon: '/images/order/more.png', message: '再次下单' }]
+    allMessage: [{ icon: '/images/order/detail.png', message: '查看订单' }, { icon: '/images/order/append.png', message: '再次下单' }]
   },
 
   /**
@@ -404,12 +405,15 @@ Page({
   onLoad: function (options) {
     console.log("options=======================", options)
     let sn = options.sn
+    let id = options.id
+    console.log("id==================================", id)
     clearInterval(init);
     let that = this;
     that.setData({
       minute: 0,
       second: 0,
-      sn: sn
+      sn: sn,
+      id: id
     })
     init = setInterval(function () {
       that.timer()
@@ -418,18 +422,21 @@ Page({
   },
 
   chooseUrl(e) {
-    switch (id) {
+    console.log("e=====================================", e)
+    let value = e.currentTarget.id
+    console.log("value==========================", value)
+    switch (value) {
       //查看运单  
       case "0":
         console.log('查看运单=======')
-        wx.redirectTo({
+        wx.switchTab({
           url: '../../waybill/index'
         })
         break;
       //再次下单  
       case "1":
         console.log('再次下单=======')
-        wx.redirectTo({
+        wx.switchTab({
           url: '../../order/index'
         })
         break;
@@ -456,11 +463,11 @@ Page({
   /**
    * 隐藏模态对话框
    */
-  hideModal: function () {
-    this.setData({
-      showModal: false
-    });
-  },
+  // hideModal: function () {
+  //   this.setData({
+  //     showModal: false
+  //   });
+  // },
   /**
    * 对话框取消按钮点击事件
    */
@@ -471,6 +478,7 @@ Page({
    * 对话框确认按钮点击事件
    */
   onConfirm: function (e) {
+    console.log("e==========================", e)
     let that = this
     that.hideModal();
     let value = that.data.chance
@@ -521,12 +529,78 @@ Page({
       timecount: that.data.minute + ":" + that.data.second
     })
 
-    if (that.data.minute == 2) {
+    console.log('that.data.name================', that.data.name)
+    if (that.data.minute == 2 && that.data.name == '') {
       clearInterval(init);
-      this.setData({
-        showModal: true
+      wx.showModal({
+        title: '提示',
+        content: '操作选择',
+        showCancel: true,//是否显示取消按钮
+        cancelText: "重新下单",//默认是“取消”
+        cancelColor: 'black',//取消文字的颜色
+        confirmText: "继续等待",//默认是“确定”
+        confirmColor: 'skyblue',//确定文字的颜色
+        success: function (res) {
+          if (res.cancel) {
+            //点击取消,默认隐藏弹框
+            wx.redirectTo({
+              url: '../../order/index'
+            })
+          } else {
+            init = setInterval(function () {
+              that.setData({
+                second: that.data.second + 1
+              })
+
+              if (that.data.second >= 60) {
+                that.setData({
+                  second: 0,
+                  minute: that.data.minute + 1
+                })
+              }
+              that.setData({
+                timecount: that.data.minute + ":" + that.data.second
+              })
+            }, 1000)
+          }
+        }
       })
+
+
+      // this.setData({
+      //   showModal: true
+      // })
     }
   },
+
+  //取消订单的功能
+  cancelOrder(e) {
+    let that = this
+    console.log("取消订单===============================", e)
+    let id = that.data.id
+    wx.showModal({
+      title: '提示',
+      content: '是否确认取消',
+      async success(res) {
+        if (res.confirm) {
+          let result = await ToolServer.cancelOrder(id)
+          let success = result.success
+          if (success == true) {
+            wx.redirectTo({
+              url: '../../order/index'
+            })
+          } else {
+            wx.showToast({
+              title: '取消失败',
+              icon: 'none',
+              duration: 1000
+            })
+          }
+
+        }
+      }
+    })
+
+  }
 
 })

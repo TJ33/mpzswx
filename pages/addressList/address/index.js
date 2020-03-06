@@ -159,7 +159,6 @@ Page({
     let coordinates = this.data.longitude + ',' + this.data.latitude
     console.log("this.data.longitude------------------------------------------", this.data.longitude)
     console.log("this.data.latitude------------------------------------------", this.data.latitude)
-    let door = this.data.door
     let id = this.data.id
 
     if (storeName == "") {
@@ -198,14 +197,6 @@ Page({
       return
     }
 
-    if (door == "") {
-      wx.showToast({
-        title: '请输入门牌号',
-        icon: 'none',
-        duration: 1000
-      })
-      return
-    }
 
     if (!(/^1[3456789]\d{9}$/.test(phone))) {
       wx.showToast({
