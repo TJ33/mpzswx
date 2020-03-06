@@ -43,17 +43,6 @@ Page({
     companyIndexList: [],  //物流公司下标集合
     companyList: [],       //物流公司集合
     companyIndex: 0,       //物流公司下标
-    sendIndexList: [],     //寄件地址下标集合
-    sendList: [],          //寄件地址集合
-    sendIndex: 0,          //寄件地址下标
-    receiptIndexList: [],  //收件地址下标集合
-    receiptList: [],       //收件地址集合
-    receiptIndex: 0,       //收件地址下标
-    consignorList: [],      //寄件人对象集合
-    consigneeList: [],      //收件人对象集合
-    sendAddress: false,
-    receiptAddress: false,
-    //useCoupon:'',        //优惠卷
 
     //时间选择相关
     date: '',
@@ -75,6 +64,22 @@ Page({
     appointChecked: false,
     monthChecked: false,
 
+    //选择地址相关
+    sendAddress: '',
+    reciveAddress: '',
+    id: '',        //0寄件人，1收件人
+
+    // sendIndexList: [],     //寄件地址下标集合
+    // sendList: [],          //寄件地址集合
+    // sendIndex: 0,          //寄件地址下标
+    // receiptIndexList: [],  //收件地址下标集合
+    // receiptList: [],       //收件地址集合
+    // receiptIndex: 0,       //收件地址下标
+    // consignorList: [],      //寄件人对象集合
+    // consigneeList: [],      //收件人对象集合
+    // sendAddress: false,
+    // receiptAddress: false,
+    //useCoupon:'',        //优惠卷
     // freightMonthlyList: [{    //运费是否月结
     //   id: true,
     //   value: '是',
@@ -93,10 +98,6 @@ Page({
     //     value: '预约'
     //   }
     // ],
-
-    sendAddress: '',
-    reciveAddress: '',
-    id: '',        //0寄件人，1收件人
 
   },
 
@@ -345,6 +346,55 @@ Page({
     })
   },
 
+
+  //是否预约
+  appointChange(e) {
+    let value = e.detail.value
+    if (value == false) {
+      this.setData({
+        state: '0',
+        isNow: false,
+        receiveAt: moment().format("YYYY-MM-DD HH:mm"),
+        haveTime: true
+      })
+    } else {
+      this.setData({
+        state: '1',
+        isNow: true,
+        receiveAt: ''
+      })
+    }
+  },
+
+  //是否月结
+  monthChange(e) {
+    let value = e.detail.value
+    if (value == false) {
+      this.setData({
+        freightMonthly: true
+      })
+    } else {
+      this.setData({
+        freightMonthly: false,
+      })
+    }
+  },
+
+  //输入代收货款
+  bindCM(e) {
+    this.setData({
+      cargoMoney: e.detail.value
+    })
+  },
+
+  //输入备注
+  bindBlurBz(e) {
+    this.setData({
+      remark: e.detail.value
+    })
+  },
+
+
   //选择寄件地址
   async changeSend(e) {
     let index = e.detail.value
@@ -402,52 +452,6 @@ Page({
     })
   },
 
-  //是否预约
-  appointChange(e) {
-    let value = e.detail.value
-    if (value == false) {
-      this.setData({
-        state: '0',
-        isNow: false,
-        receiveAt: moment().format("YYYY-MM-DD HH:mm"),
-        haveTime: true
-      })
-    } else {
-      this.setData({
-        state: '1',
-        isNow: true,
-        receiveAt: ''
-      })
-    }
-  },
-
-  //是否月结
-  monthChange(e) {
-    let value = e.detail.value
-    if (value == false) {
-      this.setData({
-        freightMonthly: true
-      })
-    } else {
-      this.setData({
-        freightMonthly: false,
-      })
-    }
-  },
-
-  //输入代收货款
-  bindCM(e) {
-    this.setData({
-      cargoMoney: e.detail.value
-    })
-  },
-
-  //输入备注
-  bindBlurBz(e) {
-    this.setData({
-      remark: e.detail.value
-    })
-  },
 
   //立即下单
   async bindOrder() {
