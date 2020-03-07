@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/me/index",
     "pages/order/index",
     "pages/addressList/searchAddress/index",
     "pages/addressList/address/index",
@@ -8,7 +9,6 @@
     "pages/waitOrder/wait/index",
     "pages/waitOrder/cancelReason/index",
     "pages/waitOrder/cancel/index",
-    "pages/me/index",
     "pages/waybill/index",
     "pages/waybillDetail/index",
     "pages/register/index",
