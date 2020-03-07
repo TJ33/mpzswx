@@ -123,96 +123,151 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: async function () {
-    //选择地址之后跳转的数据
-    let sendAddress = wx.getStorageSync('sendAddress')
-    let reciveAddress = wx.getStorageSync('reciveAddress')
-    console.log("sendAddress----------------------------------------", sendAddress)
-    console.log("reciveAddress----------------------------------------", reciveAddress)
-    this.setData({
-      sendAddress: sendAddress,
-      reciveAddress: reciveAddress
-    })
+
+    let user = wx.getStorageSync('USER')
+    if (user != '') {
+      //查询用户关联物流公司
+      let companyList = []
+      let companyIndexList = []
+      let company = await ToolServer.queryLogisticsCompany()
+      for (let i = 0; i < company.length; i++) {
+        let name = company[i].name
+        let id = company[i].id
+        companyList.push(name)
+        companyIndexList.push(id)
+      }
+
+      //查询地址簿
+      // let sendList = []
+      // let sendIndexList = []
+      // let receiptList = []
+      // let receiptIndexList = []
+      // let consignorList = []
+      // let consigneeList = []
+      // let addressBook = await ToolServer.findAddressBook('')
+
+      // for (let i = 0; i < addressBook.length; i++) {
+      //   let addressName = addressBook[i].address
+      //   let addressId = addressBook[i]._id
+      //   sendList.push(addressName)
+      //   sendIndexList.push(addressId)
+      //   receiptList.push(addressName)
+      //   receiptIndexList.push(addressId)
+
+      //   //寄件人/收件人 对象集合
+      //   let name = addressBook[i].contactName
+      //   let phone = addressBook[i].contactPhone
+      //   let coordinates = addressBook[i].coordinates
+
+      //   let consignorObject = new Object()
+      //   consignorObject.address = addressName
+      //   consignorObject.name = name
+      //   consignorObject.phone = phone
+      //   consignorObject.coordinates = coordinates
+      //   consignorObject.id = addressId
+      //   let consigneeObject = new Object()
+      //   consigneeObject.address = addressName
+      //   consigneeObject.name = name
+      //   consigneeObject.phone = phone
+      //   consigneeObject.coordinates = coordinates
+      //   consigneeObject.id = addressId
+      //   consignorList.push(consignorObject)
+      //   consigneeList.push(consigneeObject)
+      // }
 
 
-    //查询用户关联物流公司
-    let companyList = []
-    let companyIndexList = []
-    let company = await ToolServer.queryLogisticsCompany()
-    for (let i = 0; i < company.length; i++) {
-      let name = company[i].name
-      let id = company[i].id
-      companyList.push(name)
-      companyIndexList.push(id)
+      //车辆
+      let vehicleTypeList = await ToolServer.vehicleType(companyIndexList[0])
+      let vehicleTypeIndexList = []
+      let newVehicleTypeList = []
+      for (let i = 0; i < vehicleTypeList.length; i++) {
+        let id = vehicleTypeList[i].id
+        let name = vehicleTypeList[i].name
+        newVehicleTypeList.push(name)
+        vehicleTypeIndexList.push(id)
+      }
+
+      //选择地址之后跳转的数据
+      let sendAddress = wx.getStorageSync('sendAddress')
+      let reciveAddress = wx.getStorageSync('reciveAddress')
+      this.setData({
+        sendAddress: sendAddress,
+        reciveAddress: reciveAddress,
+      })
+
+      if (sendAddress != '' && reciveAddress != '') {
+        //下单所需要的数据
+        //寄件人信息
+        let consignor = new Object()
+        consignor.contactName = sendAddress.contactName
+        consignor.contactPhone = sendAddress.contactPhone
+        consignor.address = sendAddress.address
+        consignor.coordinates = sendAddress.coordinates
+        consignor._id = sendAddress._id
+        //收件人信息
+        let consignee = new Object()
+        consignee.contactName = reciveAddress.contactName
+        consignee.contactPhone = reciveAddress.contactPhone
+        consignee.address = reciveAddress.address
+        consignee.coordinates = reciveAddress.coordinates
+        consignee._id = reciveAddress._id
+        //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离
+        let sendCoordinates = consignor.coordinates
+        let receipteCoordinates = consignee.coordinates
+        //查询运费
+        let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleTypeIndexList[0]);
+        let distance = result.distance
+        let price = result.price
+        let active = this.data.TopicTitleActive
+
+        this.setData({
+          companyList: companyList,
+          companyIndexList: companyIndexList,
+          operationTeam: companyIndexList[0],
+          vehicleTypeList: newVehicleTypeList,
+          vehicleTypeIndexList: vehicleTypeIndexList,
+          vehicleType: vehicleTypeIndexList[0],
+          //新的
+          sendAddress: sendAddress,
+          reciveAddress: reciveAddress,
+          consignor: consignor._id,
+          consignee: consignee._id,
+          freight: price,
+          distance: distance,
+          haveFreight: false
+        })
+      } else {
+        this.setData({
+          companyList: companyList,
+          companyIndexList: companyIndexList,
+          operationTeam: companyIndexList[0],
+          vehicleTypeList: newVehicleTypeList,
+          vehicleTypeIndexList: vehicleTypeIndexList,
+          vehicleType: vehicleTypeIndexList[0],
+        })
+      }
     }
 
-    //查询地址簿
-    let sendList = []
-    let sendIndexList = []
-    let receiptList = []
-    let receiptIndexList = []
-    let consignorList = []
-    let consigneeList = []
-    let addressBook = await ToolServer.findAddressBook('')
-
-    for (let i = 0; i < addressBook.length; i++) {
-      let addressName = addressBook[i].address
-      let addressId = addressBook[i]._id
-      sendList.push(addressName)
-      sendIndexList.push(addressId)
-      receiptList.push(addressName)
-      receiptIndexList.push(addressId)
-
-      //寄件人/收件人 对象集合
-      let name = addressBook[i].contactName
-      let phone = addressBook[i].contactPhone
-      let coordinates = addressBook[i].coordinates
-
-      let consignorObject = new Object()
-      consignorObject.address = addressName
-      consignorObject.name = name
-      consignorObject.phone = phone
-      consignorObject.coordinates = coordinates
-      consignorObject.id = addressId
-      let consigneeObject = new Object()
-      consigneeObject.address = addressName
-      consigneeObject.name = name
-      consigneeObject.phone = phone
-      consigneeObject.coordinates = coordinates
-      consigneeObject.id = addressId
-      consignorList.push(consignorObject)
-      consigneeList.push(consigneeObject)
-    }
-
-
-    //车辆
-    let vehicleTypeList = await ToolServer.vehicleType(companyIndexList[0])
-    let vehicleTypeIndexList = []
-    let newVehicleTypeList = []
-    for (let i = 0; i < vehicleTypeList.length; i++) {
-      let id = vehicleTypeList[i].id
-      let name = vehicleTypeList[i].name
-      newVehicleTypeList.push(name)
-      vehicleTypeIndexList.push(id)
-    }
-
-    this.setData({
-      companyList: companyList,
-      companyIndexList: companyIndexList,
-      operationTeam: companyIndexList[0],
-      sendList: sendList,
-      sendIndexList: sendIndexList,
-      receiptList: receiptList,
-      receiptIndexList: receiptIndexList,
-      consignorList: consignorList,
-      consigneeList: consigneeList,
-      consignorObject: consignorList[0],
-      consigneeObject: consigneeList[0],
-      consignor: consignorList[0].id,
-      consignee: consigneeList[0].id,
-      vehicleTypeList: newVehicleTypeList,
-      vehicleTypeIndexList: vehicleTypeIndexList,
-      vehicleType: vehicleTypeIndexList[0]
-    })
+    // this.setData({
+    //   companyList: companyList,
+    //   companyIndexList: companyIndexList,
+    //   operationTeam: companyIndexList[0],
+    //   sendList: sendList,
+    //   sendIndexList: sendIndexList,
+    //   receiptList: receiptList,
+    //   receiptIndexList: receiptIndexList,
+    //   consignorList: consignorList,
+    //   consigneeList: consigneeList,
+    //   consignorObject: consignorList[0],
+    //   consigneeObject: consigneeList[0],
+    //   consignor: consignorList[0].id,
+    //   consignee: consigneeList[0].id,
+    //   vehicleTypeList: newVehicleTypeList,
+    //   vehicleTypeIndexList: vehicleTypeIndexList,
+    //   vehicleType: vehicleTypeIndexList[0],
+    //   sendAddress: sendAddress,
+    //   reciveAddress: reciveAddress
+    // })
   },
 
   //选择寄件/收件地址
@@ -222,52 +277,6 @@ Page({
       url: `../addressList/searchAddress/index?id=${id}`
     })
   },
-
-  //导航栏
-  // async titleTab(e) {
-  //   let index = e.currentTarget.dataset.index;
-  //   //选择车辆
-  //   let vehicleId = this.data.vehicleTypeList[index].id
-  //   //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离
-  //   let sendCoordinates = this.data.consignorObject.coordinates
-  //   let receipteCoordinates = this.data.consigneeObject.coordinates
-
-
-  //   let send = {
-  //     longitude: sendCoordinates[0],
-  //     latitude: sendCoordinates[1]
-  //   }
-  //   let receipt = {
-  //     longitude: receipteCoordinates[0],
-  //     latitude: receipteCoordinates[1]
-  //   }
-  //   //查询运费
-  //   let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
-  //   let distance = result.distance
-  //   let price = result.price
-  //   let active = this.data.TopicTitleActive
-
-  //   let animation = wx.createAnimation({
-  //     duration: 300,
-  //   });
-  //   for (var i in this.data.type) {
-  //     if (index == i && index != active) {
-  //       animation.left(i * 50 + 22 + '%').step()
-  //     }
-  //   }
-
-  // this.setData({
-  //   'TopicTitleActive': index,
-  //   'animation': animation.export(),
-  //   vehicleType: vehicleId,
-  //   haveFreight: false,
-  //   freight: price,
-  //   distance: distance
-  // })
-
-  //   //导航栏自动带出配送距离 参考运费
-
-  // },
 
   //滑动切换
   async bindtransition(e) {
@@ -369,7 +378,7 @@ Page({
   //是否月结
   monthChange(e) {
     let value = e.detail.value
-    if (value == false) {
+    if (value == true) {
       this.setData({
         freightMonthly: true
       })
@@ -528,28 +537,19 @@ Page({
       return
     }
 
-
-    // if (cargoMoney == "") {
-    //   wx.showToast({
-    //     title: '代收货款不能为空',
-    //     icon: 'none',
-    //     duration: 1000
-    //   });
-    //   return
-    // }
-
     wx.showModal({
       title: '提示',
       content: '是否确认下单',
       async success(res) {
         if (res.confirm) {
           let result = await ToolServer.merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, receiveAt)
-          console.log('result==========================下单完成====', result)
           let sn = result.sn
           let id = result.id
           wx.redirectTo({
             url: '../waitOrder/single/index?sn=' + sn + '&&id=' + id
           })
+          wx.removeStorageSync('sendAddress')
+          wx.removeStorageSync('reciveAddress')
         }
       }
     })
@@ -566,7 +566,6 @@ Page({
     arr[e.detail.column] = e.detail.value;
     dateArr[2] = dateTimePicker.getMonthDay(dateArr[0][arr[0]], dateArr[1][arr[1]]);
     let receiveAt = dateArr[0][arr[0]] + "-" + dateArr[1][arr[1]] + "-" + dateArr[2][arr[2]] + " " + dateArr[3][arr[3]] + ":" + dateArr[4][arr[4]]
-    // {{dateTimeArray[0][dateTime[0]]}}-{{dateTimeArray[1][dateTime[1]]}}-{{dateTimeArray[2][dateTime[2]]}} {{dateTimeArray[3][dateTime[3]]}}:{{dateTimeArray[4][dateTime[4]]}}
     this.setData({
       dateTimeArray: dateArr,
       dateTime: arr,
@@ -605,5 +604,51 @@ Page({
   //       freightMonthly: false,
   //     })
   //   }
+  // },
+
+  //导航栏
+  // async titleTab(e) {
+  //   let index = e.currentTarget.dataset.index;
+  //   //选择车辆
+  //   let vehicleId = this.data.vehicleTypeList[index].id
+  //   //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离
+  //   let sendCoordinates = this.data.consignorObject.coordinates
+  //   let receipteCoordinates = this.data.consigneeObject.coordinates
+
+
+  //   let send = {
+  //     longitude: sendCoordinates[0],
+  //     latitude: sendCoordinates[1]
+  //   }
+  //   let receipt = {
+  //     longitude: receipteCoordinates[0],
+  //     latitude: receipteCoordinates[1]
+  //   }
+  //   //查询运费
+  //   let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
+  //   let distance = result.distance
+  //   let price = result.price
+  //   let active = this.data.TopicTitleActive
+
+  //   let animation = wx.createAnimation({
+  //     duration: 300,
+  //   });
+  //   for (var i in this.data.type) {
+  //     if (index == i && index != active) {
+  //       animation.left(i * 50 + 22 + '%').step()
+  //     }
+  //   }
+
+  // this.setData({
+  //   'TopicTitleActive': index,
+  //   'animation': animation.export(),
+  //   vehicleType: vehicleId,
+  //   haveFreight: false,
+  //   freight: price,
+  //   distance: distance
+  // })
+
+  //   //导航栏自动带出配送距离 参考运费
+
   // },
 })
