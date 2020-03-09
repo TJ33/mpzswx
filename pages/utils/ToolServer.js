@@ -144,10 +144,10 @@ class ToolServer {
   }
 
   //未实现功能
-  async cancelOrder(id) {
+  async cancelOrder(sn) {
     let url = `${domain}/api/wxapp/waybill_del`
     let data = {
-      id: id
+      sn: sn
     }
     return this.post(url, data)
   }

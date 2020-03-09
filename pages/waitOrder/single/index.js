@@ -577,13 +577,13 @@ Page({
   cancelOrder(e) {
     let that = this
     console.log("取消订单===============================", e)
-    let id = that.data.id
+    let sn = that.data.sn
     wx.showModal({
       title: '提示',
       content: '是否确认取消',
       async success(res) {
         if (res.confirm) {
-          let result = await ToolServer.cancelOrder(id)
+          let result = await ToolServer.cancelOrder(sn)
           let success = result.success
           if (success == true) {
             wx.redirectTo({

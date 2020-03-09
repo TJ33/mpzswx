@@ -1,1 +1,1 @@
-{"version":3,"sources":["index.js"],"names":[],"mappings":";;;;;;;AAAA;AACA;AACA;AACA;AACA;AACA","file":"index.js","sourcesContent":["var toString = {}.toString;\n\nmodule.exports = Array.isArray || function (arr) {\n  return toString.call(arr) == '[object Array]';\n};\n"]}
+{"version":3,"sources":["index.js"],"names":[],"mappings":";;;;;;;AAAA;AACA;AACA;AACA;AACA;AACA","file":"index.js","sourcesContent":["var toString = {}.toString;\r\n\r\nmodule.exports = Array.isArray || function (arr) {\r\n  return toString.call(arr) == '[object Array]';\r\n};\r\n"]}
