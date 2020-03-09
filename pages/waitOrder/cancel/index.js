@@ -25,7 +25,7 @@ Page({
     }],
 
     //底部消息栏
-    allMessage: [{ icon: '/images/order/headset.png', message: '联系客服' }, { icon: '/images/order/order.png', message: '再来一单' }, { icon: '/images/order/the_order.png', message: '订单信息' }]
+    allMessage: [{ icon: '/images/order/headset.png', message: '联系客服' }, { icon: '/images/order/order.png', message: '再来一单' }, { icon: '/images/order/the_order.png', message: '运单信息' }]
   },
 
   //拖动地图触发
@@ -153,9 +153,9 @@ Page({
       case "1":
         console.log('再来一单=======')
         break;
-      //订单信息  
+      //运单信息  
       case "2":
-        console.log('订单信息=======')
+        console.log('运单信息=======')
         break;
       default:
         break;

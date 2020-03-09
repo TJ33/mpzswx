@@ -149,11 +149,11 @@ class ToolServer {
     let data = {
       sn: sn
     }
-    return this.post(url, data)
+    return this.post2(url, data)
   }
 
 
-  //商家点击提交取消订单原因
+  //商家点击提交取消运单原因
   async cancelReason(value) {
     let url = `${domain}/api/wxapp/cancel_reason`
     let data = {

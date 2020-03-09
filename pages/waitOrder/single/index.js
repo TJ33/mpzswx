@@ -239,19 +239,14 @@ Page({
 
         //请求司机经纬度
         let locationResult = await ToolServer.findDriverLocation(that.data.sn)
-        console.log('locationResult===============================', locationResult)
         let location = locationResult.location
         let deliverLongitude = location[0]
         let deliverLatitude = location[1]
-        console.log('deliverLongitude===============================', deliverLongitude)
-        console.log('deliverLatitude===============================', deliverLatitude)
-
         this.setData({
           haveSingle: false,
           deliverLongitude: deliverLongitude,
           deliverLatitude: deliverLatitude
         })
-        console.log("deliveryman--------------------++++++++++++++++++++++", deliveryman)
 
         let name = deliveryman.name                             //司机姓名
         let licensePlate = deliveryman.licensePlate             //车牌号码   
@@ -287,7 +282,6 @@ Page({
         //需要用到的数据
         //idcardPositivePic 身份证正面
         let idcardPositivePic = photos.idcardPositivePic
-        console.log('idcardPositivePic===========================', idcardPositivePic)
         //licensePlate 车牌号码
         //vehiclePic 车辆照片
         let vehiclePic = photos.vehiclePic
@@ -300,15 +294,6 @@ Page({
         let vehicleTypeName = vehicleType.name
         let vehicleTypeSize = vehicleType.size
 
-
-        console.log("idcardPositivePic-------------------------------------------------", idcardPositivePic)
-        console.log("licensePlate-------------------------------------------------", licensePlate)
-        console.log("vehiclePic-------------------------------------------------", vehiclePic)
-        console.log("name-------------------------------------------------", name)
-        console.log("successRate-------------------------------------------------", successRate)
-        console.log("totalWaybillCount-------------------------------------------------", totalWaybillCount)
-        console.log("vehicleTypeName-------------------------------------------------", vehicleTypeName)
-        console.log("vehicleTypeSize-------------------------------------------------", vehicleTypeSize)
         this.setData({
           //配送员信息
           idcardPositivePic: idcardPositivePic,
@@ -403,10 +388,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log("options=======================", options)
     let sn = options.sn
     let id = options.id
-    console.log("id==================================", id)
     clearInterval(init);
     let that = this;
     that.setData({
@@ -422,20 +405,16 @@ Page({
   },
 
   chooseUrl(e) {
-    console.log("e=====================================", e)
     let value = e.currentTarget.id
-    console.log("value==========================", value)
     switch (value) {
       //查看运单  
       case "0":
-        console.log('查看运单=======')
         wx.switchTab({
           url: '../../waybill/index'
         })
         break;
       //再次下单  
       case "1":
-        console.log('再次下单=======')
         wx.switchTab({
           url: '../../order/index'
         })
@@ -478,7 +457,6 @@ Page({
    * 对话框确认按钮点击事件
    */
   onConfirm: function (e) {
-    console.log("e==========================", e)
     let that = this
     that.hideModal();
     let value = that.data.chance
@@ -529,7 +507,6 @@ Page({
       timecount: that.data.minute + ":" + that.data.second
     })
 
-    console.log('that.data.name================', that.data.name)
     if (that.data.minute == 2 && that.data.name == '') {
       clearInterval(init);
       wx.showModal({
@@ -576,7 +553,6 @@ Page({
   //取消订单的功能
   cancelOrder(e) {
     let that = this
-    console.log("取消订单===============================", e)
     let sn = that.data.sn
     wx.showModal({
       title: '提示',
@@ -586,9 +562,16 @@ Page({
           let result = await ToolServer.cancelOrder(sn)
           let success = result.success
           if (success == true) {
-            wx.redirectTo({
-              url: '../../order/index'
+            wx.showToast({
+              title: '取消成功',
+              icon: 'success',
+              duration: 1000
             })
+            setTimeout(function () {
+              wx.switchTab({
+                url: '/pages/order/index'
+              })
+            }, 1000);
           } else {
             wx.showToast({
               title: '取消失败',

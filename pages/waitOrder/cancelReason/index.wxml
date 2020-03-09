@@ -4,7 +4,7 @@
     <view>
       <image src="/images/order/check.png" class="picture" />
     </view>
-    <view class="cancelMessageOne">订单已取消</view>
+    <view class="cancelMessageOne">运单已取消</view>
     <view class="cancelMessageTwo">请告诉我们取消原因,我们会努力改进!</view>
   </view>
   <view class="last">

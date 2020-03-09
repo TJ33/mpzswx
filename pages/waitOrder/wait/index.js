@@ -137,7 +137,7 @@ Page({
     }],
     //底部消息栏
     // allMessage: [{ icon: '/images/order/police.png', message: '一键报警' }, { icon: '/images/order/share.png', message: '行程分享' }, { icon: '/images/order/message.png', message: '发送消息' }, { icon: '/images/order/more.png', message: '更多操作' }]
-    allMessage: [{ icon: '/images/order/message.png', message: '查看订单' }, { icon: '/images/order/more.png', message: '再次下单' }]
+    allMessage: [{ icon: '/images/order/message.png', message: '查看运单' }, { icon: '/images/order/more.png', message: '再次下单' }]
   },
 
   //拖动地图触发
