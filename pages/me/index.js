@@ -65,6 +65,7 @@ Page({
     //执行wx.login
     wx.login({
       async success(res) {
+        wx.setStorageSync("CODE", res.code)
         if (e.detail.errMsg == 'getPhoneNumber:ok') {
           await wx.request({
             url: `${domain}/api/wxapp/analys_phone`,
@@ -81,7 +82,6 @@ Page({
               if (res.statusCode == 200) {
                 let ret = res.data.data.phoneNumber
                 wx.setStorageSync("PHONE", ret)
-
                 if (ret == undefined) {
                   wx.showToast({
                     title: '请求异常',

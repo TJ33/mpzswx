@@ -16,8 +16,7 @@ Page({
     userName: '',
     userPhone: '',
     storeAddress: '',
-    number: '',
-    code: ''
+    number: ''
   },
 
   /**
@@ -118,7 +117,9 @@ Page({
     let userPhone = this.data.userPhone
     let storeAddress = this.data.storeAddress
     let number = this.data.number
-    let code = this.data.code
+
+    let user = wx.getStorageSync('USER')
+    let code = wx.getStorageSync('CODE')
 
     if (storeName == "") {
       wx.showToast({
@@ -174,9 +175,11 @@ Page({
                 icon: 'success',
                 duration: 1000
               })
-              wx.switchTab({
-                url: '../me/index'
-              })
+              setTimeout(function () {
+                wx.switchTab({
+                  url: '../me/index'
+                })
+              }, 1000);
             } else {
               wx.showToast({
                 title: '注册失败',
