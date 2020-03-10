@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/me/index",
+    "pages/register/index",
     "pages/order/index",
     "pages/addressList/searchAddress/index",
     "pages/addressList/address/index",
@@ -11,7 +12,6 @@
     "pages/waitOrder/cancel/index",
     "pages/waybill/index",
     "pages/waybillDetail/index",
-    "pages/register/index",
     "pages/index/index",
     "pages/map/index"
   ],

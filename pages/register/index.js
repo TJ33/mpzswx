@@ -81,14 +81,6 @@ Page({
     })
   },
 
-  //输入联系电话
-  inputPhone(e) {
-    let name = e.detail.value
-    this.setData({
-      userPhone: name
-    })
-  },
-
   //移动选点
   moveToLocation: function () {
     var that = this;
@@ -111,58 +103,9 @@ Page({
 
   //点击获取手机号码
   getPhoneNumber(e) {
-    let that = this
-    //执行wx.login
-    wx.login({
-      async success(res) {
-        that.setData({
-          code: res.code
-        })
-        if (e.detail.errMsg == 'getPhoneNumber:ok') {
-          await wx.request({
-            url: `${domain}/api/wxapp/analys_phone`,
-            method: 'POST',
-            header: {
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            data: {
-              iv: e.detail.iv,
-              encryptedData: e.detail.encryptedData,
-              code: res.code
-            },
-            async success(res) {
-              if (res.statusCode == 200) {
-                let ret = res.data.data.phoneNumber
-                if (ret == undefined) {
-                  wx.showToast({
-                    title: '请求异常',
-                    icon: 'none',
-                    duration: 1000
-                  })
-                } else {
-                  that.setData({
-                    userPhone: ret
-                  })
-                }
-              }
-              else if (res.statusCode = 500) {
-                wx.showToast({
-                  title: '请求错误',
-                  icon: 'none',
-                  duration: 1000
-                })
-              }
-              else {
-                wx.showToast({
-                  title: '网络连接异常',
-                  icon: 'none',
-                  duration: 1000
-                })
-              }
-            }
-          })
-        }
-      }
+    let phone = wx.getStorageSync('PHONE')
+    this.setData({
+      userPhone: phone
     })
   },
 
@@ -207,24 +150,6 @@ Page({
     if (userName == "") {
       wx.showToast({
         title: '请输入用户名',
-        icon: 'none',
-        duration: 1000
-      })
-      return
-    }
-
-    if (userPhone == "") {
-      wx.showToast({
-        title: '请输入联系电话',
-        icon: 'none',
-        duration: 1000
-      })
-      return
-    }
-
-    if (!(/^1[3456789]\d{9}$/.test(userPhone))) {
-      wx.showToast({
-        title: '号码有误，请重填',
         icon: 'none',
         duration: 1000
       })

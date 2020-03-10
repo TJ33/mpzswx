@@ -61,12 +61,10 @@ Page({
   },
   //点击用户授权
   async getPhoneNumber(e) {
-    console.log("用户授权================================", e)
     let that = this
     //执行wx.login
     wx.login({
       async success(res) {
-        console.log("res===============================", res)
         if (e.detail.errMsg == 'getPhoneNumber:ok') {
           await wx.request({
             url: `${domain}/api/wxapp/analys_phone`,
@@ -75,16 +73,15 @@ Page({
               'Content-Type': 'application/x-www-form-urlencoded'
             },
             data: {
-              // appid: "wxfea63eb860bd639e",
-              // secret: "70372a7d632e6e03a9ff5608d15c715f",
               iv: e.detail.iv,
               encryptedData: e.detail.encryptedData,
               code: res.code
             },
             async success(res) {
-              console.log("res===================================", res)
               if (res.statusCode == 200) {
                 let ret = res.data.data.phoneNumber
+                wx.setStorageSync("PHONE", ret)
+
                 if (ret == undefined) {
                   wx.showToast({
                     title: '请求异常',
@@ -93,7 +90,6 @@ Page({
                   })
                 } else {
                   let user = await LoginServer.myPhoneLogin(ret)
-                  console.log('user==========================', user)
                   let errorcode = user.errorcode
                   if (errorcode == 0) {
                     that.setData({
