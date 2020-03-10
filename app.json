@@ -1,11 +1,11 @@
 {
   "pages": [
     "pages/me/index",
+    "pages/addressList/addressBook/index",
+    "pages/addressList/address/index",
     "pages/register/index",
     "pages/order/index",
     "pages/addressList/searchAddress/index",
-    "pages/addressList/address/index",
-    "pages/addressList/addressBook/index",
     "pages/waitOrder/single/index",
     "pages/waitOrder/wait/index",
     "pages/waitOrder/cancelReason/index",

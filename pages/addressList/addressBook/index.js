@@ -21,7 +21,7 @@ Page({
 
   async onShow() {
     //查询地址簿列表
-    let list = await ToolServer.findAddressBook()
+    let list = await ToolServer.findAddressBook('')
     this.setData({ 'list': list })
   },
 
