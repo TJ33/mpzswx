@@ -412,12 +412,14 @@ Page({
         wx.switchTab({
           url: '../../waybill/index'
         })
+        clearInterval(init);
         break;
       //再次下单  
       case "1":
         wx.switchTab({
           url: '../../order/index'
         })
+        clearInterval(init);
         break;
       default:
         break;
@@ -480,6 +482,7 @@ Page({
       wx.redirectTo({
         url: '../../order/index'
       })
+      clearInterval(init);
     }
 
   },
@@ -523,6 +526,7 @@ Page({
             wx.redirectTo({
               url: '../../order/index'
             })
+            clearInterval(init);
           } else {
             init = setInterval(function () {
               that.setData({
@@ -571,6 +575,7 @@ Page({
               wx.switchTab({
                 url: '/pages/order/index'
               })
+              clearInterval(init);
             }, 1000);
           } else {
             wx.showToast({

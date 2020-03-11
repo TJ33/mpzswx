@@ -28,28 +28,39 @@ Page({
   },
 
   async onShow() {
+    // let createdList = await ToolServer.findWayBill('CREATED', '')
+    // let deliveringList = await ToolServer.findWayBill('DELIVERING', '')
+    // let signInList = await ToolServer.findWayBill('SIGN_IN', '')
+    // let completeList = await ToolServer.findWayBill('COMPLETE', '')
+
+    // if (createdList && deliveringList && signInList && completeList) {
+    //   this.reviseTr(createdList)
+    //   this.reviseTr(deliveringList)
+    //   this.reviseTr(signInList)
+    //   this.reviseTr(completeList)
+    //   createdList = await this.createTime(createdList)
+    //   deliveringList = await this.createTime(deliveringList)
+    //   signInList = await this.createTime(signInList)
+    //   completeList = await this.createTime(completeList)
+
+    //   this.setData({
+    //     createdList: createdList,
+    //     deliveringList: deliveringList,
+    //     signInList: signInList,
+    //     completeList: completeList,
+    //   })
+    // }
+
     let createdList = await ToolServer.findWayBill('CREATED', '')
-    let deliveringList = await ToolServer.findWayBill('DELIVERING', '')
-    let signInList = await ToolServer.findWayBill('SIGN_IN', '')
-    let completeList = await ToolServer.findWayBill('COMPLETE', '')
-
-    if (createdList && deliveringList && signInList && completeList) {
+    if (createdList) {
       this.reviseTr(createdList)
-      this.reviseTr(deliveringList)
-      this.reviseTr(signInList)
-      this.reviseTr(completeList)
       createdList = await this.createTime(createdList)
-      deliveringList = await this.createTime(deliveringList)
-      signInList = await this.createTime(signInList)
-      completeList = await this.createTime(completeList)
-
       this.setData({
-        createdList: createdList,
-        deliveringList: deliveringList,
-        signInList: signInList,
-        completeList: completeList,
+        createdList: createdList
       })
     }
+
+
 
   },
   async onPullDownRefresh() {
@@ -162,9 +173,7 @@ Page({
   //扫码
   async scanCode() {
     let that = this
-
     let TopicTitleActive = that.data.TopicTitleActive
-    let waybill = that.data.waybill
     let status = ''
     switch (TopicTitleActive) {
       case 0:
@@ -185,7 +194,7 @@ Page({
 
     wx.scanCode({
       success: async function (res) {
-        console.log(res)
+        let waybill = res.result
         let list = await ToolServer.findWayBill(status, waybill)
         that.reviseTr(that.data.list)
         switch (status) {
@@ -209,10 +218,7 @@ Page({
             that.data.completeList = await that.createTime(that.data.completeList)
             that.setData({ completeList: that.data.completeList })
             break;
-          default:
         }
-
-
       }
     })
   },
@@ -232,6 +238,7 @@ Page({
       'TopicTitleActive': index,
       'animation': animation.export()
     })
+
     if (index == 0) {
       this.data.flag = 'CREATED'
       this.data.createdList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)

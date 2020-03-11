@@ -75,12 +75,12 @@
 					</cover-view>
 					<cover-view class="second-two">
 						<cover-view class="second_two_c">{{name}}</cover-view>
-						<cover-view class="second_two_c second_two_border">接单成功率:{{successRate}}</cover-view>
+						<cover-view class="second_two_c second_two_border">接单成功率:{{successRate}}%</cover-view>
 						<cover-view class="second_two_c">总运单数:{{totalWaybillCount}}</cover-view>
 					</cover-view>
 					<cover-view class="second-three">
 						<cover-view class="second-three_c">{{vehicleTypeName}}</cover-view>
-						<cover-view class="second-three_c">{{vehicleTypeSize}}</cover-view>
+						<cover-view class="second-three_c">{{vehicleTypeSize}}米</cover-view>
 					</cover-view>
 				</cover-view>
 			</cover-view>
