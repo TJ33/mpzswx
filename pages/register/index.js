@@ -139,14 +139,14 @@ Page({
       return
     }
 
-    if (number == "") {
-      wx.showToast({
-        title: '请输入门牌号',
-        icon: 'none',
-        duration: 1000
-      })
-      return
-    }
+    // if (number == "") {
+    //   wx.showToast({
+    //     title: '请输入门牌号',
+    //     icon: 'none',
+    //     duration: 1000
+    //   })
+    //   return
+    // }
 
     if (userName == "") {
       wx.showToast({

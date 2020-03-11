@@ -1,16 +1,16 @@
 {
   "pages": [
+    "pages/register/index",
+    "pages/waybill/index",
     "pages/me/index",
+    "pages/order/index",
     "pages/addressList/addressBook/index",
     "pages/addressList/address/index",
-    "pages/register/index",
-    "pages/order/index",
     "pages/addressList/searchAddress/index",
     "pages/waitOrder/single/index",
     "pages/waitOrder/wait/index",
     "pages/waitOrder/cancelReason/index",
     "pages/waitOrder/cancel/index",
-    "pages/waybill/index",
     "pages/waybillDetail/index",
     "pages/index/index",
     "pages/map/index"

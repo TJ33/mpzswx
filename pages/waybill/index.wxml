@@ -32,24 +32,31 @@
 			 scroll-y="{{true}}"
 			 style="height:calc(100vh - 102px);"
 			 bindscrolltolower="bindscrolltolower1"
-			 wx:if="{{createdList.length > 0 }}"
+			 wx:if="{{allList.length > 0 }}"
 			>
 				<view
 				 class="list"
-				 wx:for="{{createdList.rows}}"
+				 wx:for="{{allList}}"
 				 wx:key=""
 				 data-index="0"
 				 data-id="{{item.id}}"
 				 bindtap="bindDes"
 				>
 					<view class="list_dh">
-						<view>
+						<view>运单编号：{{item.sn}}</view>
+						<view wx:if="{{item.transportStatus=='DELIVERING'}}" class="st_1">已揽件</view>
+						<view wx:if="{{item.transportStatus=='SIGN_IN'}}" class="st_1">已签收</view>
+						<view wx:if="{{item.transportStatus=='PUSHED_ORDER'}}" class="st_1">派单众</view>
+						<view wx:if="{{item.transportStatus=='CREATED'}}" class="st_1">已下单</view>
+						<view wx:if="{{item.transportStatus=='RECEIVED_ORDER'}}" class="st_1">已接单</view>
+						<view wx:if="{{item.transportStatus=='COMPLETE'}}" class="st_1">已完成</view>
+						<!-- <view>
 							<i wx:if="{{!item.consignee._id}}" class="iconfont icon-kuaisukaidian" />
 							运单编号：{{item.sn}}
 						</view>
-						<view class="{{item.transportStatus == '已下单'?'st_2':'st_1'}}">
+						<view class="{{item.transportStatus == ''?'st_2':'st_1'}}">
 							{{item.transportStatus}}
-						</view>
+						</view> -->
 					</view>
 					<view class="list_box">
 						<view class="box_1">收件人</view>
@@ -116,12 +123,12 @@
 			<scroll-view
 			 scroll-y="{{true}}"
 			 style="height:calc(100vh - 102px);"
-			 bindscrolltolower="bindscrolltolower2"
+			 bindscrolltolower="bindscrolltolower3"
 			 wx:if="{{signInList.length > 0 }}"
 			>
 				<view
 				 class="list"
-				 wx:for="{{signInList.rows}}"
+				 wx:for="{{signInList}}"
 				 wx:key=""
 				 data-index="1"
 				 data-id="{{item.id}}"
@@ -156,12 +163,12 @@
 			<scroll-view
 			 scroll-y="{{true}}"
 			 style="height:calc(100vh - 102px);"
-			 bindscrolltolower="bindscrolltolower2"
-			 wx:if="{{completeList.length > 0 }}"
+			 bindscrolltolower="bindscrolltolower4"
+			 wx:if="{{pushedOrderList.length > 0 }}"
 			>
 				<view
 				 class="list"
-				 wx:for="{{completeList.rows}}"
+				 wx:for="{{pushedOrderList}}"
 				 wx:key=""
 				 data-index="1"
 				 data-id="{{item.id}}"
@@ -169,7 +176,7 @@
 				>
 					<view class="list_dh">
 						<view>运单编号：{{item.sn}}</view>
-						<view class="{{item.transportStatus == 'COMPLETE'?'st_2':'st_1'}}">已完成</view>
+						<view class="{{item.transportStatus == 'PUSHED_ORDER'?'st_2':'st_1'}}">派单中</view>
 					</view>
 					<view class="list_box">
 						<view class="box_1">收件人</view>
