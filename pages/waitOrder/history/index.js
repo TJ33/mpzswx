@@ -38,15 +38,10 @@ Page({
 
   async onLoad() {
     let data = moment().format('YYYY-MM-DD')
-    console.log('this.data.waybill==================================', this.data.waybill)
-    console.log('this.data.pageNum==================================', this.data.pageNum)
-    console.log('this.data.stTime==================================', data)
-    console.log('this.data.edTime==================================', data)
-    console.log('this.data.startList==================================', this.data.startList[this.data.startIndex].id)
-    let list = await ToolServer.searchOrder(this.data.waybill, this.data.pageNum, data, data, this.data.startList[this.data.startIndex].id)
-    console.log('list================================================', list)
+    let result = await ToolServer.searchOrder(this.data.waybill, this.data.pageNum, data, data, this.data.startList[this.data.startIndex].id)
+    let list = result.data
     this.reviseTr(list)
-    list.rows = await this.createTime(list.rows)
+    list = await this.createTime(list)
     this.setData({
       'list': list,
       'stTime': data,
@@ -76,35 +71,36 @@ Page({
   },
   reviseTr(e) {
     let list = e
-    for (let i in list.rows) {
+    for (let i in list) {
       switch (true) {
-        case list.rows[i].transportStatus == 'CREATED':
-          list.rows[i].transportStatus = '已下单'
+        case list[i].transportStatus == 'CREATED':
+          list[i].transportStatus = '已下单'
           break;
-        case list.rows[i].transportStatus == 'PUSHED_ORDER':
-          list.rows[i].transportStatus = '派单中'
+        case list[i].transportStatus == 'PUSHED_ORDER':
+          list[i].transportStatus = '派单中'
           break;
-        case list.rows[i].transportStatus == 'RECEIVED_ORDER':
-          list.rows[i].transportStatus = '已接单'
+        case list[i].transportStatus == 'RECEIVED_ORDER':
+          list[i].transportStatus = '已接单'
           break;
-        case list.rows[i].transportStatus == 'DELIVERING':
-          list.rows[i].transportStatus = '已揽件'
+        case list[i].transportStatus == 'DELIVERING':
+          list[i].transportStatus = '已揽件'
           break;
-        case list.rows[i].transportStatus == 'SIGN_IN':
-          list.rows[i].transportStatus = '已签收'
+        case list[i].transportStatus == 'SIGN_IN':
+          list[i].transportStatus = '已签收'
           break;
-        case list.rows[i].transportStatus == 'COMPLETE':
-          list.rows[i].transportStatus = '已完成'
+        case list[i].transportStatus == 'COMPLETE':
+          list[i].transportStatus = '已完成'
           break;
       }
     }
   },
-  //状态选择
+  //运单状态选择
   async bindStart(e) {
     let index = e.currentTarget.dataset.index;
-    let list = await ToolServer.searchOrder(this.data.waybill, this.data.pageNum, this.data.stTime, this.data.edTime, this.data.startList[index].id)
+    let result = await ToolServer.searchOrder(this.data.waybill, this.data.pageNum, this.data.stTime, this.data.edTime, this.data.startList[index].id)
+    let list = result.data
     this.reviseTr(list)
-    list.rows = await this.createTime(list.rows)
+    list = await this.createTime(list)
     this.setData({
       'list': list,
       'startIndex': index
@@ -120,15 +116,17 @@ Page({
     } else if (index == 2) {
       this.data.stTime = moment().subtract('days', 31).format('YYYY-MM-DD');
     }
-    let list = await ToolServer.searchOrder(this.data.waybill, this.data.pageNum, this.data.stTime, this.data.edTime, this.data.startList[this.data.startIndex].id)
+    let result = await ToolServer.searchOrder(this.data.waybill, this.data.pageNum, this.data.stTime, this.data.edTime, this.data.startList[this.data.startIndex].id)
+    let list = result.data
     this.reviseTr(list)
-    list.rows = await this.createTime(list.rows)
+    list = await this.createTime(list)
     this.setData({
       'list': list,
       'dataIndex': index,
       'stTime': this.data.stTime
     })
   },
+  //点击搜索图标 显示/隐藏 输入运单编号的框
   bindSer() {
     let ser = !this.data.ser
     this.setData({ ser: ser })
@@ -150,11 +148,12 @@ Page({
 
     this.setData({ 'dataBoxShow': dataBoxShow, 'animation': animation.export() })
   },
-
+  //输入运单编号查询
   async waybillInput(e) {
-    let list = await ToolServer.searchOrder(e.detail.value, this.data.pageNum, this.data.stTime, this.data.edTime, this.data.startList[this.data.startIndex].id)
+    let result = await ToolServer.searchOrder(e.detail.value, this.data.pageNum, this.data.stTime, this.data.edTime, this.data.startList[this.data.startIndex].id)
+    let list = result.data
     this.reviseTr(list)
-    list.rows = await this.createTime(list.rows)
+    list = await this.createTime(list)
     this.setData({
       'list': list,
       'waybill': e.detail.value
@@ -165,36 +164,42 @@ Page({
     let that = this
     wx.scanCode({
       success: async function (res) {
-        console.log(res)
-        that.data.list = ToolServer.searchOrder(res.result, this.data.pageNum, this.data.stTime, this.data.edTime, this.data.startList[this.data.startIndex].id)
-        that.reviseTr(that.data.list)
-        that.data.list.rows = await that.createTime(that.data.list.rows)
-        that.setData({ 'list': that.data.list })
+        let result = await ToolServer.searchOrder(res.result, that.data.pageNum, that.data.stTime, that.data.edTime, that.data.startList[that.data.startIndex].id)
+        let list = result.data
+        that.reviseTr(list)
+        list = await that.createTime(list)
+        that.setData({ 'list': list })
       }
     })
   },
+  //点击取消
   async bindQx() {
-    let list = await ToolServer.searchOrder('', this.data.pageNum, this.data.stTime, this.data.edTime, this.data.startList[this.data.startIndex].id)
+    let result = await ToolServer.searchOrder('', this.data.pageNum, this.data.stTime, this.data.edTime, this.data.startList[this.data.startIndex].id)
+    let list = result.data
     this.reviseTr(list)
-    list.rows = await this.createTime(list.rows)
+    list = await this.createTime(list)
     this.setData({
       'list': list,
       'waybill': ''
     })
   },
+  //选择日期开始时间
   async bindStTime(e) {
-    let list = await ToolServer.searchOrder(this.data.waybill, this.data.pageNum, e.detail.value, this.data.edTime, this.data.startList[this.data.startIndex].id)
+    let result = await ToolServer.searchOrder(this.data.waybill, this.data.pageNum, e.detail.value, this.data.edTime, this.data.startList[this.data.startIndex].id)
+    let list = result.data
     this.reviseTr(list)
-    list.rows = await this.createTime(list.rows)
+    list = await this.createTime(list)
     this.setData({
       stTime: e.detail.value,
       list: list
     })
   },
+  //选择日期结束时间
   async bindEdTime(e) {
-    let list = await ToolServer.searchOrder(this.data.waybill, this.data.pageNum, this.data.stTime, e.detail.value, this.data.startList[this.data.startIndex].id)
+    let result = await ToolServer.searchOrder(this.data.waybill, this.data.pageNum, this.data.stTime, e.detail.value, this.data.startList[this.data.startIndex].id)
+    let list = result.data
     this.reviseTr(list)
-    list.rows = await this.createTime(list.rows)
+    list = await this.createTime(list)
     this.setData({
       edTime: e.detail.value,
       list: list
@@ -210,16 +215,16 @@ Page({
   async bindscrolltolower() {
     await this.tolower(this.data.list)
     this.reviseTr(this.data.list)
-    this.data.list.rows = await this.createTime(this.data.list.rows)
+    this.data.list = await this.createTime(this.data.list)
     this.setData({ list: this.data.list })
   },
   async tolower(e) {
     if (e.total > this.data.pageNum * e.pageSize) {
       this.data.pageNum++
       let item = await searchOrder(this.data.waybill, this.data.pageNum, this.data.stTime, this.data.edTime, this.data.startList[this.data.startIndex].id)
-      e.rows = e.rows.concat(item.rows)
+      e = e.concat(item)
       this.reviseTr(e)
-      e.rows = await this.createTime(e.rows)
+      e = await this.createTime(e)
       this.setData({
         pageNum: this.data.pageNum,
       })

@@ -98,11 +98,11 @@
  scroll-y="{{true}}"
  bindscrolltolower="bindscrolltolower"
  style="height:calc(100vh - 102rpx);"
- wx:if="{{list.rows.length > 0}}"
+ wx:if="{{list.length > 0}}"
 >
 	<view
 	 class="list"
-	 wx:for="{{list.rows}}"
+	 wx:for="{{list}}"
 	 wx:key=""
 	 data-sn="{{item.sn}}"
 	 bindtap="bindDes"
@@ -114,13 +114,16 @@
 		<view class="list_box">
 			<view class="box_1">收件人</view>
 			<view class="box_2">
-				{{item.consignee.nickname}}
-				<text>{{item.consignee.contact.name}}</text>
+				{{item.consignee.contactName}}
+				<text>{{item.consignee.contactPhone}}</text>
 			</view>
 		</view>
 		<view class="list_box">
-			<view class="box_1">包裹数</view>
-			<view class="box_2">{{item.packageInfo.packageCount}}件</view>
+			<view class="box_1">寄件人</view>
+			<view class="box_2">
+				{{item.consignor.contactName}}
+				<text>{{item.consignor.contactPhone}}</text>
+			</view>
 		</view>
 		<view class="list_box">
 			<view class="box_1">下单时间</view>
@@ -129,7 +132,7 @@
 			</view>
 			<view class="box_3">
 				代收货款
-				<text>￥{{item.cost.cargoMoney}}</text>
+				<text>￥{{item.cargoMoney}}</text>
 			</view>
 		</view>
 	</view>

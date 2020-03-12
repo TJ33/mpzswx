@@ -1,51 +1,74 @@
 <view class="top">
-		<image class="bgs" src="/images/my_bg.png" />
-		<view class="left" wx:if="{{user.name}}">
-				<view>{{user.name}}</view>
+	<image class="bgs" src="/images/my_bg.png" />
+	<view class="left" wx:if="{{user.name}}">
+		<view>{{user.name}}</view>
+	</view>
+	<view wx:else class="left">
+		<button
+		 class="dl"
+		 open-type="getPhoneNumber"
+		 bindgetphonenumber="getPhoneNumber"
+		 plain="{{true}}"
+		>
+			用户登录
+		</button>
+	</view>
+	<view class="right" wx:if="{{Myhead !=''}}">
+		<image src="{{Myhead}}" />
+	</view>
+	<view class="right" wx:else>
+		<view class="box_null">
+			<i class="iconfont iconweibiaoti--" />
 		</view>
-		<view wx:else class="left">
-				<button class="dl" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" plain="{{true}}">
-						用户登录
-				</button>
-		</view>
-		<view class="right" wx:if="{{Myhead !=''}}">
-				<image src="{{Myhead}}" />
-		</view>
-		<view class="right" wx:else>
-				<view class="box_null">
-						<i class="iconfont iconweibiaoti--" />
-				</view>
-		</view>
+	</view>
 </view>
 <view class="box">
-		<navigator wx:if="{{Myhead!=''}}" class="content" url="../addressList/addressBook/index">
-				<view class=" left">
-						<view class="icon">
-								<i class="iconfont iconyuyuexinxi" />
-						</view>
-						<view class="name">店铺地址</view>
-				</view>
-				<i class="iconfont iconyoujiantou" />
-		</navigator>
-		<navigator wx:else class="content" url="">
-				<view class=" left">
-						<view class="icon">
-								<i class="iconfont iconyuyuexinxi" />
-						</view>
-						<view class="name">店铺地址</view>
-				</view>
-				<i class="iconfont iconyoujiantou" />
-		</navigator>
-		<view class="content" bindtap="bindOut">
-				<view class=" left">
-						<view class="icon">
-								<i class="iconfont iconyuyuexinxi" />
-						</view>
-						<view class="name">退出登录</view>
-				</view>
-				<i class="iconfont iconyoujiantou" />
+	<navigator wx:if="{{Myhead!=''}}" class="content" url="../addressList/addressBook/index">
+		<view class=" left">
+			<view class="icon">
+				<i class="iconfont iconyuyuexinxi" />
+			</view>
+			<view class="name">店铺地址</view>
 		</view>
-		<!-- <navigator class="content" url="../../other/carsList/index">
+		<i class="iconfont iconyoujiantou" />
+	</navigator>
+	<navigator wx:else class="content" url="">
+		<view class=" left">
+			<view class="icon">
+				<i class="iconfont iconyuyuexinxi" />
+			</view>
+			<view class="name">店铺地址</view>
+		</view>
+		<i class="iconfont iconyoujiantou" />
+	</navigator>
+	<navigator wx:if="{{Myhead!=''}}" class="content" url="../waitOrder/history/index">
+		<view class=" left">
+			<view class="icon">
+				<i class="iconfont iconyuyuexinxi" />
+			</view>
+			<view class="name">历史运单</view>
+		</view>
+		<i class="iconfont iconyoujiantou" />
+	</navigator>
+	<navigator wx:else class="content" url="">
+		<view class=" left">
+			<view class="icon">
+				<i class="iconfont iconyuyuexinxi" />
+			</view>
+			<view class="name">历史运单</view>
+		</view>
+		<i class="iconfont iconyoujiantou" />
+	</navigator>
+	<view class="content" bindtap="bindOut">
+		<view class=" left">
+			<view class="icon">
+				<i class="iconfont iconyuyuexinxi" />
+			</view>
+			<view class="name">退出登录</view>
+		</view>
+		<i class="iconfont iconyoujiantou" />
+	</view>
+	<!-- <navigator class="content" url="../../other/carsList/index">
 		<view class="left">
 			<view class="icon">
 				<i class="iconfont iconcheliang-" />
@@ -75,18 +98,33 @@
 </view>
 <!-- 组件--弹出框 -->
 <view class="Dialog_Box {{popupShow?'Dialog_Box_active':'Dialog_Box_hidden'}}" catchtouchmove="ture" animation="{{showHeightAnimation}}">
-		<view class="Dialog_Box_float {{popupShow ? 'Dialog_Box_float_show' : ''}}">
-				<view class="Dialog_  {{popupShow ? 'Dialog_show' : ''}}">
-						<view class="Dialog_title">{{title}}</view>
-						<view class="Dialog_content">微信授权登陆</view>
-						<view class="Dialog_Btn">
-								<button class="Dialog_Btn_s" hover-class="Dialog_Btn_hover" plain open-type="getUserInfo" lang="zh_CN" bindtap="bindClose">
-										取消
-								</button>
-								<button class="Dialog_Btn_s" hover-class="Dialog_Btn_hover" plain open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">
-										确认
-								</button>
-						</view>
-				</view>
+	<view class="Dialog_Box_float {{popupShow ? 'Dialog_Box_float_show' : ''}}">
+		<view class="Dialog_  {{popupShow ? 'Dialog_show' : ''}}">
+			<view class="Dialog_title">{{title}}</view>
+			<view class="Dialog_content">微信授权登陆</view>
+			<view class="Dialog_Btn">
+				<button
+				 class="Dialog_Btn_s"
+				 hover-class="Dialog_Btn_hover"
+				 plain
+				 open-type="getUserInfo"
+				 lang="zh_CN"
+				 bindtap="bindClose"
+				>
+					取消
+				</button>
+				<button
+				 class="Dialog_Btn_s"
+				 hover-class="Dialog_Btn_hover"
+				 plain
+				 open-type="getUserInfo"
+				 lang="zh_CN"
+				 bindgetuserinfo="onGotUserInfo"
+				>
+					确认
+				</button>
+			</view>
 		</view>
+	</view>
 </view>
+
