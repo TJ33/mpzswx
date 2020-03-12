@@ -548,7 +548,7 @@ Page({
           wx.redirectTo({
             url: '../waitOrder/single/index?sn=' + sn + '&&id=' + id
           })
-          wx.removeStorageSync('sendAddress')
+          // wx.removeStorageSync('sendAddress')
           wx.removeStorageSync('reciveAddress')
         }
       }

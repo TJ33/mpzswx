@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/me/index",
+    "pages/order/index",
     "pages/register/index",
     "pages/waitOrder/history/index",
     "pages/waitOrder/single/index",
@@ -8,7 +9,6 @@
     "pages/waitOrder/cancelReason/index",
     "pages/waitOrder/cancel/index",
     "pages/waybill/index",
-    "pages/order/index",
     "pages/addressList/addressBook/index",
     "pages/addressList/address/index",
     "pages/addressList/searchAddress/index",
