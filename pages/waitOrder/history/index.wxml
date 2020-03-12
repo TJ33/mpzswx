@@ -1,0 +1,138 @@
+<!-- pages/waitOrder/history/index.wxml -->
+<view class="box">
+	<view class="title">
+		<view class="box1">
+			日期：
+			<picker
+			 mode="date"
+			 value="{{stTime}}"
+			 start=""
+			 end="{{edTime}}"
+			 bindchange="bindStTime"
+			>
+				<view class="picker">{{stTime}}</view>
+			</picker>
+			~
+			<picker
+			 mode="date"
+			 value="{{edTime}}"
+			 start="{{stTime}}"
+			 end=""
+			 bindchange="bindEdTime"
+			>
+				<view class="picker">{{edTime}}</view>
+			</picker>
+		</view>
+		<view class="tb">
+			<i class="iconfont icon-sousuo {{ser?'bs':''}}" bindtap="bindSer" />
+		</view>
+	</view>
+	<view class="ssBox {{dataBoxShow?'BoxShow':''}}">
+		<view class="select {{dataBoxShow?'show':''}}">
+			<view class="left">运单状态</view>
+			<view class="right">
+				<view
+				 class="{{startIndex == index?'on':'down'}}"
+				 wx:for="{{startList}}"
+				 wx:key=""
+				 data-index="{{index}}"
+				 bindtap="bindStart"
+				>
+					{{item.value}}
+				</view>
+			</view>
+		</view>
+		<view class="select {{dataBoxShow?'show':''}}">
+			<view class="left">日期选择</view>
+			<view class="right">
+				<view
+				 class="{{dataIndex == index?'on':'down'}}"
+				 wx:for="{{dataList}}"
+				 wx:key=""
+				 data-index="{{index}}"
+				 bindtap="bindData"
+				>
+					{{item}}
+				</view>
+			</view>
+			<i class="iconfont icon-rili1 {{ssBoxShow?'bs':''}}" />
+		</view>
+	</view>
+	<view class="ssBox {{ssBoxShow?'BoxShow':''}}">
+		<view class="dataBox {{ssBoxShow?'show':''}}">
+			<picker
+			 mode="date"
+			 value="{{stTime}}"
+			 start=""
+			 end="{{edTime}}"
+			 bindchange="bindStTime"
+			>
+				<view class="picker">{{stTime}}</view>
+			</picker>
+			~
+			<picker
+			 mode="date"
+			 value="{{edTime}}"
+			 start="{{stTime}}"
+			 end=""
+			 bindchange="bindEdTime"
+			>
+				<view class="picker">{{edTime}}</view>
+			</picker>
+		</view>
+	</view>
+	<view class="ssBox {{ser?'BoxShow':''}}">
+		<view class="search {{ser?'show':''}}">
+			<input
+			 placeholder="请输入要搜索的运单编号…"
+			 placeholder-class="placeholder"
+			 value="{{waybill}}"
+			 bindblur="waybillInput"
+			/>
+			<i wx:if="{{waybill == ''}}" class="iconfont icon-saoma" bindtap="scanCode" />
+			<view wx:if="{{waybill != ''}}" class="qx" bindtap="bindQx">取消</view>
+		</view>
+	</view>
+</view>
+<scroll-view
+ scroll-y="{{true}}"
+ bindscrolltolower="bindscrolltolower"
+ style="height:calc(100vh - 102rpx);"
+ wx:if="{{list.rows.length > 0}}"
+>
+	<view
+	 class="list"
+	 wx:for="{{list.rows}}"
+	 wx:key=""
+	 data-sn="{{item.sn}}"
+	 bindtap="bindDes"
+	>
+		<view class="list_dh">
+			<view>运单编号：{{item.sn}}</view>
+			<view class="{{item.transportStatus=='已签收'?'st_2':'st_1'}}">{{item.transportStatus}}</view>
+		</view>
+		<view class="list_box">
+			<view class="box_1">收件人</view>
+			<view class="box_2">
+				{{item.consignee.nickname}}
+				<text>{{item.consignee.contact.name}}</text>
+			</view>
+		</view>
+		<view class="list_box">
+			<view class="box_1">包裹数</view>
+			<view class="box_2">{{item.packageInfo.packageCount}}件</view>
+		</view>
+		<view class="list_box">
+			<view class="box_1">下单时间</view>
+			<view class="box_2">
+				<view>{{item.time.createAt}}</view>
+			</view>
+			<view class="box_3">
+				代收货款
+				<text>￥{{item.cost.cargoMoney}}</text>
+			</view>
+		</view>
+	</view>
+</scroll-view>
+<miss wx:else />
+

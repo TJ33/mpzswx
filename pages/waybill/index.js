@@ -38,9 +38,8 @@ Page({
         pushedOrderList: pushedOrderList
       })
     }
-
-
   },
+
   async onShow() {
     //查询全部
     let allList = await ToolServer.findWayBill('', '')

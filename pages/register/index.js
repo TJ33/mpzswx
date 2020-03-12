@@ -157,6 +157,15 @@ Page({
       return
     }
 
+    if (userPhone == "") {
+      wx.showToast({
+        title: '请获取联系电话',
+        icon: 'none',
+        duration: 1000
+      })
+      return
+    }
+
     storeAddress = storeAddress + number
 
     wx.showModal({

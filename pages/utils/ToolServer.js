@@ -198,11 +198,19 @@ class ToolServer {
     return this.get(url, data)
   }
 
-
-
-
-
-
+  //查询历史运单信息
+  async searchOrder(sn, pageNum, start, end, transportStatus) {
+    let url = `${domain}/api/wxapp/search_order`
+    let data = {
+      sn: sn,
+      pageNum: pageNum,
+      pageSize: 10,
+      start: start,
+      end: end,
+      transportStatus: transportStatus
+    }
+    return this.post(url, data)
+  }
 
 
   async untyingUser(childId) {
@@ -212,6 +220,8 @@ class ToolServer {
     }
     return this.post2(url, data)
   }
+
+
   /*-------------------------------------------原版------------------------------------------------*/
   //获取商家信息
   async getInformation() {
@@ -252,26 +262,6 @@ class ToolServer {
       })
     })
   }
-
-  //带搜索的查单列表
-  async searchOrder(sn, flag, pageNum, time, transportStatus) {
-    let url = `${domain}/api/mobile/merchant/search_order`
-    let data = {
-      sn: sn,
-      flag: flag,
-      pageNum: pageNum,
-      pageSize: 10,
-      time: time,
-      transportStatus: transportStatus
-    }
-    return this.get(url, data)
-
-  }
-
-
-
-
-
 
 
 

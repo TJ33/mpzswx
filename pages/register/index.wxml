@@ -1,6 +1,9 @@
 <!-- pages/register/index.wxml -->
 <view class="top">
-	<view class="storeNameTitle">店铺名称</view>
+	<view class="storeNameTitle">
+		<view>*</view>
+		<view>店铺名称</view>
+	</view>
 	<input
 	 placeholder="请输入店铺名称"
 	 class="storeNameValue"
@@ -10,7 +13,10 @@
 	/>
 </view>
 <view class="top">
-	<view class="storeAddressTitle">店铺地址</view>
+	<view class="storeAddressTitle">
+		<view>*</view>
+		<view>店铺地址</view>
+	</view>
 	<input
 	 placeholder="请选择店铺地址"
 	 class="storeAddressValue"
@@ -30,7 +36,10 @@
 	/>
 </view>
 <view class="top">
-	<view class="userTitle">用户名</view>
+	<view class="userTitle">
+		<view>*</view>
+		<view>用户名</view>
+	</view>
 	<input
 	 placeholder="请输入用户名"
 	 class="userValue"
@@ -40,7 +49,10 @@
 	/>
 </view>
 <view class="top">
-	<view class="phoneTitle">联系电话</view>
+	<view class="phoneTitle">
+		<view>*</view>
+		<view>联系电话</view>
+	</view>
 	<view class="phone">
 		<input
 		 class="phoneValue"
