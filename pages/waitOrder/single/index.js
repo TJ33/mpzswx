@@ -404,22 +404,27 @@ Page({
 
   },
 
+  onUnload: function () {
+    console.log('退出当前页面')
+    clearInterval(init)
+  },
+
   chooseUrl(e) {
     let value = e.currentTarget.id
     switch (value) {
       //查看运单  
       case "0":
+        clearInterval(init);
         wx.switchTab({
           url: '../../waybill/index'
         })
-        clearInterval(init);
         break;
       //再次下单  
       case "1":
+        clearInterval(init);
         wx.switchTab({
           url: '../../order/index'
         })
-        clearInterval(init);
         break;
       default:
         break;
@@ -479,10 +484,10 @@ Page({
         })
       }, 1000)
     } else {
+      clearInterval(init);
       wx.redirectTo({
         url: '../../order/index'
       })
-      clearInterval(init);
     }
 
   },
@@ -510,7 +515,9 @@ Page({
       timecount: that.data.minute + ":" + that.data.second
     })
 
-    if (that.data.minute == 2 && that.data.name == '') {
+    console.log("that.data.minute=================================", that.data.minute)
+    console.log("that.data.name===================================", that.data.name)
+    if (that.data.minute == 1 && that.data.name == '') {
       clearInterval(init);
       wx.showModal({
         title: '提示',
@@ -523,10 +530,10 @@ Page({
         success: function (res) {
           if (res.cancel) {
             //点击取消,默认隐藏弹框
+            clearInterval(init);
             wx.redirectTo({
               url: '../../order/index'
             })
-            clearInterval(init);
           } else {
             init = setInterval(function () {
               that.setData({
@@ -566,6 +573,7 @@ Page({
           let result = await ToolServer.cancelOrder(sn)
           let success = result.success
           if (success == true) {
+            clearInterval(init);
             wx.showToast({
               title: '取消成功',
               icon: 'success',
@@ -575,7 +583,6 @@ Page({
               wx.switchTab({
                 url: '/pages/order/index'
               })
-              clearInterval(init);
             }, 1000);
           } else {
             wx.showToast({

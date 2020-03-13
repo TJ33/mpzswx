@@ -46,7 +46,7 @@
 						<view>运单编号：{{item.sn}}</view>
 						<view wx:if="{{item.transportStatus=='DELIVERING'}}" class="st_1">已揽件</view>
 						<view wx:if="{{item.transportStatus=='SIGN_IN'}}" class="st_1">已签收</view>
-						<view wx:if="{{item.transportStatus=='PUSHED_ORDER'}}" class="st_1">派单众</view>
+						<view wx:if="{{item.transportStatus=='PUSHED_ORDER'}}" class="st_1">派单中</view>
 						<view wx:if="{{item.transportStatus=='CREATED'}}" class="st_1">已下单</view>
 						<view wx:if="{{item.transportStatus=='RECEIVED_ORDER'}}" class="st_1">已接单</view>
 						<view wx:if="{{item.transportStatus=='COMPLETE'}}" class="st_1">已完成</view>
