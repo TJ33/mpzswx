@@ -287,7 +287,7 @@ Page({
     let id = user.id
     console.log("user=======================", user)
     console.log("id=======================", id)
-    var socket = io('http://zs.51qp.top/mpzs', {
+    var socket = io('https://zs.51qp.top/mpzs', {
       transports: ['websocket']
     });
     //家

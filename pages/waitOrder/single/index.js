@@ -212,7 +212,7 @@ Page({
 
     let user = wx.getStorageSync('USER')
     let id = user.id
-    let socket = io('http://zs.51qp.top/mpzs', {
+    let socket = io('https://zs.51qp.top/mpzs', {
       transports: ['websocket']
     });
     //家
