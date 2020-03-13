@@ -78,7 +78,7 @@ Page({
     // consignorList: [],      //寄件人对象集合
     // consigneeList: [],      //收件人对象集合
     // sendAddress: false,
-    // receiptAddress: false,
+    // reciveAddress: false,
     //useCoupon:'',        //优惠卷
     // freightMonthlyList: [{    //运费是否月结
     //   id: true,
@@ -195,6 +195,39 @@ Page({
         reciveAddress: reciveAddress,
       })
 
+      if (sendAddress != '') {
+        //寄件人信息
+        let consignor = new Object()
+        consignor.contactName = sendAddress.contactName
+        consignor.contactPhone = sendAddress.contactPhone
+        consignor.address = sendAddress.address
+        consignor.coordinates = sendAddress.coordinates
+        consignor._id = sendAddress._id
+        //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离
+        let sendCoordinates = consignor.coordinates
+        this.setData({
+          companyList: companyList,
+          companyIndexList: companyIndexList,
+          operationTeam: companyIndexList[0],
+          vehicleTypeList: newVehicleTypeList,
+          vehicleTypeIndexList: vehicleTypeIndexList,
+          vehicleType: vehicleTypeIndexList[0],
+          //新的
+          sendAddress: sendAddress,
+          consignor: consignor._id,
+          consignorObject: consignor
+        })
+      } else {
+        this.setData({
+          companyList: companyList,
+          companyIndexList: companyIndexList,
+          operationTeam: companyIndexList[0],
+          vehicleTypeList: newVehicleTypeList,
+          vehicleTypeIndexList: vehicleTypeIndexList,
+          vehicleType: vehicleTypeIndexList[0],
+        })
+      }
+
       if (sendAddress != '' && reciveAddress != '') {
         //下单所需要的数据
         //寄件人信息
@@ -204,6 +237,7 @@ Page({
         consignor.address = sendAddress.address
         consignor.coordinates = sendAddress.coordinates
         consignor._id = sendAddress._id
+
         //收件人信息
         let consignee = new Object()
         consignee.contactName = reciveAddress.contactName
@@ -234,7 +268,9 @@ Page({
           consignee: consignee._id,
           freight: price,
           distance: distance,
-          haveFreight: false
+          haveFreight: false,
+          consigneeObject: consignee,
+          consignorObject: consignor
         })
       } else {
         this.setData({
@@ -333,6 +369,25 @@ Page({
     //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离
     let sendCoordinates = this.data.consignorObject.coordinates
     let receipteCoordinates = this.data.consigneeObject.coordinates
+
+    if (sendCoordinates == '') {
+      wx.showToast({
+        title: '请选择寄件地址',
+        icon: 'none',
+        duration: 1000
+      });
+      return
+    }
+    if (receipteCoordinates == '') {
+      wx.showToast({
+        title: '请选择收件地址',
+        icon: 'none',
+        duration: 1000
+      });
+      return
+    }
+
+
     let send = {
       longitude: sendCoordinates[0],
       latitude: sendCoordinates[1]
@@ -342,6 +397,8 @@ Page({
       latitude: receipteCoordinates[1]
     }
     //查询运费
+
+
     let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
     let distance = result.distance
     let price = result.price
@@ -351,7 +408,8 @@ Page({
       vehicleType: vehicleId,
       haveFreight: false,
       freight: price,
-      distance: distance
+      distance: distance,
+      vehicleTypeIndex: index
     })
   },
 
@@ -481,8 +539,7 @@ Page({
     let receiveAt = this.data.receiveAt
     //需要判断用户有没有选择寄件收件地址
     let sendAddress = this.data.sendAddress
-    let receiptAddress = this.data.receiptAddress
-
+    let reciveAddress = this.data.reciveAddress
 
     if (sendAddress == false) {
       wx.showToast({
@@ -492,7 +549,7 @@ Page({
       });
       return
     }
-    if (receiptAddress == false) {
+    if (reciveAddress == false) {
       wx.showToast({
         title: '请选择收件地址',
         icon: 'none',
