@@ -405,7 +405,6 @@ Page({
   },
 
   onUnload: function () {
-    console.log('退出当前页面')
     clearInterval(init)
   },
 
@@ -515,9 +514,7 @@ Page({
       timecount: that.data.minute + ":" + that.data.second
     })
 
-    console.log("that.data.minute=================================", that.data.minute)
-    console.log("that.data.name===================================", that.data.name)
-    if (that.data.minute == 1 && that.data.name == '') {
+    if (that.data.minute == 2 && that.data.name == '') {
       clearInterval(init);
       wx.showModal({
         title: '提示',
