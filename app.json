@@ -1,6 +1,8 @@
 {
   "pages": [
     "pages/me/index",
+    "pages/waybill/index",
+    "pages/waybillDetail/index",
     "pages/order/index",
     "pages/register/index",
     "pages/waitOrder/history/index",
@@ -8,11 +10,9 @@
     "pages/waitOrder/wait/index",
     "pages/waitOrder/cancelReason/index",
     "pages/waitOrder/cancel/index",
-    "pages/waybill/index",
     "pages/addressList/addressBook/index",
     "pages/addressList/address/index",
     "pages/addressList/searchAddress/index",
-    "pages/waybillDetail/index",
     "pages/index/index",
     "pages/map/index"
   ],

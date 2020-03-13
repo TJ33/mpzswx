@@ -38,6 +38,11 @@ Page({
     },
     sn: '',                   //运单编号
     cargoMoney: '',            //代收货款
+
+    //司机信息
+    deliverymanName: '',      //司机姓名
+    deliverymanPhone: '',     //司机电话
+    deliverymanVehicle: '',   //车辆类型
     //遮罩修改框
     dialog: false,
   },
@@ -46,8 +51,21 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
-    console.log("options id=============================", options.id)
+    let deliverymanName = ''
+    let deliverymanPhone = ''
+    let deliverymanVehicle = ''
     let waybill = await ToolServer.findWayBillDetails(options.id)
+    let deliveryman = waybill.deliveryman
+    let vehicle = waybill.vehicle
+    if (vehicle != undefined) {
+      let vehicleType = vehicle.vehicleType
+      deliverymanVehicle = vehicleType.name
+    }
+    if (deliveryman != undefined) {
+      deliverymanName = deliveryman.name
+      deliverymanPhone = deliveryman.phone
+    }
+
     //商家已下单  
     let transportStatus = waybill.transportStatus    //CREATED：已下单   DELIVERING：已揽件   SIGN_IN：已签收   COMPLETE: 已完成
     //到达(揽件)时间
@@ -56,8 +74,6 @@ Page({
     let OrderAt = time.OrderAt     //接单时间
     let receiveAt = time.receiveAt //揽件时间 
     let newTime = new Object()
-
-    console.log("createAt111==============================", createAt)
 
     newTime.createAt = moment(createAt).format("YYYY-MM-DD HH:mm")
     newTime.OrderAt = moment(OrderAt).format("YYYY-MM-DD HH:mm")
@@ -85,7 +101,6 @@ Page({
     let sn = waybill.sn
     //代收货款   
     let cargoMoney = waybill.cargoMoney
-    console.log("cargoMoney==============================", cargoMoney)
 
     this.setData({
       transportStatus: transportStatus,
@@ -93,13 +108,16 @@ Page({
       consignor: newConsignor,
       consignee: newConsignee,
       sn: sn,
-      cargoMoney: cargoMoney
+      cargoMoney: cargoMoney,
+
+      //司机信息
+      deliverymanName: deliverymanName,
+      deliverymanPhone: deliverymanPhone,
+      deliverymanVehicle: deliverymanVehicle
     })
 
-    // console.log("waybill====================================", waybill)
     // // this.reviseTr(waybill)
     // waybill.cost.freightPayMethod = this.payMethod(waybill.cost.freightPayMethod)
-    // console.log('waybill', waybill)
     // waybill.time = await TimeServer.createAtYMD_ONE(waybill.time)
 
     // let [first, ...rest] = waybill.statusLogs.reverse()
@@ -219,13 +237,11 @@ Page({
   //修改活保存
   // async bindClose(e) {
   //   let index = e.currentTarget.dataset.index
-  //   console.log('e', index)
   //   if (index == 0) {
   //     await ToolServer.cargoMoneyUpdate({ 'id': this.data.id, 'cargoMoney': this.data.cargoMoney })
 
   //     let waybill = await ToolServer.orderDetails(this.data.id)
   //     waybill.cost.freightPayMethod = this.payMethod(waybill.cost.freightPayMethod)
-  //     console.log('waybill', waybill)
   //     waybill.time = await TimeServer.createAtYMD_ONE(waybill.time)
   //     let [first, ...rest] = waybill.statusLogs.reverse()
   //     first = await TimeServer.timeYMD_ONE(first)

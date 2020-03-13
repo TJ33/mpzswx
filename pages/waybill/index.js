@@ -50,7 +50,6 @@ Page({
 
 
 
-
     // let createdList = await ToolServer.findWayBill('CREATED', '')
     // let deliveringList = await ToolServer.findWayBill('DELIVERING', '')
     // let signInList = await ToolServer.findWayBill('SIGN_IN', '')
