@@ -1,10 +1,10 @@
 {
   "pages": [
+    "pages/register/index",
     "pages/me/index",
     "pages/waybill/index",
     "pages/waybillDetail/index",
     "pages/order/index",
-    "pages/register/index",
     "pages/waitOrder/history/index",
     "pages/waitOrder/single/index",
     "pages/waitOrder/wait/index",

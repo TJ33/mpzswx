@@ -16,15 +16,17 @@ Page({
     userName: '',
     userPhone: '',
     storeAddress: '',
-    number: ''
+    number: '',
+
+    choose: [{ value: '商家', key: '1', checked: true }, { value: '个人', key: '2', checked: false }],
+    judgeStoreName: false,
+    judgeStoreAddress: false,
+    judgeUserName: false,
+    judgeUserPhone: false,
+    judge: true,
   },
 
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
 
-  },
 
   /**
    * 生命周期函数--监听页面显示
@@ -42,6 +44,15 @@ Page({
     this.setData({
       storeName: name
     })
+    if (name == '') {
+      this.setData({
+        judgeStoreName: true
+      })
+    } else {
+      this.setData({
+        judgeStoreName: false
+      })
+    }
   },
 
   //选择店铺地址
@@ -78,6 +89,15 @@ Page({
     this.setData({
       userName: name
     })
+    if (name == '') {
+      this.setData({
+        judgeUserName: true
+      })
+    } else {
+      this.setData({
+        judgeUserName: false
+      })
+    }
   },
 
   //移动选点
@@ -90,14 +110,34 @@ Page({
         let chooseLatitude = res.latitude
         let chooseLongitude = res.longitude
         let chooseName = res.name
+
         //选择地点之后返回的结果
         that.setData({
           storeAddress: chooseName,
           longitude: chooseLongitude,
           latitude: chooseLatitude
         })
+        if (that.data.storeAddress != '') {
+          that.setData({
+            judgeStoreAddress: false
+          })
+        }
+      },
+      fail: function (e) {
+        let message = e.errMsg
+        if (that.data.storeAddress == '' && message == 'chooseLocation:fail cancel') {
+          that.setData({
+            judgeStoreAddress: true
+          })
+        } else {
+          that.setData({
+            judgeStoreAddress: false
+          })
+        }
       }
     })
+
+
   },
 
   //点击获取手机号码
@@ -106,8 +146,52 @@ Page({
     this.setData({
       userPhone: phone
     })
+    if (phone == '') {
+      this.setData({
+        judgeUserPhone: true
+      })
+    } else {
+      this.setData({
+        judgeUserPhone: false
+      })
+    }
   },
 
+  // 选择角色,获取用户选择的单选框的值
+  radioChange: function (e) {
+    let value = e.detail.value
+    if (value == '商家') {
+      this.setData({
+        judge: true,
+        storeName: '',
+        longitude: '',
+        latitude: '',
+        userName: '',
+        userPhone: '',
+        storeAddress: '',
+        number: '',
+        judgeStoreName: false,
+        judgeStoreAddress: false,
+        judgeUserName: false,
+        judgeUserPhone: false,
+      })
+    } else {
+      this.setData({
+        judge: false,
+        storeName: '',
+        longitude: '',
+        latitude: '',
+        userName: '',
+        userPhone: '',
+        storeAddress: '',
+        number: '',
+        judgeStoreName: false,
+        judgeStoreAddress: false,
+        judgeUserName: false,
+        judgeUserPhone: false,
+      })
+    }
+  },
   //点击注册按钮
   register() {
     let storeName = this.data.storeName

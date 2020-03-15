@@ -1,69 +1,124 @@
 <!-- pages/register/index.wxml -->
-<view class="top">
-	<view class="storeNameTitle">
-		<view>*</view>
-		<view>店铺名称</view>
-	</view>
-	<input
-	 placeholder="请输入店铺名称"
-	 class="storeNameValue"
-	 placeholder-class="input-placeholder"
-	 bindinput="inputStoreName"
-	 value="{{storeName}}"
-	/>
+<view class="choose">
+	<view class="role">请选择角色</view>
+	<radio-group class="radio-group" bindchange="radioChange">
+		<label class="radio" wx:for="{{choose}}" wx:key="index">
+			<radio
+			 value="{{item.value}}"
+			 bindtap='radio'
+			 data-id="{{item.key}}"
+			 checked="{{item.checked}}"
+			/>
+			{{item.value}}
+		</label>
+	</radio-group>
 </view>
-<view class="top">
-	<view class="storeAddressTitle">
-		<view>*</view>
-		<view>店铺地址</view>
-	</view>
-	<input
-	 placeholder="请选择店铺地址"
-	 class="storeAddressValue"
-	 placeholder-class="input-placeholder"
-	 bindtap="inputStoreAddress"
-	 value="{{storeAddress}}"
-	/>
-</view>
-<view class="top">
-	<view class="numberTitle">门牌号</view>
-	<input
-	 placeholder="请输入门牌号"
-	 class="numberValue"
-	 placeholder-class="input-placeholder"
-	 bindinput="inputNumber"
-	 value="{{number}}"
-	/>
-</view>
-<view class="top">
-	<view class="userTitle">
-		<view>*</view>
-		<view>用户名</view>
-	</view>
-	<input
-	 placeholder="请输入用户名"
-	 class="userValue"
-	 placeholder-class="input-placeholder"
-	 bindinput="inputUser"
-	 value="{{userName}}"
-	/>
-</view>
-<view class="top">
-	<view class="phoneTitle">
-		<view>*</view>
-		<view>联系电话</view>
-	</view>
-	<view class="phone">
+<view wx:if="{{judge}}">
+	<view class="top">
+		<view class="storeNameTitle">
+			<view>*</view>
+			<view>店铺名称</view>
+		</view>
 		<input
-		 class="phoneValue"
+		 placeholder="请输入店铺名称"
+		 class="storeNameValue"
 		 placeholder-class="input-placeholder"
-		 value="{{userPhone}}"
-		 disabled="{{true}}"
+		 bindinput="inputStoreName"
+		 value="{{storeName}}"
 		/>
-		<button class="phoneButton" bindtap="getPhoneNumber">获取手机号码</button>
+		<view class="oName" wx:if="{{judgeStoreName}}">店铺名称为必填项</view>
+	</view>
+	<view class="top">
+		<view class="storeAddressTitle">
+			<view>*</view>
+			<view>店铺地址</view>
+		</view>
+		<input
+		 placeholder="请选择店铺地址"
+		 class="storeAddressValue"
+		 placeholder-class="input-placeholder"
+		 bindtap="inputStoreAddress"
+		 value="{{storeAddress}}"
+		/>
+		<view class="oName" wx:if="{{judgeStoreAddress}}">店铺地址为必填项</view>
+	</view>
+	<view class="top">
+		<view class="numberTitle">门牌号</view>
+		<input
+		 placeholder="请输入门牌号"
+		 class="numberValue"
+		 placeholder-class="input-placeholder"
+		 bindinput="inputNumber"
+		 value="{{number}}"
+		/>
+	</view>
+	<view class="top">
+		<view class="userTitle">
+			<view>*</view>
+			<view>用户名</view>
+		</view>
+		<input
+		 placeholder="请输入用户名"
+		 class="userValue"
+		 placeholder-class="input-placeholder"
+		 bindinput="inputUser"
+		 value="{{userName}}"
+		/>
+		<view class="oName" wx:if="{{judgeUserName}}">用户名为必填项</view>
+	</view>
+	<view class="top">
+		<view class="phoneTitle">
+			<view>*</view>
+			<view>联系电话</view>
+		</view>
+		<view class="phone">
+			<input
+			 class="phoneValue"
+			 placeholder-class="input-placeholder"
+			 value="{{userPhone}}"
+			 disabled="{{true}}"
+			/>
+			<button class="phoneButton" bindtap="getPhoneNumber">获取手机号码</button>
+		</view>
+		<view class="oName" wx:if="{{judgeUserPhone}}">请获取手机号码</view>
+	</view>
+	<view class="last">
+		<button class="search" bindtap="register">注册</button>
 	</view>
 </view>
-<view class="last">
-	<button class="search" bindtap="register">注册</button>
+<view wx:else>
+	<view class="top">
+		<view class="userTitle">
+			<view>*</view>
+			<view>用户名</view>
+		</view>
+		<input
+		 placeholder="请输入用户名"
+		 class="userValue"
+		 placeholder-class="input-placeholder"
+		 bindinput="inputUser"
+		 value="{{userName}}"
+		/>
+		<view class="oName" wx:if="{{judgeUserName}}">用户名为必填项</view>
+	</view>
+	<view class="top">
+		<view class="phoneTitle">
+			<view>*</view>
+			<view>联系电话</view>
+		</view>
+		<view class="phone">
+			<input
+			 class="phoneValue"
+			 placeholder-class="input-placeholder"
+			 value="{{userPhone}}"
+			 disabled="{{true}}"
+			/>
+			<button class="phoneButton" bindtap="getPhoneNumber">获取手机号码</button>
+		</view>
+		<view class="oName" wx:if="{{judgeUserPhone}}">请获取手机号码</view>
+		<view class="last">
+			<button class="search" bindtap="register">注册</button>
+		</view>
+	</view>
 </view>
 
