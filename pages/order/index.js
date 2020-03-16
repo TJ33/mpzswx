@@ -28,10 +28,6 @@ Page({
     freightMonthly: false,
     cargoMoney: '',        //代收货款金额
     distance: '',          //配送距离
-    vehicleTypeIndexList: '',   //车辆下标集合  
-    vehicleTypeList: [],       //车辆集合
-    vehicleTypeIndex: 0,        //车辆类型下标
-    vehicleType: '',             //车辆id
     freight: '',           //运费
     haveFreight: true,
     haveDistance: true,
@@ -87,6 +83,12 @@ Page({
       value: '顺带',
       checked: false
     }],
+
+    //选择车辆相关
+    vehicleTypeIndexList: '',   //车辆下标集合  
+    vehicleTypeList: [],       //车辆集合
+    vehicleTypeIndex: 0,        //车辆类型下标
+    vehicleType: '',             //车辆id
 
     // sendIndexList: [],     //寄件地址下标集合
     // sendList: [],          //寄件地址集合
