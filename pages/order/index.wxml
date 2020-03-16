@@ -72,7 +72,7 @@
 			<i class="iconfont icon-qianjin" />
 		</view>
 	</view>
-	<view class="company">
+	<!-- <view class="company">
 		<view class="companyTitle">选择车辆</view>
 		<picker
 		 class="companyValue"
@@ -83,12 +83,39 @@
 			<view class="picker">{{vehicleTypeList[vehicleTypeIndex]}}</view>
 		</picker>
 		<i class="iconfont icon-qianjin" />
+	</view> -->
+	<view class="TopicTitle">
+		<view
+		 class="TopicTitleBox"
+		 wx:key=""
+		 wx:for="{{vehicleTypeArray}}"
+		 data-index="{{index}}"
+		 bindtap="{{TopicTitleActive == index ? '' : 'titleTab'}}"
+		>
+			<view class="{{TopicTitleActive == index ? 'TopicTitleActive' : ''}}">{{item}}</view>
+		</view>
+		<!-- <view class="TopicTitle-bottom" animation="{{animation}}" /> -->
 	</view>
-	<!-- <view class="TopicTitle">
-				<view class="TopicTitleBox" wx:key="{{index}}" wx:for="{{vehicleTypeList}}" value="{{item.id}}" data-index="{{index}}" bindtap="{{TopicTitleActive == index ? '' : 'titleTab'}}">
-						<view class="{{TopicTitleActive == index ? 'TopicTitleActive' : ''}}">{{item.name}}</view>
-				</view>
-		</view> -->
+	<view class="box-3" wx:index="{{index}}">
+		<view class="box-left">
+			<image class="img" src="{{photo}}" />
+		</view>
+		<view class="box-right">
+			<view class="box-right-all">
+				载重:
+				<text>{{load}}公斤</text>
+			</view>
+			<view class="box-right-all">
+				长宽高:
+				<text>{{size}}米</text>
+			</view>
+			<view class="box-right-all">
+				载货体积:
+				<text>{{capacity}}方</text>
+			</view>
+			<view/>
+		</view>
+	</view>
 	<view class="box_3">
 		<view class="time">
 			<view class="left">

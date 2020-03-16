@@ -84,11 +84,18 @@ Page({
       checked: false
     }],
 
-    //选择车辆相关
+    //选择车辆相关   做卡片显示(车辆种类、载重、长宽高、载货体积)  name、load、size、capacity
     vehicleTypeIndexList: '',   //车辆下标集合  
     vehicleTypeList: [],       //车辆集合
     vehicleTypeIndex: 0,        //车辆类型下标
     vehicleType: '',             //车辆id
+    TopicTitleActive: 0,
+    animation: '',
+    vehicleTypeArray: [],
+    load: '',
+    size: '',
+    capacity: '',
+    photo: ''
 
     // sendIndexList: [],     //寄件地址下标集合
     // sendList: [],          //寄件地址集合
@@ -158,55 +165,47 @@ Page({
         companyIndexList.push(id)
       }
 
-      //查询地址簿
-      // let sendList = []
-      // let sendIndexList = []
-      // let receiptList = []
-      // let receiptIndexList = []
-      // let consignorList = []
-      // let consigneeList = []
-      // let addressBook = await ToolServer.findAddressBook('')
-
-      // for (let i = 0; i < addressBook.length; i++) {
-      //   let addressName = addressBook[i].address
-      //   let addressId = addressBook[i]._id
-      //   sendList.push(addressName)
-      //   sendIndexList.push(addressId)
-      //   receiptList.push(addressName)
-      //   receiptIndexList.push(addressId)
-
-      //   //寄件人/收件人 对象集合
-      //   let name = addressBook[i].contactName
-      //   let phone = addressBook[i].contactPhone
-      //   let coordinates = addressBook[i].coordinates
-
-      //   let consignorObject = new Object()
-      //   consignorObject.address = addressName
-      //   consignorObject.name = name
-      //   consignorObject.phone = phone
-      //   consignorObject.coordinates = coordinates
-      //   consignorObject.id = addressId
-      //   let consigneeObject = new Object()
-      //   consigneeObject.address = addressName
-      //   consigneeObject.name = name
-      //   consigneeObject.phone = phone
-      //   consigneeObject.coordinates = coordinates
-      //   consigneeObject.id = addressId
-      //   consignorList.push(consignorObject)
-      //   consigneeList.push(consigneeObject)
-      // }
-
-
       //车辆
-      let vehicleTypeList = await ToolServer.vehicleType(companyIndexList[0])
       let vehicleTypeIndexList = []
       let newVehicleTypeList = []
+      let newVehicleTypeArray = []
+      let vehicleTypeList = await ToolServer.vehicleType(companyIndexList[0])
+      console.log('vehicleTypeList========================', vehicleTypeList)
+
       for (let i = 0; i < vehicleTypeList.length; i++) {
         let id = vehicleTypeList[i].id
         let name = vehicleTypeList[i].name
-        newVehicleTypeList.push(name)
+        let photo = vehicleTypeList[i].phone
+        let load = vehicleTypeList[i].load
+        let size = vehicleTypeList[i].size
+        let capacity = vehicleTypeList[i].capacity
+        let object = new Object()
+        object.name = name
+        object.photo = photo
+        object.load = load
+        object.size = size
+        object.capacity = capacity
         vehicleTypeIndexList.push(id)
+        newVehicleTypeList.push(object)
+        newVehicleTypeArray.push(name)
       }
+      console.log('vehicleTypeIndexList========================', vehicleTypeIndexList)
+      console.log('newVehicleTypeList========================', newVehicleTypeList)
+      console.log('newVehicleTypeArray========================', newVehicleTypeArray)
+
+      let vehicle = newVehicleTypeList[0]
+
+      let load = vehicle.load
+      let size = vehicle.size
+      let capacity = vehicle.capacity
+      let photo = vehicle.photo
+      this.setData({
+        load: load,
+        size: size,
+        capacity: capacity,
+        photo: photo,
+        TopicTitleActive: 0,
+      })
 
       //选择地址之后跳转的数据
       let sendAddress = wx.getStorageSync('sendAddress')
@@ -231,7 +230,7 @@ Page({
           companyIndexList: companyIndexList,
           operationTeam: companyIndexList[0],
           vehicleTypeList: newVehicleTypeList,
-          vehicleTypeIndexList: vehicleTypeIndexList,
+          vehicleTypeArray: newVehicleTypeArray,
           vehicleType: vehicleTypeIndexList[0],
           //新的
           sendAddress: sendAddress,
@@ -244,7 +243,7 @@ Page({
           companyIndexList: companyIndexList,
           operationTeam: companyIndexList[0],
           vehicleTypeList: newVehicleTypeList,
-          vehicleTypeIndexList: vehicleTypeIndexList,
+          vehicleTypeArray: newVehicleTypeArray,
           vehicleType: vehicleTypeIndexList[0],
         })
       }
@@ -280,7 +279,7 @@ Page({
           companyIndexList: companyIndexList,
           operationTeam: companyIndexList[0],
           vehicleTypeList: newVehicleTypeList,
-          vehicleTypeIndexList: vehicleTypeIndexList,
+          vehicleTypeArray: newVehicleTypeArray,
           vehicleType: vehicleTypeIndexList[0],
           //新的
           sendAddress: sendAddress,
@@ -300,32 +299,45 @@ Page({
           companyIndexList: companyIndexList,
           operationTeam: companyIndexList[0],
           vehicleTypeList: newVehicleTypeList,
-          vehicleTypeIndexList: vehicleTypeIndexList,
+          vehicleTypeArray: newVehicleTypeArray,
           vehicleType: vehicleTypeIndexList[0],
         })
       }
     }
 
+  },
+
+  //选择车辆
+  async titleTab(e) {
+    let index = e.currentTarget.dataset.index;
+    let vehicle = this.data.vehicleTypeList[index]
+    let load = vehicle.load
+    let size = vehicle.size
+    let capacity = vehicle.capacity
+    let photo = vehicle.photo
+    this.setData({
+      load: load,
+      size: size,
+      capacity: capacity,
+      photo: photo,
+      TopicTitleActive: index,
+    })
+
+
+    // let active = this.data.TopicTitleActive
+    // let animation = wx.createAnimation({
+    //   duration: 300,
+    // });
+    // for (var i in this.data.type) {
+    //   if (index == i && index != active) {
+    //     animation.left(i * 50 + 22 + '%').step()
+    //   }
+    // }
+
     // this.setData({
-    //   companyList: companyList,
-    //   companyIndexList: companyIndexList,
-    //   operationTeam: companyIndexList[0],
-    //   sendList: sendList,
-    //   sendIndexList: sendIndexList,
-    //   receiptList: receiptList,
-    //   receiptIndexList: receiptIndexList,
-    //   consignorList: consignorList,
-    //   consigneeList: consigneeList,
-    //   consignorObject: consignorList[0],
-    //   consigneeObject: consigneeList[0],
-    //   consignor: consignorList[0].id,
-    //   consignee: consigneeList[0].id,
-    //   vehicleTypeList: newVehicleTypeList,
-    //   vehicleTypeIndexList: vehicleTypeIndexList,
-    //   vehicleType: vehicleTypeIndexList[0],
-    //   sendAddress: sendAddress,
-    //   reciveAddress: reciveAddress
+    //   animation: animation.export()
     // })
+
   },
 
   //选择寄件/收件地址
@@ -680,7 +692,8 @@ Page({
       remark: remark,
       bz: this.data.bz
     })
-  },
+  }
+})
 
   //预约时间的选择
   // timeChange(e) {
@@ -759,4 +772,64 @@ Page({
   //   //导航栏自动带出配送距离 参考运费
 
   // },
-})
+
+      //owshow
+       //查询地址簿
+      // let sendList = []
+      // let sendIndexList = []
+      // let receiptList = []
+      // let receiptIndexList = []
+      // let consignorList = []
+      // let consigneeList = []
+      // let addressBook = await ToolServer.findAddressBook('')
+
+      // for (let i = 0; i < addressBook.length; i++) {
+      //   let addressName = addressBook[i].address
+      //   let addressId = addressBook[i]._id
+      //   sendList.push(addressName)
+      //   sendIndexList.push(addressId)
+      //   receiptList.push(addressName)
+      //   receiptIndexList.push(addressId)
+
+      //   //寄件人/收件人 对象集合
+      //   let name = addressBook[i].contactName
+      //   let phone = addressBook[i].contactPhone
+      //   let coordinates = addressBook[i].coordinates
+
+      //   let consignorObject = new Object()
+      //   consignorObject.address = addressName
+      //   consignorObject.name = name
+      //   consignorObject.phone = phone
+      //   consignorObject.coordinates = coordinates
+      //   consignorObject.id = addressId
+      //   let consigneeObject = new Object()
+      //   consigneeObject.address = addressName
+      //   consigneeObject.name = name
+      //   consigneeObject.phone = phone
+      //   consigneeObject.coordinates = coordinates
+      //   consigneeObject.id = addressId
+      //   consignorList.push(consignorObject)
+      //   consigneeList.push(consigneeObject)
+      // }
+
+
+    // this.setData({
+    //   companyList: companyList,
+    //   companyIndexList: companyIndexList,
+    //   operationTeam: companyIndexList[0],
+    //   sendList: sendList,
+    //   sendIndexList: sendIndexList,
+    //   receiptList: receiptList,
+    //   receiptIndexList: receiptIndexList,
+    //   consignorList: consignorList,
+    //   consigneeList: consigneeList,
+    //   consignorObject: consignorList[0],
+    //   consigneeObject: consigneeList[0],
+    //   consignor: consignorList[0].id,
+    //   consignee: consigneeList[0].id,
+    //   vehicleTypeList: newVehicleTypeList,
+    //   vehicleTypeIndexList: vehicleTypeIndexList,
+    //   vehicleType: vehicleTypeIndexList[0],
+    //   sendAddress: sendAddress,
+    //   reciveAddress: reciveAddress
+    // })

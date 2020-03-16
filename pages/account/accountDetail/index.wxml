@@ -1,0 +1,72 @@
+<!-- pages/account/accountDetail/index.wxml -->
+<view class="top">
+	<view class="title">单日总金额（元）</view>
+	<view class="content">
+		<view class="box_1">
+			{{list.rows.total.aggregateQrCode + list.rows.total.staticQrCode + list.rows.total.cash}}
+		</view>
+		<view class="box_2">
+			<view>{{list.rows.total.aggregateQrCode + list.rows.total.staticQrCode}}</view>
+			<view>线上支付</view>
+		</view>
+		<view class="box_2">
+			<view>{{list.rows.total.cash}}</view>
+			<view>现金付款</view>
+		</view>
+	</view>
+</view>
+<scroll-view scroll-y="{{true}}">
+	<view
+	 class="box"
+	 wx:for="{{list.rows.waybills}}"
+	 wx:key=""
+	 data-id="{{item.id}}"
+	 bindtap="bindDes"
+	>
+		<view class="box_1">
+			<view class="title">运单号</view>
+			<view class="value">{{item.sn}}</view>
+		</view>
+		<view class="box_2">
+			<view class="title">收件人</view>
+			<view class="value">
+				<text wx:if="{{item.consignee.nickname !=''}}">{{item.consignee.nickname}}</text>
+				<text wx:else>{{item.consignee.contact.name}}</text>
+				<text>{{item.consignee.contact.phone}}</text>
+			</view>
+		</view>
+		<view class="box_2">
+			<view class="title">包裹数</view>
+			<view class="value">{{item.packageInfo.packageCount}}个</view>
+		</view>
+		<view class="box_2">
+			<view class="title">签收时间</view>
+			<view class="value">{{item.signInAt}}</view>
+			<view class="title_2">总价</view>
+			<view class="value_2">￥{{item.cost.revisedFreigth + item.cost.revisedCargoMoney}}</view>
+		</view>
+		<view class="box_2">
+			<view class="title">备注</view>
+			<view class="value" wx:if="{{item.remark.deliverymanRemark == '' }}">无</view>
+			<view class="value" wx:else>{{item.remark.deliverymanRemark}}</view>
+		</view>
+	</view>
+</scroll-view>
+<view class="bottom {{list.rows.status == 'NOT_CHECK'?'':'bottom_active'}}">
+	<view>
+		合计：
+		<text>
+      ￥{{ list.rows.total.freightCost +list.rows.total.premiumCost +  list.rows.total.cargoMoneyCost}}
+    </text>
+	</view>
+	<!-- <view>手续费:￥{{list.rows.total.freightCommission}}</view> -->
+	<view>运费:￥{{list.rows.total.freightCost}}</view>
+	<view bindtap="bindConfirm" wx:if="{{list.rows.status == 'NOT_CHECK'}}">核对</view>
+</view>
+<dialog
+ popup-show='{{shows}}'
+ title="{{title}}"
+ bindbtn="btn"
+ is-cancel-show
+></dialog>
+

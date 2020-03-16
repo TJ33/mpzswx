@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "miss": "../../../component/miss/index"
+  },
+  "navigationBarBackgroundColor": "#ffffff",
+  "navigationBarTextStyle": "black",
+  "navigationBarTitleText": "对账",
+  "backgroundColor": "#eeeeee",
+  "backgroundTextStyle": "light",
+  "enablePullDownRefresh": true,
+  "onReachBottomDistance": 50
+}

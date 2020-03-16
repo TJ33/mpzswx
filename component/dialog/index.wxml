@@ -1,0 +1,19 @@
+<!-- 组件--弹出框 -->
+<view class="Dialog_Box" catchtouchmove="ture" animation="{{showHeightAnimation}}">
+  <view class="Dialog_Box_float {{popupShow ? 'Dialog_Box_float_show' : ''}}">
+    <view class="Dialog_  {{popupShow ? 'Dialog_show' : ''}}">
+      <view class="Dialog_title">{{title}}</view>
+      <view class="Dialog_content">
+        <slot></slot>
+      </view>
+      <view class="Dialog_Btn">
+        <button class="Dialog_Btn_s" hover-class="Dialog_Btn_hover" plain bindtap="cancelBtn" wx:if="{{isCancelShow}}">
+          取消
+        </button>
+        <button class="Dialog_Btn_s" hover-class="Dialog_Btn_hover" plain bindtap="confirmBtn">
+          确认
+        </button>
+      </view>
+    </view>
+  </view>
+</view>

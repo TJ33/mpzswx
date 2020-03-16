@@ -1,0 +1,191 @@
+<!-- pages/account/accountList/index.wxml -->
+<view class="TopicTitle">
+	<view
+	 class="TopicTitleBox"
+	 wx:key=""
+	 wx:for="{{type}}"
+	 data-index="{{index}}"
+	 bindtap="{{TopicTitleActive == index ? '' : 'titleTab'}}"
+	>
+		<view class="{{TopicTitleActive == index ? 'TopicTitleActive' : ''}}">{{item}}</view>
+	</view>
+	<view class="TopicTitle-bottom" animation="{{animation}}" />
+</view>
+<view class="screen">
+	<view class="left">
+		<view
+		 class="{{screenActive == index ? 'screen_active' : ''}}"
+		 wx:for="{{screen}}"
+		 wx:key=""
+		 data-index="{{index}}"
+		 bindtap="screenTab"
+		>
+			{{item}}
+		</view>
+	</view>
+	<view class="center" wx:if="{{screenBs}}">日期：{{timeAt}} ~ {{timeEt}}</view>
+	<view class="right" wx:if="{{TopicTitleActive == 0}}">共{{list1.rows.length}}天未对账</view>
+	<view class="right" wx:else>共{{list2.rows.length}}天已对账</view>
+</view>
+<view class="box">
+	<view class="ssBox {{screenBs?'BoxShow':''}}">
+		<view class="select {{screenBs?'show':''}}">
+			<view class="left">日期选择</view>
+			<view class="right">
+				<view
+				 class="{{dataIndex == index?'on':'down'}}"
+				 wx:for="{{dataList}}"
+				 wx:key=""
+				 data-index="{{index}}"
+				 bindtap="bindData"
+				>
+					{{item}}
+				</view>
+			</view>
+			<i class="iconfont icon-rili1 {{ssBoxShow?'bs':''}}" bindtap="bindssBox" />
+		</view>
+	</view>
+	<view class="ssBox {{ssBoxShow?'BoxShow':''}}">
+		<view class="dataBox {{ssBoxShow?'show':''}}">
+			<picker
+			 mode="date"
+			 value="{{timeAt}}"
+			 start=""
+			 end="{{timeEt}}"
+			 bindchange="bindtimeAt"
+			>
+				<view class="picker">{{timeAt}}</view>
+			</picker>
+			~
+			<picker
+			 mode="date"
+			 value="{{timeEt}}"
+			 start="{{timeAt}}"
+			 end=""
+			 bindchange="bindtimeEt"
+			>
+				<view class="picker">{{timeEt}}</view>
+			</picker>
+		</view>
+	</view>
+</view>
+<!-- <view class="{{screenBs?'bg_active':'bg_hidden'}}">
+    <view class="{{screenBs?'black_active':'black_hidden'}}" bindtap="SreenOut"></view>
+    <view class="choice {{screenBs?'choice_active':'choice_hidden'}}">
+        <view>
+            开始日期
+            <picker mode="date" value="{{timeAt}}" start="2015-09-01" end="2099-09-01" bindchange="bindtimeAt">
+                {{timeAt}}
+            </picker>
+        </view>
+        <view>
+            结束日期
+            <picker mode="date" value="{{timeEt}}" start="{{timeAt}}" end="2099-09-01" bindchange="bindtimeEt">
+                {{timeEt}}
+            </picker>
+        </view>
+        <view bindtap="bindSearch">查询</view>
+    </view>
+</view> -->
+<swiper
+ duration="{{duration}}"
+ style="height:calc(100vh - 197rpx)"
+ current="{{TopicTitleActive}}"
+ bindchange="bindtransition"
+>
+	<block>
+		<swiper-item>
+			<scroll-view scroll-y="{{true}}" bindscrolltolower="bindscrolltolower1">
+				<view
+				 class="box"
+				 wx:for="{{list1.rows}}"
+				 wx:key=""
+				 data-id="{{item.date}}"
+				 bindtap="bindBill"
+				>
+					<view class="top">
+						<view>{{item.date}}</view>
+						<view class="none" wx:if="{{TopicTitleActive == 0}}">未对账</view>
+						<view class="dz" wx:else>已对账</view>
+					</view>
+					<view class="bottom">
+						<view class="content">
+							<view class="contentBox">
+								<view class="contentBox_1">总单数</view>
+								<view class="contentBox_2">{{item.waybills.length}}单</view>
+							</view>
+						</view>
+						<view class="content">
+							<view class="contentBox">
+								<view class="contentBox_1">线上支付</view>
+								<view class="contentBox_2">
+									{{item.total.aggregateQrCode + item.total.staticQrCode}}元
+								</view>
+							</view>
+							<view class="contentBox">
+								<view class="contentBox_3">现金收款</view>
+								<view class="contentBox_2">{{item.total.cash}}元</view>
+							</view>
+						</view>
+						<view class="content">
+							<view class="contentBox">
+								<view class="contentBox_1">总金额</view>
+								<view class="contentBox_2">
+									{{item.total.freightCost +item.total.premiumCost + item.total.cargoMoneyCost}}元
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+				<miss wx:if="{{list1.rows.length == 0}}" />
+			</scroll-view>
+		</swiper-item>
+		<swiper-item>
+			<scroll-view scroll-y="{{true}}" bindscrolltolower="bindscrolltolower2">
+				<view
+				 class="box"
+				 wx:for="{{list2.rows}}"
+				 wx:key=""
+				 data-id="{{item.date}}"
+				 bindtap="bindBill"
+				>
+					<view class="top">
+						<view>{{item.date}}</view>
+						<view class="none" wx:if="{{TopicTitleActive == 0}}">未对账</view>
+						<view class="dz" wx:else>已对账</view>
+					</view>
+					<view class="bottom">
+						<view class="content">
+							<view class="contentBox">
+								<view class="contentBox_1">总单数</view>
+								<view class="contentBox_2">{{item.waybills.length}}单</view>
+							</view>
+						</view>
+						<view class="content">
+							<view class="contentBox">
+								<view class="contentBox_1">线上支付</view>
+								<view class="contentBox_2">
+									{{item.total.aggregateQrCode + item.total.staticQrCode}}元
+								</view>
+							</view>
+							<view class="contentBox">
+								<view class="contentBox_3">现金收款</view>
+								<view class="contentBox_2">{{item.total.cash}}元</view>
+							</view>
+						</view>
+						<view class="content">
+							<view class="contentBox">
+								<view class="contentBox_1">总金额</view>
+								<view class="contentBox_2">
+									{{item.total.freightCost +item.total.premiumCost + item.total.cargoMoneyCost}}元
+								</view>
+							</view>
+						</view>
+					</view>
+				</view>
+				<miss wx:if="{{list2.rows.length == 0}}" />
+			</scroll-view>
+		</swiper-item>
+	</block>
+</swiper>
+
