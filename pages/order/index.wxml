@@ -172,11 +172,22 @@
 		<view class="content">
 			<view class="left">
 				<i class="iconfont icon-yunshu" />
-				<view>参考运费</view>
+				<view>参考运费(元)</view>
 			</view>
 			<view class="right">
 				<view class="color" wx:if="{{haveFreight}}">暂无运费信息</view>
 				<view class="color" wx:else>{{freight}}</view>
+				<i class="iconfont icon-qianjin" />
+			</view>
+		</view>
+		<view class="content">
+			<view class="left">
+				<i class="iconfont icon-yunshu" />
+				<view>参考距离(公里)</view>
+			</view>
+			<view class="right">
+				<view class="color" wx:if="{{haveDistance}}">暂无距离信息</view>
+				<view class="color" wx:else>{{distance}}</view>
 				<i class="iconfont icon-qianjin" />
 			</view>
 		</view>
@@ -196,6 +207,11 @@
 					/>
 					</view>
 								<i class="iconfont icon-qianjin" />
+						</view>
+				</view>
+				<view class="bz">
+						<view class="{{item.checked?'on':'dowm'}}" wx:for="{{bz}}" wx:key="" bindtap="bindBz" data-index="{{index}}">
+								{{item.value}}
 						</view>
 				</view>
 		</view>

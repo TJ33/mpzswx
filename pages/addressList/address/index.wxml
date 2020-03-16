@@ -1,27 +1,36 @@
 <view class="box">
 	<view class="content">
-		<view class="left">店铺名称:</view>
-		<view class="right">
-			<input value="{{storeName}}" bindinput="bindStoreName" placeholder="请输入店铺名称" />
+		<view class="left">
+			<text style="color:red">*</text>
+			联系姓名:
 		</view>
-	</view>
-	<view class="content">
-		<view class="left">联系姓名:</view>
 		<view class="right">
 			<input value="{{name}}" bindinput="bindName" placeholder="请输入联系姓名" />
 		</view>
 	</view>
 	<view class="content">
-		<view class="left">联系电话:</view>
+		<view class="left">
+			<text style="color:red">*</text>
+			联系电话:
+		</view>
 		<view class="right">
 			<input value="{{phone}}" bindinput="bindPhone" placeholder="请输入手机号码" />
 		</view>
 	</view>
 	<view class="content" bindtap="bindDw">
-		<view class="left">店铺地址:</view>
+		<view class="left">
+			<text style="color:red">*</text>
+			店铺地址:
+		</view>
 		<view class="right">
 			<view class="null" wx:if="{{address ==''}}">请选择地址</view>
 			<view class="" wx:else>{{address}}</view>
+		</view>
+	</view>
+	<view class="content">
+		<view class="left">店铺名称:</view>
+		<view class="right">
+			<input value="{{storeName}}" bindinput="bindStoreName" placeholder="请输入店铺名称" />
 		</view>
 	</view>
 	<view class="content">

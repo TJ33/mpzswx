@@ -28,13 +28,13 @@ Page({
     freightMonthly: false,
     cargoMoney: '',        //代收货款金额
     distance: '',          //配送距离
-    remark: '',            //商家备注
     vehicleTypeIndexList: '',   //车辆下标集合  
     vehicleTypeList: [],       //车辆集合
     vehicleTypeIndex: 0,        //车辆类型下标
     vehicleType: '',             //车辆id
     freight: '',           //运费
     haveFreight: true,
+    haveDistance: true,
     operationTeam: '',     //物流公司id
     state: '0',
     receiveAt: moment().format("YYYY-MM-DD HH:mm"),         //预约时间
@@ -68,6 +68,25 @@ Page({
     sendAddress: '',
     reciveAddress: '',
     id: '',        //0寄件人，1收件人
+
+    //备注相关
+    remark: '',            //商家备注
+    bz: [{
+      value: '挂账',
+      checked: false
+    }, {
+      value: '给货',
+      checked: false
+    }, {
+      value: '换货',
+      checked: false
+    }, {
+      value: '退货',
+      checked: false
+    }, {
+      value: '顺带',
+      checked: false
+    }],
 
     // sendIndexList: [],     //寄件地址下标集合
     // sendList: [],          //寄件地址集合
@@ -269,6 +288,7 @@ Page({
           freight: price,
           distance: distance,
           haveFreight: false,
+          haveDistance: false,
           consigneeObject: consignee,
           consignorObject: consignor
         })
@@ -407,6 +427,7 @@ Page({
     this.setData({
       vehicleType: vehicleId,
       haveFreight: false,
+      haveDistance: false,
       freight: price,
       distance: distance,
       vehicleTypeIndex: index
@@ -486,6 +507,7 @@ Page({
       //运费相关
       vehicleType: vehicleId,
       haveFreight: false,
+      haveDistance: false,
       freight: price,
       distance: distance
     })
@@ -514,6 +536,7 @@ Page({
       //运费相关
       vehicleType: vehicleId,
       haveFreight: false,
+      haveDistance: false,
       freight: price,
       distance: distance
     })
@@ -629,6 +652,32 @@ Page({
       receiveAt: receiveAt,
       haveTime: false
     });
+  },
+
+  //点击备注选项
+  bindBlurBz(e) {
+    this.setData({ remark: e.detail.value })
+  },
+
+  //备注
+  bindBz(e) {
+    let index = e.currentTarget.dataset.index
+    let remark
+    for (var i in this.data.bz) {
+      if (!this.data.bz[index].checked) {
+        remark = this.data.remark + ' ' + this.data.bz[index].value
+        this.data.bz[index].checked = !this.data.bz[index].checked
+      } else {
+        remark = this.data.remark.split(this.data.bz[index].value).join("");
+        this.data.bz[index].checked = !this.data.bz[index].checked
+      }
+    }
+
+
+    this.setData({
+      remark: remark,
+      bz: this.data.bz
+    })
   },
 
   //预约时间的选择

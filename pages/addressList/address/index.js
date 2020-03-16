@@ -153,14 +153,6 @@ Page({
     let id = this.data.id
     let door = this.data.door
 
-    if (storeName == "") {
-      wx.showToast({
-        title: '请输入店铺名称',
-        icon: 'none',
-        duration: 1000
-      })
-      return
-    }
 
     if (name == "") {
       wx.showToast({
@@ -188,6 +180,16 @@ Page({
       })
       return
     }
+
+
+    // if (storeName == "") {
+    //   wx.showToast({
+    //     title: '请输入店铺名称',
+    //     icon: 'none',
+    //     duration: 1000
+    //   })
+    //   return
+    // }
 
 
     if (!(/^1[3456789]\d{9}$/.test(phone))) {
