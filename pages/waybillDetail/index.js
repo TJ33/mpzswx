@@ -91,8 +91,8 @@ Page({
     //收件人信息 店铺名 姓名 电话
     let consignee = waybill.consignee
     let consigneeAddress = consignee.address
-    let consigneeName = consignor.contactName
-    let consigneePhone = consignor.contactPhone
+    let consigneeName = consignee.contactName
+    let consigneePhone = consignee.contactPhone
     let newConsignee = new Object()
     newConsignee.address = consigneeAddress
     newConsignee.name = consigneeName
