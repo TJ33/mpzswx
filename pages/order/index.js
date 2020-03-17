@@ -34,7 +34,6 @@ Page({
     operationTeam: '',     //物流公司id
     state: '0',
     receiveAt: moment().format("YYYY-MM-DD HH:mm"),         //预约时间
-    animation: '',         //
     appointment: '',       //
     companyIndexList: [],  //物流公司下标集合
     companyList: [],       //物流公司集合
@@ -90,42 +89,11 @@ Page({
     vehicleTypeIndex: 0,        //车辆类型下标
     vehicleType: '',             //车辆id
     TopicTitleActive: 0,
-    animation: '',
     vehicleTypeArray: [],
     load: '',
     size: '',
     capacity: '',
     photo: ''
-
-    // sendIndexList: [],     //寄件地址下标集合
-    // sendList: [],          //寄件地址集合
-    // sendIndex: 0,          //寄件地址下标
-    // receiptIndexList: [],  //收件地址下标集合
-    // receiptList: [],       //收件地址集合
-    // receiptIndex: 0,       //收件地址下标
-    // consignorList: [],      //寄件人对象集合
-    // consigneeList: [],      //收件人对象集合
-    // sendAddress: false,
-    // reciveAddress: false,
-    //useCoupon:'',        //优惠卷
-    // freightMonthlyList: [{    //运费是否月结
-    //   id: true,
-    //   value: '是',
-    // },
-    // {
-    //   id: false,
-    //   value: '否',
-    // }],
-    // stateList: [               //现在 0/预约 1
-    //   {
-    //     id: '0',
-    //     value: '现在'
-    //   },
-    //   {
-    //     id: '1',
-    //     value: '预约'
-    //   }
-    // ],
 
   },
 
@@ -170,7 +138,7 @@ Page({
       let newVehicleTypeList = []
       let newVehicleTypeArray = []
       let vehicleTypeList = await ToolServer.vehicleType(companyIndexList[0])
-      console.log('vehicleTypeList========================', vehicleTypeList)
+
 
       for (let i = 0; i < vehicleTypeList.length; i++) {
         let id = vehicleTypeList[i].id
@@ -189,12 +157,8 @@ Page({
         newVehicleTypeList.push(object)
         newVehicleTypeArray.push(name)
       }
-      console.log('vehicleTypeIndexList========================', vehicleTypeIndexList)
-      console.log('newVehicleTypeList========================', newVehicleTypeList)
-      console.log('newVehicleTypeArray========================', newVehicleTypeArray)
 
       let vehicle = newVehicleTypeList[0]
-
       let load = vehicle.load
       let size = vehicle.size
       let capacity = vehicle.capacity
@@ -232,6 +196,7 @@ Page({
           vehicleTypeList: newVehicleTypeList,
           vehicleTypeArray: newVehicleTypeArray,
           vehicleType: vehicleTypeIndexList[0],
+          vehicleTypeIndexList: vehicleTypeIndexList,
           //新的
           sendAddress: sendAddress,
           consignor: consignor._id,
@@ -245,6 +210,7 @@ Page({
           vehicleTypeList: newVehicleTypeList,
           vehicleTypeArray: newVehicleTypeArray,
           vehicleType: vehicleTypeIndexList[0],
+          vehicleTypeIndexList: vehicleTypeIndexList
         })
       }
 
@@ -274,6 +240,7 @@ Page({
         let price = result.price
         let active = this.data.TopicTitleActive
 
+
         this.setData({
           companyList: companyList,
           companyIndexList: companyIndexList,
@@ -281,6 +248,7 @@ Page({
           vehicleTypeList: newVehicleTypeList,
           vehicleTypeArray: newVehicleTypeArray,
           vehicleType: vehicleTypeIndexList[0],
+          vehicleTypeIndexList: vehicleTypeIndexList,
           //新的
           sendAddress: sendAddress,
           reciveAddress: reciveAddress,
@@ -301,6 +269,7 @@ Page({
           vehicleTypeList: newVehicleTypeList,
           vehicleTypeArray: newVehicleTypeArray,
           vehicleType: vehicleTypeIndexList[0],
+          vehicleTypeIndexList: vehicleTypeIndexList
         })
       }
     }
@@ -315,28 +284,49 @@ Page({
     let size = vehicle.size
     let capacity = vehicle.capacity
     let photo = vehicle.photo
+    let vehicleId = this.data.vehicleTypeIndexList[index]
+
+
+    //根据寄件人坐标 收件人坐标 车辆类型 计算配送距离 运费
+    let sendCoordinates = this.data.consignorObject.coordinates
+    let receipteCoordinates = this.data.consigneeObject.coordinates
+
+    if (sendCoordinates == '') {
+      wx.showToast({
+        title: '请选择寄件地址',
+        icon: 'none',
+        duration: 1000
+      });
+      return
+    }
+    if (receipteCoordinates == '') {
+      wx.showToast({
+        title: '请选择收件地址',
+        icon: 'none',
+        duration: 1000
+      });
+      return
+    }
+
+    //查询运费
+    let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
+    let distance = result.distance
+    let price = result.price
+    let active = this.data.TopicTitleActive
+
     this.setData({
-      load: load,
-      size: size,
-      capacity: capacity,
-      photo: photo,
+      load: load != undefined ? load : '',
+      size: size != undefined ? size : '',
+      capacity: capacity != undefined ? capacity : '',
+      photo: photo != undefined ? photo : '',
       TopicTitleActive: index,
+      vehicleType: vehicleId,
+      haveFreight: false,
+      haveDistance: false,
+      freight: price,
+      distance: distance,
+      vehicleTypeIndex: index
     })
-
-
-    // let active = this.data.TopicTitleActive
-    // let animation = wx.createAnimation({
-    //   duration: 300,
-    // });
-    // for (var i in this.data.type) {
-    //   if (index == i && index != active) {
-    //     animation.left(i * 50 + 22 + '%').step()
-    //   }
-    // }
-
-    // this.setData({
-    //   animation: animation.export()
-    // })
 
   },
 
@@ -345,24 +335,6 @@ Page({
     let id = e.currentTarget.dataset.id
     wx.navigateTo({
       url: `../addressList/searchAddress/index?id=${id}`
-    })
-  },
-
-  //滑动切换
-  async bindtransition(e) {
-    let index = e.detail.current;
-    let active = this.data.TopicTitleActive
-    let animation = wx.createAnimation({
-      duration: 300,
-    });
-    for (var i in this.data.type) {
-      if (index == i && index != active) {
-        animation.left(i * 50 + 22 + '%').step()
-      }
-    }
-    this.setData({
-      'TopicTitleActive': index,
-      'animation': animation.export()
     })
   },
 
@@ -421,18 +393,7 @@ Page({
       return
     }
 
-
-    let send = {
-      longitude: sendCoordinates[0],
-      latitude: sendCoordinates[1]
-    }
-    let receipt = {
-      longitude: receipteCoordinates[0],
-      latitude: receipteCoordinates[1]
-    }
     //查询运费
-
-
     let result = await ToolServer.waybillDistance(sendCoordinates, receipteCoordinates, vehicleId);
     let distance = result.distance
     let price = result.price
@@ -694,6 +655,38 @@ Page({
     })
   }
 })
+
+
+  //data相关
+    // sendIndexList: [],     //寄件地址下标集合
+    // sendList: [],          //寄件地址集合
+    // sendIndex: 0,          //寄件地址下标
+    // receiptIndexList: [],  //收件地址下标集合
+    // receiptList: [],       //收件地址集合
+    // receiptIndex: 0,       //收件地址下标
+    // consignorList: [],      //寄件人对象集合
+    // consigneeList: [],      //收件人对象集合
+    // sendAddress: false,
+    // reciveAddress: false,
+    //useCoupon:'',        //优惠卷
+    // freightMonthlyList: [{    //运费是否月结
+    //   id: true,
+    //   value: '是',
+    // },
+    // {
+    //   id: false,
+    //   value: '否',
+    // }],
+    // stateList: [               //现在 0/预约 1
+    //   {
+    //     id: '0',
+    //     value: '现在'
+    //   },
+    //   {
+    //     id: '1',
+    //     value: '预约'
+    //   }
+    // ],
 
   //预约时间的选择
   // timeChange(e) {

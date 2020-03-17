@@ -98,20 +98,24 @@
 	</view>
 	<view class="box-3" wx:index="{{index}}">
 		<view class="box-left">
-			<image class="img" src="{{photo}}" />
+			<image class="img" src="{{photo}}" wx:if="{{photo!=''}}" />
+			<image class="img" src="../../images/order/no-img.png" wx:else />
 		</view>
 		<view class="box-right">
 			<view class="box-right-all">
 				载重:
-				<text>{{load}}公斤</text>
+				<text wx:if="{{load!=''}}">{{load!=''?load:''}}公斤</text>
+				<text wx:else>暂无数据</text>
 			</view>
 			<view class="box-right-all">
 				长宽高:
-				<text>{{size}}米</text>
+				<text wx:if="{{size!=''}}">{{size!=''?size:''}}米</text>
+				<text wx:else>暂无数据</text>
 			</view>
 			<view class="box-right-all">
 				载货体积:
-				<text>{{capacity}}方</text>
+				<text wx:if="{{capacity!=''}}">{{capacity!=''?capacity:''}}方</text>
+				<text wx:else>暂无数据</text>
 			</view>
 			<view/>
 		</view>
