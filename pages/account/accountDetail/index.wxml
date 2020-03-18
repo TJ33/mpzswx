@@ -2,23 +2,21 @@
 <view class="top">
 	<view class="title">单日总金额（元）</view>
 	<view class="content">
-		<view class="box_1">
-			{{list.rows.total.aggregateQrCode + list.rows.total.staticQrCode + list.rows.total.cash}}
+		<view class="box_1">{{list.total.cargoMoneyCost}}</view>
+		<view class="box_2">
+			<view>{{list.total.freightCost}}</view>
+			<view>实收运费总额</view>
 		</view>
 		<view class="box_2">
-			<view>{{list.rows.total.aggregateQrCode + list.rows.total.staticQrCode}}</view>
-			<view>线上支付</view>
-		</view>
-		<view class="box_2">
-			<view>{{list.rows.total.cash}}</view>
-			<view>现金付款</view>
+			<view>{{list.total.cargoMoneyCost}}</view>
+			<view>实收货款总额</view>
 		</view>
 	</view>
 </view>
 <scroll-view scroll-y="{{true}}">
 	<view
 	 class="box"
-	 wx:for="{{list.rows.waybills}}"
+	 wx:for="{{list.waybills}}"
 	 wx:key=""
 	 data-id="{{item.id}}"
 	 bindtap="bindDes"
@@ -35,33 +33,31 @@
 				<text>{{item.consignee.contact.phone}}</text>
 			</view>
 		</view>
-		<view class="box_2">
+		<!-- <view class="box_2">
 			<view class="title">包裹数</view>
 			<view class="value">{{item.packageInfo.packageCount}}个</view>
-		</view>
+		</view> -->
 		<view class="box_2">
 			<view class="title">签收时间</view>
-			<view class="value">{{item.signInAt}}</view>
+			<view class="value">{{item.time.signInAt}}</view>
 			<view class="title_2">总价</view>
-			<view class="value_2">￥{{item.cost.revisedFreigth + item.cost.revisedCargoMoney}}</view>
+			<view class="value_2">￥{{item.total.cargoMoneyCost}}</view>
 		</view>
 		<view class="box_2">
 			<view class="title">备注</view>
-			<view class="value" wx:if="{{item.remark.deliverymanRemark == '' }}">无</view>
-			<view class="value" wx:else>{{item.remark.deliverymanRemark}}</view>
+			<view class="value" wx:if="{{item.remark == '' }}">无</view>
+			<view class="value" wx:else>{{item.remark}}</view>
 		</view>
 	</view>
 </scroll-view>
-<view class="bottom {{list.rows.status == 'NOT_CHECK'?'':'bottom_active'}}">
+<view class="bottom {{list.status == 'NOT_CHECK'?'':'bottom_active'}}">
 	<view>
 		合计：
-		<text>
-      ￥{{ list.rows.total.freightCost +list.rows.total.premiumCost +  list.rows.total.cargoMoneyCost}}
-    </text>
+		<text>￥{{ list.total.cargoMoneyCost}}</text>
 	</view>
-	<!-- <view>手续费:￥{{list.rows.total.freightCommission}}</view> -->
-	<view>运费:￥{{list.rows.total.freightCost}}</view>
-	<view bindtap="bindConfirm" wx:if="{{list.rows.status == 'NOT_CHECK'}}">核对</view>
+	<!-- <view>手续费:￥{{list.total.freightCommission}}</view> -->
+	<view>运费:￥{{list.total.freight}}</view>
+	<view bindtap="bindConfirm" wx:if="{{list.status == 'NOT_CHECK'}}">核对</view>
 </view>
 <dialog
  popup-show='{{shows}}'

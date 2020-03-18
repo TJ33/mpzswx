@@ -7,20 +7,21 @@ Page({
   data: {
     list: [],
     pageNum: 1,
-    id: '',
+    time: '',
     title: '核对账单',
     shows: false
   },
   async onLoad(options) {
-    let id = options.id
+    let time = options.time
     let status = options.status
-    console.log('id===========================', id)
+    console.log('time===========================', time)
     console.log('status================================', status)
-    let list = await ToolServer.reconcileDateList(id, status, this.data.pageNum)
-    list.rows.waybills = await this.createTime(list.rows.waybills)
+    let list = await ToolServer.getAccountList(time, time, status, this.data.pageNum)
+    console.log('list================================================', list)
+    list.waybills = await this.createTime(list.waybills)
     this.setData({
       'list': list,
-      'id': id
+      'time': time
     })
   },
 
@@ -44,9 +45,9 @@ Page({
   },
   async btn(e) {
     if (e.detail) {
-      await ToolServer.reconcileConfirm(this.data.list.rows._id)
+      await ToolServer.reconcileConfirm(this.data.list._id)
       this.data.list = await ToolServer.reconcileDateList(this.data.id, 'HAVE_CHECK', this.data.pageNum)
-      this.data.list.rows.waybills = await this.createTime(this.data.list.rows.waybills)
+      this.data.list.waybills = await this.createTime(this.data.list.waybills)
       wx.redirectTo({ url: '../account/index' })
     }
     this.setData({
