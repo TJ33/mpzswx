@@ -12,14 +12,16 @@ Page({
     shows: false
   },
   async onLoad(options) {
-    // let id = options.id
-    // let status = options.status
-    // let list = await ToolServer.reconcileDateList(id, status, this.data.pageNum)
-    // list.rows.waybills = await this.createTime(list.rows.waybills)
-    // this.setData({
-    //   'list': list,
-    //   'id': id
-    // })
+    let id = options.id
+    let status = options.status
+    console.log('id===========================', id)
+    console.log('status================================', status)
+    let list = await ToolServer.reconcileDateList(id, status, this.data.pageNum)
+    list.rows.waybills = await this.createTime(list.rows.waybills)
+    this.setData({
+      'list': list,
+      'id': id
+    })
   },
 
   onShow: function () {

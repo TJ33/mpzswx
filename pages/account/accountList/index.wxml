@@ -23,7 +23,7 @@
 			{{item}}
 		</view>
 	</view>
-	<view class="center" wx:if="{{screenBs}}">日期：{{timeAt}} ~ {{timeEt}}</view>
+	<view class="center" wx:if="{{screenBs}}">日期：{{startTime}} ~ {{endTime}}</view>
 	<view class="right" wx:if="{{TopicTitleActive == 0}}">共{{noCheckList.length}}天未对账</view>
 	<view class="right" wx:else>共{{haveCheckList.length}}天已对账</view>
 </view>
@@ -49,22 +49,22 @@
 		<view class="dataBox {{ssBoxShow?'show':''}}">
 			<picker
 			 mode="date"
-			 value="{{timeAt}}"
+			 value="{{startTime}}"
 			 start=""
-			 end="{{timeEt}}"
-			 bindchange="bindtimeAt"
+			 end="{{endTime}}"
+			 bindchange="bindStartTime"
 			>
-				<view class="picker">{{timeAt}}</view>
+				<view class="picker">{{startTime}}</view>
 			</picker>
 			~
 			<picker
 			 mode="date"
-			 value="{{timeEt}}"
-			 start="{{timeAt}}"
+			 value="{{endTime}}"
+			 start="{{startTime}}"
 			 end=""
-			 bindchange="bindtimeEt"
+			 bindchange="bindEndTime"
 			>
-				<view class="picker">{{timeEt}}</view>
+				<view class="picker">{{endTime}}</view>
 			</picker>
 		</view>
 	</view>
