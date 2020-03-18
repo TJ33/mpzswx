@@ -143,7 +143,7 @@ class ToolServer {
     return this.post2(url, data)
   }
 
-  //未实现功能
+  //取消订单
   async cancelOrder(sn) {
     let url = `${domain}/api/wxapp/waybill_del`
     let data = {
@@ -220,6 +220,54 @@ class ToolServer {
     }
     return this.post2(url, data)
   }
+
+  //对账相关
+  //查询账单列表
+  async getAccountList(time, status, pageNum) {
+    let url = `${domain}/api/wxapp/account_list`
+    let data = {
+      time: time,
+      status: status,  //标志:历史对帐(HAVE_CHECK)or未对帐(NOT_CHECK)
+      pageNum: pageNum,
+      pageSize: 10,
+    }
+    return this.post(url, data)
+  }
+
+  //对帐列表--每天
+  async reconcileDateList(time, status, pageNum) {
+
+    let url = `${domain}/api/wxapp/date_list`
+    let data = {
+      time: time,
+      status: status,  //标志:历史对帐(HAVE_CHECK)or未对帐(NOT_CHECK)
+      pageNum: pageNum,
+      pageSize: 10,
+    }
+    return this.post(url, data)
+  }
+
+  //确认对帐
+  async reconcileConfirm(id) {
+    let url = `${domain}/api/wxapp/account_confirm`
+    let data = {
+      id: id,
+    }
+    return this.post(url, data)
+  }
+
+
+  //账单详情
+  async getAccountDetail(time, status, pageNum) {
+    let url = `${domain}/api/wxapp/account_details`
+    let data = {
+      id: id,
+    }
+    return this.post(url, data)
+  }
+
+
+
 
 
   /*-------------------------------------------原版------------------------------------------------*/

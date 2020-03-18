@@ -1,8 +1,9 @@
 {
   "pages": [
-    "pages/order/index",
     "pages/account/accountList/index",
     "pages/account/accountDetail/index",
+    "pages/account/billDetails/index",
+    "pages/order/index",
     "pages/waybill/index",
     "pages/waybillDetail/index",
     "pages/addressList/address/index",

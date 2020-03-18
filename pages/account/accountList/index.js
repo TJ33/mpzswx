@@ -31,8 +31,9 @@ Page({
    * 生命周期函数--监听页面加载
    */
   async onLoad(options) {
-    // let list1 = await ToolServer.reconcileList('', 'NOT_CHECK', this.data.pageNum)
-    // let list2 = await ToolServer.reconcileList('', 'HAVE_CHECK', this.data.pageNum)
+    //周期对账
+    // let list1 = await ToolServer.getAccountList('', 'NOT_CHECK', this.data.pageNum)
+    // let list2 = await ToolServer.getAccountList('', 'HAVE_CHECK', this.data.pageNum)
     // list1.rows = await this.createTime(list1.rows)
     // list2.rows = await this.createTime(list2.rows)
     // this.setData({
@@ -92,11 +93,11 @@ Page({
       this.data.ssBoxShow = false
       if (this.data.TopicTitleActive == 0) {
         this.data.status = 'NOT_CHECK'
-        this.data.list1 = await ToolServer.reconcileList('', this.data.status, this.data.pageNum)
+        this.data.list1 = await ToolServer.getAccountList('', this.data.status, this.data.pageNum)
         this.data.list1.rows = await this.createTime(this.data.list1.rows)
       } else {
         this.data.status = 'HAVE_CHECK'
-        this.data.list2 = await ToolServer.reconcileList('', this.data.status, this.data.pageNum)
+        this.data.list2 = await ToolServer.getAccountList('', this.data.status, this.data.pageNum)
         this.data.list2.rows = await this.createTime(this.data.list2.rows)
       }
     } else {
@@ -106,11 +107,11 @@ Page({
       this.data.timeEt = data
       if (this.data.TopicTitleActive == 0) {
         this.data.status = 'NOT_CHECK'
-        this.data.list1 = await ToolServer.reconcileList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
+        this.data.list1 = await ToolServer.getAccountList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
         this.data.list1.rows = await this.createTime(this.data.list1.rows)
       } else {
         this.data.status = 'HAVE_CHECK'
-        this.data.list2 = await ToolServer.reconcileList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
+        this.data.list2 = await ToolServer.getAccountList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
         this.data.list2.rows = await this.createTime(this.data.list2.rows)
       }
     }
@@ -138,11 +139,11 @@ Page({
   async bindtimeAt(e) {
     if (this.data.TopicTitleActive == 0) {
       this.data.status = 'NOT_CHECK'
-      this.data.list1 = await ToolServer.reconcileList(e.detail.value + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
+      this.data.list1 = await ToolServer.getAccountList(e.detail.value + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
       this.data.list1.rows = await this.createTime(this.data.list1.rows)
     } else {
       this.data.status = 'HAVE_CHECK'
-      this.data.list2 = await ToolServer.reconcileList(e.detail.value + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
+      this.data.list2 = await ToolServer.getAccountList(e.detail.value + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
       this.data.list2.rows = await this.createTime(this.data.list2.rows)
     }
     this.setData({
@@ -155,11 +156,11 @@ Page({
   async bindtimeEt(e) {
     if (this.data.TopicTitleActive == 0) {
       this.data.status = 'NOT_CHECK'
-      this.data.list1 = await ToolServer.reconcileList(this.data.timeAt + '--' + e.detail.value, this.data.status, this.data.pageNum)
+      this.data.list1 = await ToolServer.getAccountList(this.data.timeAt + '--' + e.detail.value, this.data.status, this.data.pageNum)
       this.data.list1.rows = await this.createTime(this.data.list1.rows)
     } else {
       this.data.status = 'HAVE_CHECK'
-      this.data.list2 = await ToolServer.reconcileList(this.data.timeAt + '--' + e.detail.value, this.data.status, this.data.pageNum)
+      this.data.list2 = await ToolServer.getAccountList(this.data.timeAt + '--' + e.detail.value, this.data.status, this.data.pageNum)
       this.data.list2.rows = await this.createTime(this.data.list2.rows)
     }
     this.setData({
@@ -178,11 +179,11 @@ Page({
   //   let index = this.data.TopicTitleActive
   //   if (index == 0) {
   //     this.data.status = 'NOT_CHECK'
-  //     this.data.list1 = await ToolServer.reconcileList(this.data.timeAt+'--'+this.data.timeEt, this.data.status, this.data.pageNum)
+  //     this.data.list1 = await ToolServer.getAccountList(this.data.timeAt+'--'+this.data.timeEt, this.data.status, this.data.pageNum)
   //     this.data.list1.rows = await this.createTime(this.data.list1.rows)
   //   } else {
   //     this.data.status = 'HAVE_CHECK'
-  //     this.data.list2 = await ToolServer.reconcileList(this.data.timeAt+'--'+this.data.timeEt, this.data.status, this.data.pageNum)
+  //     this.data.list2 = await ToolServer.getAccountList(this.data.timeAt+'--'+this.data.timeEt, this.data.status, this.data.pageNum)
   //     this.data.list2.rows = await this.createTime(this.data.list2.rows)
   //   }
   //   this.setData({
@@ -208,11 +209,11 @@ Page({
     }
     if (this.data.TopicTitleActive == 0) {
       this.data.status = 'NOT_CHECK'
-      this.data.list1 = await ToolServer.reconcileList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
+      this.data.list1 = await ToolServer.getAccountList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
       this.data.list1.rows = await this.createTime(this.data.list1.rows)
     } else {
       this.data.status = 'HAVE_CHECK'
-      this.data.list2 = await ToolServer.reconcileList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
+      this.data.list2 = await ToolServer.getAccountList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
       this.data.list2.rows = await this.createTime(this.data.list2.rows)
     }
 
@@ -248,21 +249,21 @@ Page({
     if (this.data.screenActive == 0) {
       if (index == 0) {
         this.data.status = 'NOT_CHECK'
-        this.data.list1 = await ToolServer.reconcileList('', this.data.status, this.data.pageNum)
+        this.data.list1 = await ToolServer.getAccountList('', this.data.status, this.data.pageNum)
         this.data.list1.rows = await this.createTime(this.data.list1.rows)
       } else {
         this.data.status = 'HAVE_CHECK'
-        this.data.list2 = await ToolServer.reconcileList('', this.data.status, this.data.pageNum)
+        this.data.list2 = await ToolServer.getAccountList('', this.data.status, this.data.pageNum)
         this.data.list2.rows = await this.createTime(this.data.list2.rows)
       }
     } else {
       if (index == 0) {
         this.data.status = 'NOT_CHECK'
-        this.data.list1 = await ToolServer.reconcileList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
+        this.data.list1 = await ToolServer.getAccountList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
         this.data.list1.rows = await this.createTime(this.data.list1.rows)
       } else {
         this.data.status = 'HAVE_CHECK'
-        this.data.list2 = await ToolServer.reconcileList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
+        this.data.list2 = await ToolServer.getAccountList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
         this.data.list2.rows = await this.createTime(this.data.list2.rows)
       }
     }
@@ -287,7 +288,7 @@ Page({
   async tolower(e) {
     if (e.total > this.data.pageNum * e.pageSize) {
       this.data.pageNum++
-      let item = await ToolServer.reconcileList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
+      let item = await ToolServer.getAccountList(this.data.timeAt + '--' + this.data.timeEt, this.data.status, this.data.pageNum)
       e.rows = e.rows.concat(item.rows)
       e.rows = await this.createTime(e.rows)
       this.setData({

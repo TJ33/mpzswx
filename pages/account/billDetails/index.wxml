@@ -1,0 +1,122 @@
+<!-- pages/account/billDetails/index.wxml -->
+<view class="content_active">
+	<view class="box_2">
+		<view class="contents">
+			<!-- <view class="left">
+                <view class="monst"></view >
+                <view class="line"></view >
+            </view > -->
+			<view class="right">
+				<view class="js top">
+					<view class="send">寄</view>
+				</view>
+				<view class="cos" wx:if="{{waybill.consignee._id}}">
+					<view class="shop">{{waybill.consignor.nickname}}</view>
+					<view class="user">
+						{{waybill.consignor.contact.name}}
+						<text selectable="true" class="phone">{{waybill.consignor.contact.phone}}</text>
+					</view>
+				</view>
+				<view wx:else class="cos">
+					<view class="shop">{{waybill.consignor.contact.name}}</view>
+					<view class="user">{{waybill.consignor.contact.phone}}</view>
+				</view>
+			</view>
+		</view>
+		<view class="contents">
+			<!-- <view class="left">
+                <view class="monst2"></view >
+            </view > -->
+			<view class="right">
+				<view class="js bottom">
+					<view class="collect">收</view>
+				</view>
+				<view class="cos" wx:if="{{waybill.consignee._id}}">
+					<view class="shop">{{waybill.consignee.nickname}}</view>
+					<view class="user">
+						{{waybill.consignee.contact.name}}
+						<text selectable="true" class="phone">{{waybill.consignee.contact.phone}}</text>
+					</view>
+				</view>
+				<view wx:else class="cos">
+					<view class="shop">{{waybill.consignee.contact.name}}</view>
+					<view class="user">{{waybill.consignee.contact.phone}}</view>
+				</view>
+			</view>
+		</view>
+	</view>
+	<view class="box_3">
+		<view class="contents">
+			<view>运单编号</view>
+			<view>{{waybill.sn}}</view>
+		</view>
+		<view class="contents">
+			<view>配送费用</view>
+			<view>{{waybill.cost.freight}}元</view>
+		</view>
+		<view class="contents">
+			<view>下单时间</view>
+			<view>{{waybill.time.createAt}}</view>
+		</view>
+		<view class="contents">
+			<view>包裹数量</view>
+			<view>{{waybill.packageInfo.packageCount}}件</view>
+		</view>
+		<view class="contents">
+			<view>投保金额</view>
+			<view>{{waybill.cost.premium}}元</view>
+		</view>
+		<view class="contents">
+			<view>代收货款</view>
+			<view>{{waybill.cost.cargoMoney}}元</view>
+		</view>
+		<view class="contents">
+			<view>应收金额</view>
+			<view>{{waybill.cost.cargoMoney + waybill.cost.freight}}元</view>
+		</view>
+		<view class="contents" wx:if="{{waybill.remark.consignorRemark != ''}}">
+			<view>寄件备注</view>
+			<view>{{waybill.remark.consignorRemark}}</view>
+		</view>
+		<view class="contents" wx:if="{{waybill.remark.deliverymanRemark != '' && waybill.remark.deliverymanRemark != null}}">
+			<view>配送备注</view>
+			<view>{{waybill.remark.deliverymanRemark}}</view>
+		</view>
+	</view>
+	<view class="box_1 {{!other?'box_1_hidden':'box_1_active'}}">
+		<view class="tos">
+			<view class="top">
+				<!-- <view class="left">
+                    <view class="line_1"></view >
+                    <view class="monst"></view >
+                    <view class="line"></view >
+                </view > -->
+				<view class="right">
+					<view class="yq">
+						<view class="monst" />
+					</view>
+					<view class="name">{{first.message}}</view>
+					<view class="ads">{{first.time}}</view>
+				</view>
+			</view>
+			<view class="top {{!other?'tos_hidden':'tos_active'}}" wx:for="{{rest}}" wx:key="">
+				<!-- <view class="left">
+                    <view class="line_2"></view >
+                    <view class="monst"></view >
+                    <view class="line {{!other?'left_hidden':''}}"></view >
+                </view > -->
+				<view class="right">
+					<view class="yq">
+						<view class="monst2" />
+					</view>
+					<view class="name">{{item.message}}</view>
+					<view class="ads">{{item.time}}</view>
+				</view>
+			</view>
+		</view>
+		<view class="bottom tos_active" wx:if="{{!other}}" bindtap="other_bt">查看更多物流信息</view>
+		<view class="bottom" wx:else bindtap="other_bt">收起物流信息</view>
+		<view/>
+	</view>
+</view>
+
