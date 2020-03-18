@@ -24,8 +24,8 @@
 		</view>
 	</view>
 	<view class="center" wx:if="{{screenBs}}">日期：{{timeAt}} ~ {{timeEt}}</view>
-	<view class="right" wx:if="{{TopicTitleActive == 0}}">共{{list1.rows.length}}天未对账</view>
-	<view class="right" wx:else>共{{list2.rows.length}}天已对账</view>
+	<view class="right" wx:if="{{TopicTitleActive == 0}}">共{{noCheckList.length}}天未对账</view>
+	<view class="right" wx:else>共{{haveCheckList.length}}天已对账</view>
 </view>
 <view class="box">
 	<view class="ssBox {{screenBs?'BoxShow':''}}">
@@ -69,24 +69,6 @@
 		</view>
 	</view>
 </view>
-<!-- <view class="{{screenBs?'bg_active':'bg_hidden'}}">
-    <view class="{{screenBs?'black_active':'black_hidden'}}" bindtap="SreenOut"></view>
-    <view class="choice {{screenBs?'choice_active':'choice_hidden'}}">
-        <view>
-            开始日期
-            <picker mode="date" value="{{timeAt}}" start="2015-09-01" end="2099-09-01" bindchange="bindtimeAt">
-                {{timeAt}}
-            </picker>
-        </view>
-        <view>
-            结束日期
-            <picker mode="date" value="{{timeEt}}" start="{{timeAt}}" end="2099-09-01" bindchange="bindtimeEt">
-                {{timeEt}}
-            </picker>
-        </view>
-        <view bindtap="bindSearch">查询</view>
-    </view>
-</view> -->
 <swiper
  duration="{{duration}}"
  style="height:calc(100vh - 197rpx)"
@@ -98,7 +80,7 @@
 			<scroll-view scroll-y="{{true}}" bindscrolltolower="bindscrolltolower1">
 				<view
 				 class="box"
-				 wx:for="{{list1.rows}}"
+				 wx:for="{{noCheckList}}"
 				 wx:key=""
 				 data-id="{{item.date}}"
 				 bindtap="bindBill"
@@ -117,34 +99,30 @@
 						</view>
 						<view class="content">
 							<view class="contentBox">
-								<view class="contentBox_1">线上支付</view>
-								<view class="contentBox_2">
-									{{item.total.aggregateQrCode + item.total.staticQrCode}}元
-								</view>
+								<view class="contentBox_1">实收运费总额</view>
+								<view class="contentBox_2">{{item.total.freightCost}}元</view>
 							</view>
-							<view class="contentBox">
-								<view class="contentBox_3">现金收款</view>
+							<!-- <view class="contentBox">
+								<view class="contentBox_3">实收货款总额</view>
 								<view class="contentBox_2">{{item.total.cash}}元</view>
-							</view>
+							</view> -->
 						</view>
 						<view class="content">
 							<view class="contentBox">
-								<view class="contentBox_1">总金额</view>
-								<view class="contentBox_2">
-									{{item.total.freightCost +item.total.premiumCost + item.total.cargoMoneyCost}}元
-								</view>
+								<view class="contentBox_1">实收货款总额</view>
+								<view class="contentBox_2">{{item.total.cargoMoneyCost}}元</view>
 							</view>
 						</view>
 					</view>
 				</view>
-				<miss wx:if="{{list1.rows.length == 0}}" />
+				<miss wx:if="{{noCheckList.length == 0}}" />
 			</scroll-view>
 		</swiper-item>
 		<swiper-item>
 			<scroll-view scroll-y="{{true}}" bindscrolltolower="bindscrolltolower2">
 				<view
 				 class="box"
-				 wx:for="{{list2.rows}}"
+				 wx:for="{{haveCheckList}}"
 				 wx:key=""
 				 data-id="{{item.date}}"
 				 bindtap="bindBill"
@@ -163,27 +141,23 @@
 						</view>
 						<view class="content">
 							<view class="contentBox">
-								<view class="contentBox_1">线上支付</view>
-								<view class="contentBox_2">
-									{{item.total.aggregateQrCode + item.total.staticQrCode}}元
-								</view>
+								<view class="contentBox_1">实收运费总额</view>
+								<view class="contentBox_2">{{item.total.freightCost}}元</view>
 							</view>
-							<view class="contentBox">
-								<view class="contentBox_3">现金收款</view>
+							<!-- <view class="contentBox">
+								<view class="contentBox_3">实收货款总额</view>
 								<view class="contentBox_2">{{item.total.cash}}元</view>
-							</view>
+							</view> -->
 						</view>
 						<view class="content">
 							<view class="contentBox">
-								<view class="contentBox_1">总金额</view>
-								<view class="contentBox_2">
-									{{item.total.freightCost +item.total.premiumCost + item.total.cargoMoneyCost}}元
-								</view>
+								<view class="contentBox_1">实收货款总额</view>
+								<view class="contentBox_2">{{item.total.cargoMoneyCost}}元</view>
 							</view>
 						</view>
 					</view>
 				</view>
-				<miss wx:if="{{list2.rows.length == 0}}" />
+				<miss wx:if="{{haveCheckList.length == 0}}" />
 			</scroll-view>
 		</swiper-item>
 	</block>

@@ -223,10 +223,11 @@ class ToolServer {
 
   //对账相关
   //查询账单列表
-  async getAccountList(time, status, pageNum) {
+  async getAccountList(startTime, endTime, status, pageNum) {
     let url = `${domain}/api/wxapp/account_list`
     let data = {
-      time: time,
+      startTime: startTime,
+      endTime: endTime,
       status: status,  //标志:历史对帐(HAVE_CHECK)or未对帐(NOT_CHECK)
       pageNum: pageNum,
       pageSize: 10,
