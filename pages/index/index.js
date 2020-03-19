@@ -5,7 +5,9 @@ Page({
   data: {
     send: "",
     received: "",
-    flag: false
+    flag: false,
+    //按钮判断
+    buttonClick: true
   },
   onLoad: function () {
     // 将当前页面的 this 赋值给 vm, 以区别于下面回调函数中的 this 
@@ -168,18 +170,23 @@ Page({
 
   //点击确认按钮
   sure() {
-
-    wx.showModal({
-      title: '提示',
-      content: '是否确认选择',
-      success(res) {
-        if (res.confirm) {
-          wx.redirectTo({
-            url: '/pages/order/index'
-          })
+    if (this.data.buttonClick == true) {
+      wx.showModal({
+        title: '提示',
+        content: '是否确认选择',
+        success(res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '/pages/order/index'
+            })
+          }
         }
-      }
-    })
+      })
+      this.setData({
+        buttonClick: false
+      })
+    }
+
   }
 
   // onLoad: function () {

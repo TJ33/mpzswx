@@ -24,6 +24,9 @@ Page({
     judgeUserName: false,
     judgeUserPhone: false,
     judge: true,
+
+    //按钮判断
+    buttonClick: true
   },
 
 
@@ -251,44 +254,49 @@ Page({
     }
 
     storeAddress = storeAddress + number
-
-    wx.showModal({
-      title: '提示',
-      content: '是否确认注册',
-      async success(res) {
-        if (res.confirm) {
-          if (code != '') {
-            let result = await ToolServer.merchantEntry(storeName, longitude, latitude, userName, userPhone, code, storeAddress)
-            let errorcode = result.errorcode
-            let message = result.message
-            let success = result.success
-            if (errorcode == 0) {
-              wx.showToast({
-                title: '注册成功',
-                icon: 'success',
-                duration: 1000
-              })
-              setTimeout(function () {
-                wx.switchTab({
-                  url: '../me/index'
+    if (this.data.buttonClick == true) {
+      wx.showModal({
+        title: '提示',
+        content: '是否确认注册',
+        async success(res) {
+          if (res.confirm) {
+            if (code != '') {
+              let result = await ToolServer.merchantEntry(storeName, longitude, latitude, userName, userPhone, code, storeAddress)
+              let errorcode = result.errorcode
+              let message = result.message
+              let success = result.success
+              if (errorcode == 0) {
+                wx.showToast({
+                  title: '注册成功',
+                  icon: 'success',
+                  duration: 1000
                 })
-              }, 1000);
+                setTimeout(function () {
+                  wx.switchTab({
+                    url: '../me/index'
+                  })
+                }, 1000);
+              } else {
+                wx.showToast({
+                  title: '注册失败',
+                  icon: 'none',
+                  duration: 1000
+                })
+              }
             } else {
               wx.showToast({
-                title: '注册失败',
+                title: '网络请求错误',
                 icon: 'none',
                 duration: 1000
               })
             }
-          } else {
-            wx.showToast({
-              title: '网络请求错误',
-              icon: 'none',
-              duration: 1000
-            })
           }
         }
-      }
-    })
+      })
+      this.setData({
+        buttonClick: false
+      })
+    }
+
   }
 })

@@ -10,6 +10,8 @@ Page({
     search: '',
     list: [],
     id: '',
+    //按钮判断
+    buttonClick: true
   },
 
   /**
@@ -42,28 +44,37 @@ Page({
   async bindDel(e) {
     let id = e.currentTarget.dataset.id
     let that = this
-    wx.showModal({
-      title: '提示',
-      content: '是否删除当前地址',
-      success: async function (res) {
-        if (res.confirm) {
-          let result = await ToolServer.delAddressBook(id)
-          if (result.success == true) {
-            wx.showToast({
-              title: '删除成功',
-              icon: 'success',
-              duration: 1000
-            })
-            await that.onShow()
-          } else {
-            wx.showToast({
-              title: '删除失败',
-              icon: 'none',
-              duration: 1000
-            })
+
+    if (this.data.buttonClick == true) {
+      wx.showModal({
+        title: '提示',
+        content: '是否删除当前地址',
+        success: async function (res) {
+          if (res.confirm) {
+            let result = await ToolServer.delAddressBook(id)
+            if (result.success == true) {
+              wx.showToast({
+                title: '删除成功',
+                icon: 'success',
+                duration: 1000
+              })
+              await that.onShow()
+            } else {
+              wx.showToast({
+                title: '删除失败',
+                icon: 'none',
+                duration: 1000
+              })
+            }
           }
         }
-      }
-    })
+      })
+      this.setData({
+        buttonClick: false
+      })
+    }
+
+
+
   }
 })

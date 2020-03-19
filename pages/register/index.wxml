@@ -83,7 +83,7 @@
 		<view class="oName" wx:if="{{judgeUserPhone}}">请获取手机号码</view>
 	</view>
 	<view class="last">
-		<button class="search" bindtap="register">注册</button>
+		<button class="search" bindtap="{{buttonClick==true?'register':''}}">注册</button>
 	</view>
 </view>
 <view wx:else>

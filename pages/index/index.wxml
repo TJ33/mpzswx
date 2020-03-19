@@ -1,25 +1,26 @@
 <!-- index.wxml -->
 <view class="all">
-  <view class="last">
-    <view class="send" bindtap="chooseSend">
-      <view class="right">
-        <view class="rightIcon" />
-        <input class="{{send!=''?rightAddress:rightAddress_no}}" placeholder="请选择寄件人地址" value="{{send!=''?send:''}}" />
-      </view>
-      <view class="left">
-        <i class="iconfont icon-jiantou" />
-      </view>
-    </view>
-    <view class="received" bindtap="chooseReceived">
-      <view class="right">
-        <view class="rightIcon" />
-        <input class="{{received!=''?rightAddress:rightAddress_no}}" placeholder="请选择收件人地址" value="{{received!=''?received:''}}" />
-      </view>
-      <view class="left">
-        <i class="iconfont icon-jiantou" />
-      </view>
-    </view>
-  </view>
-  <button class="sure" bindtap="sure" wx:if="{{flag}}">确认选择</button>
-  <button class="sure_no" wx:else>确认选择</button>
+	<view class="last">
+		<view class="send" bindtap="chooseSend">
+			<view class="right">
+				<view class="rightIcon" />
+				<input class="{{send!=''?rightAddress:rightAddress_no}}" placeholder="请选择寄件人地址" value="{{send!=''?send:''}}" />
+			</view>
+			<view class="left">
+				<i class="iconfont icon-jiantou" />
+			</view>
+		</view>
+		<view class="received" bindtap="chooseReceived">
+			<view class="right">
+				<view class="rightIcon" />
+				<input class="{{received!=''?rightAddress:rightAddress_no}}" placeholder="请选择收件人地址" value="{{received!=''?received:''}}" />
+			</view>
+			<view class="left">
+				<i class="iconfont icon-jiantou" />
+			</view>
+		</view>
+	</view>
+	<button class="sure" bindtap="{{buttonClick==true?'sure':''}}" wx:if="{{flag}}">确认选择</button>
+	<button class="sure_no" wx:else>确认选择</button>
 </view>
+

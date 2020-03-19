@@ -15,6 +15,9 @@ Page({
     longitude: '',  //经度
     latitude: '', //维度
     //set: true, //是否保存到地址薄
+
+    //按钮判断
+    buttonClick: true
   },
 
   /**
@@ -205,61 +208,71 @@ Page({
       id = ''
     }
 
-    if (id == '') {
-      wx.showModal({
-        title: '提示',
-        content: '是否确认添加',
-        async success(res) {
-          if (res.confirm) {
-            let result = await ToolServer.addAddressBook(storeName, name, phone, address, coordinates, door, id)
-            let success = result.success
-            if (success) {
-              wx.showToast({
-                title: '添加成功',
-                icon: 'success',
-                duration: 1000
-              })
-              wx.redirectTo({
-                url: '../addressBook/index'
-              })
-            } else {
-              wx.showToast({
-                title: '添加失败',
-                icon: 'none',
-                duration: 1000
-              })
+    if (this.data.buttonClick == true) {
+      if (id == '') {
+        wx.showModal({
+          title: '提示',
+          content: '是否确认添加',
+          async success(res) {
+            if (res.confirm) {
+              let result = await ToolServer.addAddressBook(storeName, name, phone, address, coordinates, door, id)
+              let success = result.success
+              if (success) {
+                wx.showToast({
+                  title: '添加成功',
+                  icon: 'success',
+                  duration: 1000
+                })
+                wx.redirectTo({
+                  url: '../addressBook/index'
+                })
+              } else {
+                wx.showToast({
+                  title: '添加失败',
+                  icon: 'none',
+                  duration: 1000
+                })
+              }
             }
           }
-        }
-      })
-    } else {
-      wx.showModal({
-        title: '提示',
-        content: '是否确认修改',
-        async success(res) {
-          if (res.confirm) {
-            let result = await ToolServer.addAddressBook(storeName, name, phone, address, coordinates, door, id)
-            let success = result.success
-            if (success) {
-              wx.showToast({
-                title: '修改成功',
-                icon: 'success',
-                duration: 1000
-              })
-              wx.redirectTo({
-                url: '../addressBook/index'
-              })
-            } else {
-              wx.showToast({
-                title: '修改失败',
-                icon: 'none',
-                duration: 1000
-              })
+        })
+        this.setData({
+          buttonClick: false
+        })
+      } else {
+        wx.showModal({
+          title: '提示',
+          content: '是否确认修改',
+          async success(res) {
+            if (res.confirm) {
+              let result = await ToolServer.addAddressBook(storeName, name, phone, address, coordinates, door, id)
+              let success = result.success
+              if (success) {
+                wx.showToast({
+                  title: '修改成功',
+                  icon: 'success',
+                  duration: 1000
+                })
+                wx.redirectTo({
+                  url: '../addressBook/index'
+                })
+              } else {
+                wx.showToast({
+                  title: '修改失败',
+                  icon: 'none',
+                  duration: 1000
+                })
+              }
             }
           }
-        }
-      })
+        })
+        this.setData({
+          buttonClick: false
+        })
+      }
     }
+
+
 
 
 

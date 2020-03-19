@@ -147,7 +147,9 @@ Page({
     //   borderWidth: 5
     // }],
     //底部消息栏
-    allMessage: [{ icon: '/images/order/detail.png', message: '查看订单' }, { icon: '/images/order/append.png', message: '再次下单' }]
+    allMessage: [{ icon: '/images/order/detail.png', message: '查看订单' }, { icon: '/images/order/append.png', message: '再次下单' }],
+    //按钮判断
+    buttonClick: true
   },
 
   /**
@@ -562,36 +564,42 @@ Page({
   cancelOrder(e) {
     let that = this
     let sn = that.data.sn
-    wx.showModal({
-      title: '提示',
-      content: '是否确认取消',
-      async success(res) {
-        if (res.confirm) {
-          let result = await ToolServer.cancelOrder(sn)
-          let success = result.success
-          if (success == true) {
-            clearInterval(init);
-            wx.showToast({
-              title: '取消成功',
-              icon: 'success',
-              duration: 1000
-            })
-            setTimeout(function () {
-              wx.switchTab({
-                url: '/pages/order/index'
+    if (this.data.buttonClick == true) {
+      wx.showModal({
+        title: '提示',
+        content: '是否确认取消',
+        async success(res) {
+          if (res.confirm) {
+            let result = await ToolServer.cancelOrder(sn)
+            let success = result.success
+            if (success == true) {
+              clearInterval(init);
+              wx.showToast({
+                title: '取消成功',
+                icon: 'success',
+                duration: 1000
               })
-            }, 1000);
-          } else {
-            wx.showToast({
-              title: '取消失败',
-              icon: 'none',
-              duration: 1000
-            })
-          }
+              setTimeout(function () {
+                wx.switchTab({
+                  url: '/pages/order/index'
+                })
+              }, 1000);
+            } else {
+              wx.showToast({
+                title: '取消失败',
+                icon: 'none',
+                duration: 1000
+              })
+            }
 
+          }
         }
-      }
-    })
+      })
+      this.setData({
+        buttonClick: false
+      })
+    }
+
 
   }
 

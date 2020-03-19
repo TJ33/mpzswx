@@ -1,16 +1,17 @@
 <!-- pages/addressBookList/addressBook/index.wxml -->
 <scroll-view scroll-y="{{true}}" style="max-height:calc(100vh - 122px);" bindscrolltolower="bindscrolltolower">
-  <view class="box" wx:for="{{list}}" wx:key="{{index}}">
-    <view class="center">
-      <view>{{item.anotherNamer}}</view>
-      <view>{{item.contactPhone}}</view>
-    </view>
-    <view class="center border">{{item.address}}</view>
-    <view class="center">
-      <view class="btn" data-id="{{item._id}}" bindtap="bindUp">编辑</view>
-      <view class="btn" data-id="{{item._id}}" bindtap="bindDel">删除</view>
-    </view>
-  </view>
+	<view class="box" wx:for="{{list}}" wx:key="{{index}}">
+		<view class="center">
+			<view>{{item.anotherNamer}}</view>
+			<view>{{item.contactPhone}}</view>
+		</view>
+		<view class="center border">{{item.address}}</view>
+		<view class="center">
+			<view class="btn" data-id="{{item._id}}" bindtap="bindUp">编辑</view>
+			<view class="btn" data-id="{{item._id}}" bindtap="bindDel">删除</view>
+		</view>
+	</view>
 </scroll-view>
 <miss wx:if="{{list.length == 0}}" />
-<view class="box4" bindtap="bindAdds">添加地址</view>
+<view class="box4" bindtap="{{buttonClick==true?'bindAdds':''}}">添加地址</view>
+

@@ -3,7 +3,7 @@
 	<view class="top">
 		<view class="left">
 			<view class="first">{{timecount}}</view>
-			<view class="second" bindtap="cancelOrder">取消运单</view>
+			<view class="second" bindtap="{{buttonClick==true?'cancelOrder':''}}">取消运单</view>
 		</view>
 		<view class="right">
 			<view class="first">系统选择司机</view>

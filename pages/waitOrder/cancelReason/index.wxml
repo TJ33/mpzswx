@@ -1,20 +1,26 @@
 <!-- pages/waitOrder/cancelReason/index.wxml -->
 <view class="all">
-  <view class="top">
-    <view>
-      <image src="/images/order/check.png" class="picture" />
-    </view>
-    <view class="cancelMessageOne">运单已取消</view>
-    <view class="cancelMessageTwo">请告诉我们取消原因,我们会努力改进!</view>
-  </view>
-  <view class="last">
-    <radio-group class="radio-group" bindchange="radioChange">
-      <radio class="radio" wx:for-items="{{reason}}" wx:key="name" value="{{item.name}}">
-        <text>{{item.name}}</text>
-      </radio>
-    </radio-group>
-  </view>
-  <view class="subButton">
-    <button class="submit" bindtap="submit">提交</button>
-  </view>
+	<view class="top">
+		<view>
+			<image src="/images/order/check.png" class="picture" />
+		</view>
+		<view class="cancelMessageOne">运单已取消</view>
+		<view class="cancelMessageTwo">请告诉我们取消原因,我们会努力改进!</view>
+	</view>
+	<view class="last">
+		<radio-group class="radio-group" bindchange="radioChange">
+			<radio
+			 class="radio"
+			 wx:for-items="{{reason}}"
+			 wx:key="name"
+			 value="{{item.name}}"
+			>
+				<text>{{item.name}}</text>
+			</radio>
+		</radio-group>
+	</view>
+	<view class="subButton">
+		<button class="submit" bindtap="{{buttonClick==true?'submit':''}}">提交</button>
+	</view>
 </view>
+
