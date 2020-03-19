@@ -96,12 +96,12 @@ Page({
       if (this.data.TopicTitleActive == 0) {
         this.data.status = 'NOT_CHECK'
         this.data.noCheckList = await ToolServer.getAccountList('', '', this.data.status, this.data.pageNum)
-        noCheckList = noCheckList.data
+        this.data.noCheckList = this.data.noCheckList.data
         this.data.noCheckList = await this.createTime(this.data.noCheckList)
       } else {
         this.data.status = 'HAVE_CHECK'
         this.data.haveCheckList = await ToolServer.getAccountList('', '', this.data.status, this.data.pageNum)
-        haveCheckList = haveCheckList.data
+        this.data.haveCheckList = this.data.haveCheckList.data
         this.data.haveCheckList = await this.createTime(this.data.haveCheckList)
       }
     } else {
@@ -112,12 +112,12 @@ Page({
       if (this.data.TopicTitleActive == 0) {
         this.data.status = 'NOT_CHECK'
         this.data.noCheckList = await ToolServer.getAccountList(this.data.startTime, this.data.endTime, this.data.status, this.data.pageNum)
-        noCheckList = noCheckList.data
+        this.data.noCheckList = this.data.noCheckList.data
         this.data.noCheckList = await this.createTime(this.data.noCheckList)
       } else {
         this.data.status = 'HAVE_CHECK'
         this.data.haveCheckList = await ToolServer.getAccountList(this.data.startTime, this.data.endTime, this.data.status, this.data.pageNum)
-        haveCheckList = haveCheckList.data
+        this.data.haveCheckList = this.data.haveCheckList.data
         this.data.haveCheckList = await this.createTime(this.data.haveCheckList)
       }
     }
@@ -146,12 +146,12 @@ Page({
     if (this.data.TopicTitleActive == 0) {
       this.data.status = 'NOT_CHECK'
       this.data.noCheckList = await ToolServer.getAccountList(e.detail.value, this.data.endTime, this.data.status, this.data.pageNum)
-      noCheckList = noCheckList.data
+      this.data.noCheckList = this.data.noCheckList.data
       this.data.noCheckList = await this.createTime(this.data.noCheckList)
     } else {
       this.data.status = 'HAVE_CHECK'
       this.data.haveCheckList = await ToolServer.getAccountList(e.detail.value, this.data.endTime, this.data.status, this.data.pageNum)
-      haveCheckList = haveCheckList.data
+      this.data.haveCheckList = this.data.haveCheckList.data
       this.data.haveCheckList = await this.createTime(this.data.haveCheckList)
     }
     this.setData({
@@ -165,12 +165,12 @@ Page({
     if (this.data.TopicTitleActive == 0) {
       this.data.status = 'NOT_CHECK'
       this.data.noCheckList = await ToolServer.getAccountList(this.data.startTime, e.detail.value, this.data.status, this.data.pageNum)
-      noCheckList = noCheckList.data
+      this.data.noCheckList = this.data.noCheckList.data
       this.data.noCheckList = await this.createTime(this.data.noCheckList)
     } else {
       this.data.status = 'HAVE_CHECK'
       this.data.haveCheckList = await ToolServer.getAccountList(this.data.startTime, e.detail.value, this.data.status, this.data.pageNum)
-      haveCheckList = haveCheckList.data
+      this.data.haveCheckList = this.data.haveCheckList.data
       this.data.haveCheckList = await this.createTime(this.data.haveCheckList)
     }
     this.setData({
@@ -190,12 +190,12 @@ Page({
   //   if (index == 0) {
   //     this.data.status = 'NOT_CHECK'
   //     this.data.noCheckList = await ToolServer.getAccountList(this.data.startTime,this.data.endTime, this.data.status, this.data.pageNum)
-  // noCheckList = noCheckList.data
+  // this.data.noCheckList = this.data.noCheckList.data
   //     this.data.noCheckList = await this.createTime(this.data.noCheckList)
   //   } else {
   //     this.data.status = 'HAVE_CHECK'
   //     this.data.haveCheckList = await ToolServer.getAccountList(this.data.startTime,this.data.endTime, this.data.status, this.data.pageNum)
-  // haveCheckList = haveCheckList.data
+  // this.data.haveCheckList = this.data.haveCheckList.data
   //     this.data.haveCheckList = await this.createTime(this.data.haveCheckList)
   //   }
   //   this.setData({
@@ -222,12 +222,12 @@ Page({
     if (this.data.TopicTitleActive == 0) {
       this.data.status = 'NOT_CHECK'
       this.data.noCheckList = await ToolServer.getAccountList(this.data.startTime, this.data.endTime, this.data.status, this.data.pageNum)
-      noCheckList = noCheckList.data
+      this.data.noCheckList = this.data.noCheckList.data
       this.data.noCheckList = await this.createTime(this.data.noCheckList)
     } else {
       this.data.status = 'HAVE_CHECK'
       this.data.haveCheckList = await ToolServer.getAccountList(this.data.startTime, this.data.endTime, this.data.status, this.data.pageNum)
-      haveCheckList = haveCheckList.data
+      this.data.haveCheckList = this.data.haveCheckList.data
       this.data.haveCheckList = await this.createTime(this.data.haveCheckList)
     }
 
@@ -263,24 +263,24 @@ Page({
       if (index == 0) {
         this.data.status = 'NOT_CHECK'
         this.data.noCheckList = await ToolServer.getAccountList('', '', this.data.status, this.data.pageNum)
-        noCheckList = noCheckList.data
+        this.data.noCheckList = this.data.noCheckList.data
         this.data.noCheckList = await this.createTime(this.data.noCheckList)
       } else {
         this.data.status = 'HAVE_CHECK'
         this.data.haveCheckList = await ToolServer.getAccountList('', '', this.data.status, this.data.pageNum)
-        haveCheckList = haveCheckList.data
+        this.data.haveCheckList = this.data.haveCheckList.data
         this.data.haveCheckList = await this.createTime(this.data.haveCheckList)
       }
     } else {
       if (index == 0) {
         this.data.status = 'NOT_CHECK'
         this.data.noCheckList = await ToolServer.getAccountList(this.data.startTime, this.data.endTime, this.data.status, this.data.pageNum)
-        noCheckList = noCheckList.data
+        this.data.noCheckList = this.data.noCheckList.data
         this.data.noCheckList = await this.createTime(this.data.noCheckList)
       } else {
         this.data.status = 'HAVE_CHECK'
         this.data.haveCheckList = await ToolServer.getAccountList(this.data.startTime, this.data.endTime, this.data.status, this.data.pageNum)
-        haveCheckList = haveCheckList.data
+        this.data.haveCheckList = this.data.haveCheckList.data
         this.data.haveCheckList = await this.createTime(this.data.haveCheckList)
       }
     }
