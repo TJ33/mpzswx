@@ -93,7 +93,10 @@ Page({
     load: '',
     size: '',
     capacity: '',
-    photo: ''
+    photo: '',
+
+    //按钮判断
+    buttonClick: true
 
   },
 
@@ -591,23 +594,28 @@ Page({
       });
       return
     }
-
-    wx.showModal({
-      title: '提示',
-      content: '是否确认下单',
-      async success(res) {
-        if (res.confirm) {
-          let result = await ToolServer.merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, receiveAt)
-          let sn = result.sn
-          let id = result.id
-          wx.redirectTo({
-            url: '../waitOrder/single/index?sn=' + sn + '&&id=' + id
-          })
-          // wx.removeStorageSync('sendAddress')
-          wx.removeStorageSync('reciveAddress')
+    if (this.data.buttonClick == true) {
+      wx.showModal({
+        title: '提示',
+        content: '是否确认下单',
+        async success(res) {
+          if (res.confirm) {
+            let result = await ToolServer.merchantOrder(consignor, consignee, freightMonthly, cargoMoney, distance, remark, vehicleType, freight, operationTeam, state, receiveAt)
+            let sn = result.sn
+            let id = result.id
+            wx.redirectTo({
+              url: '../waitOrder/single/index?sn=' + sn + '&&id=' + id
+            })
+            // wx.removeStorageSync('sendAddress')
+            wx.removeStorageSync('reciveAddress')
+          }
         }
-      }
-    })
+      })
+      this.setData({
+        buttonClick: false
+      })
+    }
+
 
   },
 

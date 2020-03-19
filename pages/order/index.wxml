@@ -103,17 +103,17 @@
 		</view>
 		<view class="box-right">
 			<view class="box-right-all">
-				载重:
+				<text>载重:</text>
 				<text wx:if="{{load!=''}}">{{load!=''?load:''}}公斤</text>
 				<text wx:else>暂无数据</text>
 			</view>
 			<view class="box-right-all">
-				长宽高:
+				<text>长宽高:</text>
 				<text wx:if="{{size!=''}}">{{size!=''?size:''}}米</text>
 				<text wx:else>暂无数据</text>
 			</view>
 			<view class="box-right-all">
-				载货体积:
+				<text>载货体积:</text>
 				<text wx:if="{{capacity!=''}}">{{capacity!=''?capacity:''}}方</text>
 				<text wx:else>暂无数据</text>
 			</view>
@@ -246,6 +246,6 @@
 						</view>
 				</view>
 		</view>
-		<view class="box_4" bindtap="bindOrder">立即下单</view>
+		<view class="box_4" bindtap="{{buttonClick==true?'bindOrder':''}}">立即下单</view>
 </view>
 
