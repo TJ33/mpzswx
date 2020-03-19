@@ -254,12 +254,12 @@ class ToolServer {
     let data = {
       id: id,
     }
-    return this.post(url, data)
+    return this.post2(url, data)
   }
 
 
   //账单详情
-  async getAccountDetail(time, status, pageNum) {
+  async getAccountDetail(id) {
     let url = `${domain}/api/wxapp/account_details`
     let data = {
       id: id,

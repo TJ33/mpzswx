@@ -2,7 +2,7 @@
 <view class="top">
 	<view class="title">单日总金额（元）</view>
 	<view class="content">
-		<view class="box_1">{{list.total.cargoMoneyCost}}</view>
+		<view class="box_1">{{list.total.cargoMoneyCost + list.total.freightCost}}</view>
 		<view class="box_2">
 			<view>{{list.total.freightCost}}</view>
 			<view>实收运费总额</view>
@@ -18,7 +18,7 @@
 	 class="box"
 	 wx:for="{{list.waybills}}"
 	 wx:key=""
-	 data-id="{{item.id}}"
+	 data-id="{{item.sn}}"
 	 bindtap="bindDes"
 	>
 		<view class="box_1">
@@ -28,9 +28,8 @@
 		<view class="box_2">
 			<view class="title">收件人</view>
 			<view class="value">
-				<text wx:if="{{item.consignee.nickname !=''}}">{{item.consignee.nickname}}</text>
-				<text wx:else>{{item.consignee.contact.name}}</text>
-				<text>{{item.consignee.contact.phone}}</text>
+				<text>{{item.consignee.contactName}}</text>
+				<text>{{item.consignee.contactPhone}}</text>
 			</view>
 		</view>
 		<!-- <view class="box_2">
@@ -39,24 +38,24 @@
 		</view> -->
 		<view class="box_2">
 			<view class="title">签收时间</view>
-			<view class="value">{{item.time.signInAt}}</view>
-			<view class="title_2">总价</view>
-			<view class="value_2">￥{{item.total.cargoMoneyCost}}</view>
+			<view class="value">{{item.time.signAt}}</view>
+			<!-- <view class="title_2">总价</view>
+			<view class="value_2">￥{{item.total.cargoMoneyCost}}</view> -->
 		</view>
-		<view class="box_2">
+		<!-- <view class="box_2">
 			<view class="title">备注</view>
 			<view class="value" wx:if="{{item.remark == '' }}">无</view>
 			<view class="value" wx:else>{{item.remark}}</view>
-		</view>
+		</view> -->
 	</view>
 </scroll-view>
 <view class="bottom {{list.status == 'NOT_CHECK'?'':'bottom_active'}}">
 	<view>
 		合计：
-		<text>￥{{ list.total.cargoMoneyCost}}</text>
+		<text>￥{{ list.total.cargoMoneyCost + list.total.freightCost}}</text>
 	</view>
 	<!-- <view>手续费:￥{{list.total.freightCommission}}</view> -->
-	<view>运费:￥{{list.total.freight}}</view>
+	<view>运费:￥{{list.total.freightCost}}</view>
 	<view bindtap="bindConfirm" wx:if="{{list.status == 'NOT_CHECK'}}">核对</view>
 </view>
 <dialog

@@ -82,7 +82,7 @@
 				 class="box"
 				 wx:for="{{noCheckList}}"
 				 wx:key=""
-				 data-id="{{item.date}}"
+				 data-id="{{item.id}}"
 				 bindtap="bindBill"
 				>
 					<view class="top">
@@ -124,7 +124,7 @@
 				 class="box"
 				 wx:for="{{haveCheckList}}"
 				 wx:key=""
-				 data-id="{{item.date}}"
+				 data-id="{{item.id}}"
 				 bindtap="bindBill"
 				>
 					<view class="top">

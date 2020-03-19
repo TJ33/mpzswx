@@ -136,9 +136,9 @@ Page({
   },
   //跳转到每日账单
   bindBill(e) {
-    let time = e.currentTarget.dataset.id
+    let id = e.currentTarget.dataset.id
     wx.navigateTo({
-      url: '../accountDetail/index?time=' + time + '&status=' + this.data.status
+      url: '../accountDetail/index?id=' + id
     })
   },
   //选择日期
