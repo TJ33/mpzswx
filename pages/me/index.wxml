@@ -59,6 +59,24 @@
 		</view>
 		<i class="iconfont iconyoujiantou" />
 	</navigator>
+	<navigator wx:if="{{Myhead!=''}}" class="content" url="../account/accountList/index">
+		<view class=" left">
+			<view class="icon">
+				<i class="iconfont iconyuyuexinxi" />
+			</view>
+			<view class="name">账单对账</view>
+		</view>
+		<i class="iconfont iconyoujiantou" />
+	</navigator>
+	<navigator wx:else class="content" url="">
+		<view class=" left">
+			<view class="icon">
+				<i class="iconfont iconyuyuexinxi" />
+			</view>
+			<view class="name">账单对账</view>
+		</view>
+		<i class="iconfont iconyoujiantou" />
+	</navigator>
 	<view class="content" bindtap="{{buttonClickTwo==true?'bindOut':''}}">
 		<view class=" left">
 			<view class="icon">
