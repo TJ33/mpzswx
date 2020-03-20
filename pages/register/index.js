@@ -208,50 +208,73 @@ Page({
     let user = wx.getStorageSync('USER')
     let code = wx.getStorageSync('CODE')
 
-    if (storeName == "") {
-      wx.showToast({
-        title: '请输入店铺名称',
-        icon: 'none',
-        duration: 1000
-      })
-      return
+    //两种注册  商家是全部 个人只有用户名和联系电话
+    let judge = this.data.judge
+    if (judge == true) {
+      if (storeName == "") {
+        wx.showToast({
+          title: '请输入店铺名称',
+          icon: 'none',
+          duration: 1000
+        })
+        return
+      }
+
+      if (storeAddress == "") {
+        wx.showToast({
+          title: '请选择店铺地址',
+          icon: 'none',
+          duration: 1000
+        })
+        return
+      }
+
+      // if (number == "") {
+      //   wx.showToast({
+      //     title: '请输入门牌号',
+      //     icon: 'none',
+      //     duration: 1000
+      //   })
+      //   return
+      // }
+
+      if (userName == "") {
+        wx.showToast({
+          title: '请输入用户名',
+          icon: 'none',
+          duration: 1000
+        })
+        return
+      }
+
+      if (userPhone == "") {
+        wx.showToast({
+          title: '请获取联系电话',
+          icon: 'none',
+          duration: 1000
+        })
+        return
+      }
+    } else {
+      if (userName == "") {
+        wx.showToast({
+          title: '请输入用户名',
+          icon: 'none',
+          duration: 1000
+        })
+        return
+      }
+
+      if (userPhone == "") {
+        wx.showToast({
+          title: '请获取联系电话',
+          icon: 'none',
+          duration: 1000
+        })
+        return
+      }
     }
 
-    if (storeAddress == "") {
-      wx.showToast({
-        title: '请选择店铺地址',
-        icon: 'none',
-        duration: 1000
-      })
-      return
-    }
-
-    // if (number == "") {
-    //   wx.showToast({
-    //     title: '请输入门牌号',
-    //     icon: 'none',
-    //     duration: 1000
-    //   })
-    //   return
-    // }
-
-    if (userName == "") {
-      wx.showToast({
-        title: '请输入用户名',
-        icon: 'none',
-        duration: 1000
-      })
-      return
-    }
-
-    if (userPhone == "") {
-      wx.showToast({
-        title: '请获取联系电话',
-        icon: 'none',
-        duration: 1000
-      })
-      return
-    }
 
     storeAddress = storeAddress + number
     if (this.data.buttonClick == true) {
@@ -261,7 +284,7 @@ Page({
         async success(res) {
           if (res.confirm) {
             if (code != '') {
-              let result = await ToolServer.merchantEntry(storeName, longitude, latitude, userName, userPhone, code, storeAddress)
+              let result = await ToolServer.merchantEntry('', '', '', userName, userPhone, code, '')
               let errorcode = result.errorcode
               let message = result.message
               let success = result.success
