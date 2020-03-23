@@ -14,11 +14,6 @@ Page({
     showHeightAnimation: '',
     Myhead: '',
     user: {},
-
-    //按钮判断
-    buttonClickOne: true,
-    //按钮判断
-    buttonClickTwo: true
   },
 
   /**
@@ -113,21 +108,17 @@ Page({
                       duration: 1000
                     })
                   } else {
-                    if (that.data.buttonClickOne == true) {
-                      wx.showModal({
-                        title: '提示',
-                        content: '请问是否注册',
-                        success(res) {
-                          if (res.confirm) {
-                            //用户不存在 跳转注册页面
-                            wx.navigateTo({ url: '../register/index' })
-                            that.setData({
-                              buttonClickOne: false
-                            })
-                          }
+                    wx.showModal({
+                      title: '提示',
+                      content: '请问是否注册',
+                      success(res) {
+                        if (res.confirm) {
+                          //用户不存在 跳转注册页面
+                          wx.navigateTo({ url: '../register/index' })
                         }
-                      })
-                    }
+                      }
+                    })
+
                   }
                 }
               }
@@ -202,21 +193,16 @@ Page({
                           duration: 1000
                         })
                       } else {
-                        if (that.data.buttonClickOne == true) {
-                          wx.showModal({
-                            title: '提示',
-                            content: '请问是否注册',
-                            success(res) {
-                              if (res.confirm) {
-                                //用户不存在 跳转注册页面
-                                wx.navigateTo({ url: '../register/index' })
-                              }
+                        wx.showModal({
+                          title: '提示',
+                          content: '请问是否注册',
+                          success(res) {
+                            if (res.confirm) {
+                              //用户不存在 跳转注册页面
+                              wx.navigateTo({ url: '../register/index' })
                             }
-                          })
-                          that.setData({
-                            buttonClickOne: false
-                          })
-                        }
+                          }
+                        })
                       }
                     }
                   }
@@ -245,37 +231,32 @@ Page({
   //退出登录
   bindOut(e) {
     let that = this
-    if (that.data.buttonClickTwo == true) {
-      wx.showModal({
-        title: '提示',
-        content: '是否退出登陆',
-        success(res) {
-          if (res.confirm) {
-            wx.clearStorage()
-            wx.clearStorageSync()
-            wx.showLoading({
-              title: '正在退出',
-            })
+    wx.showModal({
+      title: '提示',
+      content: '是否退出登陆',
+      success(res) {
+        if (res.confirm) {
+          wx.clearStorage()
+          wx.clearStorageSync()
+          wx.showLoading({
+            title: '正在退出',
+          })
 
-            setTimeout(function () {
-              wx.showToast({
-                title: '退出成功',
-                icon: 'success',
-                duration: 1000
-              })
-              wx.hideLoading()
-              that.onLoad()
-            }, 2000)
-
-            that.setData({
-              buttonClickTwo: false
+          setTimeout(function () {
+            wx.showToast({
+              title: '退出成功',
+              icon: 'success',
+              duration: 1000
             })
-          } else if (res.cancel) {
-            console.log('用户点击取消')
-          }
+            wx.hideLoading()
+            that.onLoad()
+          }, 2000)
+
+        } else if (res.cancel) {
         }
-      })
-    }
+      }
+    })
+
 
 
   }
