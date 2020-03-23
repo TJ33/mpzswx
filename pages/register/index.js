@@ -197,6 +197,7 @@ Page({
   },
   //点击注册按钮
   register() {
+    let result = ''
     let storeName = this.data.storeName
     let longitude = this.data.longitude
     let latitude = this.data.latitude
@@ -283,22 +284,36 @@ Page({
         content: '是否确认注册',
         async success(res) {
           if (res.confirm) {
+
             if (code != '') {
-              let result = await ToolServer.merchantEntry('', '', '', userName, userPhone, code, '')
-              let errorcode = result.errorcode
-              let message = result.message
-              let success = result.success
-              if (errorcode == 0) {
-                wx.showToast({
-                  title: '注册成功',
-                  icon: 'success',
-                  duration: 1000
-                })
-                setTimeout(function () {
-                  wx.switchTab({
-                    url: '../me/index'
+              if (judge == false) {
+                result = await ToolServer.merchantEntryWithOutAddress(userName, userPhone, code)
+              } else {
+                result = await ToolServer.merchantEntry(storeName, longitude, latitude, userName, userPhone, code, storeAddress)
+              }
+
+              if (result != '') {
+                let errorcode = result.errorcode
+                let message = result.message
+                let success = result.success
+                if (errorcode == 0) {
+                  wx.showToast({
+                    title: '注册成功',
+                    icon: 'success',
+                    duration: 1000
                   })
-                }, 1000);
+                  setTimeout(function () {
+                    wx.switchTab({
+                      url: '../me/index'
+                    })
+                  }, 1000);
+                } else {
+                  wx.showToast({
+                    title: '注册失败',
+                    icon: 'none',
+                    duration: 1000
+                  })
+                }
               } else {
                 wx.showToast({
                   title: '注册失败',

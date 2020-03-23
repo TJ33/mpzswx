@@ -23,6 +23,18 @@ class ToolServer {
     return this.post2(url, data)
   }
 
+  async merchantEntryWithOutAddress(userName, userPhone, code) {
+    let url = `${domain}/api/wxapp/merchant_entry`
+    let data = {
+      name: userName,
+      userPhone: userPhone,
+      code: code
+    }
+    return this.post2(url, data)
+  }
+
+
+
   //查询运单
   async findWayBill(transportStatus, sn) {
     let url = `${domain}/api/wxapp/find_waybill`
