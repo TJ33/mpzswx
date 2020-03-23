@@ -564,7 +564,7 @@ Page({
   cancelOrder(e) {
     let that = this
     let sn = that.data.sn
-    if (this.data.buttonClick == true) {
+    if (that.data.buttonClick == true) {
       wx.showModal({
         title: '提示',
         content: '是否确认取消',
@@ -595,7 +595,7 @@ Page({
           }
         }
       })
-      this.setData({
+      that.setData({
         buttonClick: false
       })
     }

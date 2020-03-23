@@ -113,7 +113,7 @@ Page({
                       duration: 1000
                     })
                   } else {
-                    if (this.data.buttonClickOne == true) {
+                    if (that.data.buttonClickOne == true) {
                       wx.showModal({
                         title: '提示',
                         content: '请问是否注册',
@@ -124,7 +124,7 @@ Page({
                           }
                         }
                       })
-                      this.setData({
+                      that.setData({
                         buttonClickOne: false
                       })
                     }
@@ -202,7 +202,7 @@ Page({
                           duration: 1000
                         })
                       } else {
-                        if (this.data.buttonClickOne == true) {
+                        if (that.data.buttonClickOne == true) {
                           wx.showModal({
                             title: '提示',
                             content: '请问是否注册',
@@ -213,7 +213,7 @@ Page({
                               }
                             }
                           })
-                          this.setData({
+                          that.setData({
                             buttonClickOne: false
                           })
                         }
@@ -245,7 +245,7 @@ Page({
   //退出登录
   bindOut(e) {
     let that = this
-    if (this.data.buttonClickTwo == true) {
+    if (that.data.buttonClickTwo == true) {
       wx.showModal({
         title: '提示',
         content: '是否退出登陆',
@@ -271,7 +271,7 @@ Page({
           }
         }
       })
-      this.setData({
+      that.setData({
         buttonClickTwo: false
       })
     }
