@@ -21,34 +21,40 @@ Page({
   },
 
   async onLoad() {
-    //查询全部
-    let allList = await ToolServer.findWayBill('', '')
-    let deliveringList = await ToolServer.findWayBill('DELIVERING', '')
-    let signInList = await ToolServer.findWayBill('SIGN_IN', '')
-    let pushedOrderList = await ToolServer.findWayBill('RECEIVED_ORDER', '')
-    if (allList && deliveringList && signInList && pushedOrderList) {
-      allList = await this.createTime(allList)
-      deliveringList = await this.createTime(deliveringList)
-      signInList = await this.createTime(signInList)
-      pushedOrderList = await this.createTime(pushedOrderList)
-      this.setData({
-        allList: allList,
-        deliveringList: deliveringList,
-        signInList: signInList,
-        pushedOrderList: pushedOrderList
-      })
+    let judgeLogin = wx.getStorageSync('judgeLogin')
+    console.log('judgeLogin======================', judgeLogin)
+    if (judgeLogin != '') {
+      //查询全部
+      let allList = await ToolServer.findWayBill('', '')
+      let deliveringList = await ToolServer.findWayBill('DELIVERING', '')
+      let signInList = await ToolServer.findWayBill('SIGN_IN', '')
+      let pushedOrderList = await ToolServer.findWayBill('RECEIVED_ORDER', '')
+      if (allList && deliveringList && signInList && pushedOrderList) {
+        allList = await this.createTime(allList)
+        deliveringList = await this.createTime(deliveringList)
+        signInList = await this.createTime(signInList)
+        pushedOrderList = await this.createTime(pushedOrderList)
+        this.setData({
+          allList: allList,
+          deliveringList: deliveringList,
+          signInList: signInList,
+          pushedOrderList: pushedOrderList
+        })
+      }
     }
+
   },
 
   async onShow() {
-    //查询全部
-    let allList = await ToolServer.findWayBill('', '')
-    allList = await this.createTime(allList)
-    this.setData({
-      allList: allList
-    })
-
-
+    let judgeLogin = wx.getStorageSync('judgeLogin')
+    if (judgeLogin != '') {
+      //查询全部
+      let allList = await ToolServer.findWayBill('', '')
+      allList = await this.createTime(allList)
+      this.setData({
+        allList: allList
+      })
+    }
 
     // let createdList = await ToolServer.findWayBill('CREATED', '')
     // let deliveringList = await ToolServer.findWayBill('DELIVERING', '')

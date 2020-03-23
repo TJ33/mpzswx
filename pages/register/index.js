@@ -278,7 +278,8 @@ Page({
 
 
     storeAddress = storeAddress + number
-    if (this.data.buttonClick == true) {
+    let that = this
+    if (that.data.buttonClick == true) {
       wx.showModal({
         title: '提示',
         content: '是否确认注册',
@@ -328,11 +329,12 @@ Page({
                 duration: 1000
               })
             }
+
+            that.setData({
+              buttonClick: false
+            })
           }
         }
-      })
-      this.setData({
-        buttonClick: false
       })
     }
 

@@ -208,7 +208,8 @@ Page({
       id = ''
     }
 
-    if (this.data.buttonClick == true) {
+    let that = this
+    if (that.data.buttonClick == true) {
       if (id == '') {
         wx.showModal({
           title: '提示',
@@ -233,12 +234,13 @@ Page({
                   duration: 1000
                 })
               }
+              that.setData({
+                buttonClick: false
+              })
             }
           }
         })
-        this.setData({
-          buttonClick: false
-        })
+
       } else {
         wx.showModal({
           title: '提示',
@@ -263,11 +265,11 @@ Page({
                   duration: 1000
                 })
               }
+              that.setData({
+                buttonClick: false
+              })
             }
           }
-        })
-        this.setData({
-          buttonClick: false
         })
       }
     }

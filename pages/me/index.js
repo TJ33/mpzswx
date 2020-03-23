@@ -121,11 +121,11 @@ Page({
                           if (res.confirm) {
                             //用户不存在 跳转注册页面
                             wx.navigateTo({ url: '../register/index' })
+                            that.setData({
+                              buttonClickOne: false
+                            })
                           }
                         }
-                      })
-                      that.setData({
-                        buttonClickOne: false
                       })
                     }
                   }
@@ -266,13 +266,14 @@ Page({
               wx.hideLoading()
               that.onLoad()
             }, 2000)
+
+            that.setData({
+              buttonClickTwo: false
+            })
           } else if (res.cancel) {
             console.log('用户点击取消')
           }
         }
-      })
-      that.setData({
-        buttonClickTwo: false
       })
     }
 

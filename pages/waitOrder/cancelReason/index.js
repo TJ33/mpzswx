@@ -37,8 +37,8 @@ Page({
   submit(e) {
 
     let value = this.data.value
-
-    if (this.data.buttonClick == true) {
+    let that = this
+    if (that.data.buttonClick == true) {
       wx.showModal({
         title: '提示',
         content: '是否确认提交',
@@ -49,11 +49,11 @@ Page({
             // wx.redirectTo({
             //   url: '../single/index'
             // })
+            that.setData({
+              buttonClick: false
+            })
           }
         }
-      })
-      this.setData({
-        buttonClick: false
       })
     }
 

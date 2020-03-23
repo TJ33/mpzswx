@@ -170,7 +170,8 @@ Page({
 
   //点击确认按钮
   sure() {
-    if (this.data.buttonClick == true) {
+    let that = this
+    if (that.data.buttonClick == true) {
       wx.showModal({
         title: '提示',
         content: '是否确认选择',
@@ -179,11 +180,11 @@ Page({
             wx.redirectTo({
               url: '/pages/order/index'
             })
+            that.setData({
+              buttonClick: false
+            })
           }
         }
-      })
-      this.setData({
-        buttonClick: false
       })
     }
 

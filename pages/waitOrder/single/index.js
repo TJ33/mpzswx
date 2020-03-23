@@ -591,13 +591,13 @@ Page({
                 duration: 1000
               })
             }
-
+            that.setData({
+              buttonClick: false
+            })
           }
         }
       })
-      that.setData({
-        buttonClick: false
-      })
+
     }
 
 

@@ -45,7 +45,7 @@ Page({
     let id = e.currentTarget.dataset.id
     let that = this
 
-    if (this.data.buttonClick == true) {
+    if (that.data.buttonClick == true) {
       wx.showModal({
         title: '提示',
         content: '是否删除当前地址',
@@ -66,11 +66,11 @@ Page({
                 duration: 1000
               })
             }
+            that.setData({
+              buttonClick: false
+            })
           }
         }
-      })
-      this.setData({
-        buttonClick: false
       })
     }
 

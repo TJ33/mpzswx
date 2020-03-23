@@ -594,7 +594,9 @@ Page({
       });
       return
     }
-    if (this.data.buttonClick == true) {
+
+    let that = this
+    if (that.data.buttonClick == true) {
       wx.showModal({
         title: '提示',
         content: '是否确认下单',
@@ -608,11 +610,11 @@ Page({
             })
             // wx.removeStorageSync('sendAddress')
             wx.removeStorageSync('reciveAddress')
+            that.setData({
+              buttonClick: false
+            })
           }
         }
-      })
-      this.setData({
-        buttonClick: false
       })
     }
 
