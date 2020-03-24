@@ -22,7 +22,6 @@ Page({
 
   async onLoad() {
     let judgeLogin = wx.getStorageSync('judgeLogin')
-    console.log('judgeLogin======================', judgeLogin)
     if (judgeLogin != '') {
       //查询全部
       let allList = await ToolServer.findWayBill('', '')
