@@ -7,7 +7,7 @@
 		<button
 		 class="dl"
 		 open-type="getPhoneNumber"
-		 bindgetphonenumber="{{getPhoneNumber}}"
+		 bindgetphonenumber="getPhoneNumber"
 		 plain="{{true}}"
 		>
 			用户登录
@@ -77,7 +77,7 @@
 		</view>
 		<i class="iconfont iconyoujiantou" />
 	</navigator>
-	<view class="content" bindtap="{{bindOut}}">
+	<view class="content" bindtap="bindOut">
 		<view class=" left">
 			<view class="icon">
 				<i class="iconfont iconyuyuexinxi" />
