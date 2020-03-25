@@ -541,7 +541,6 @@ Page({
     //需要判断用户有没有选择寄件收件地址
     let sendAddress = this.data.sendAddress
     let reciveAddress = this.data.reciveAddress
-
     if (sendAddress == false) {
       wx.showToast({
         title: '请选择寄件地址',

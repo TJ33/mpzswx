@@ -33,7 +33,7 @@ Page({
   },
 
   bindscrolltolower(e) {
-    console.log('翻页');
+
   },
   //修改地址
   bindUp(e) {

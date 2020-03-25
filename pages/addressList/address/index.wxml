@@ -50,7 +50,7 @@
 		</view>
 	</view>
 </view> -->
-<view class="box4 {{storeName != '' && name !=''&& phone!='' && address!=''  ?'':'box_4_no'}} " bindtap="{{storeName != '' && name !=''&& phone!='' && address!='' && buttonClick==true ?'bindAdds':''}}">
+<view class="box4 {{ name !=''&& phone!='' && address!=''  && buttonClick==true ?'':'box_4_no'}} " bindtap="{{ name !=''&& phone!='' && address!='' && buttonClick==true ?'bindAdds':''}}">
 	保存
 </view>
 
