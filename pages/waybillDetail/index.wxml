@@ -1,6 +1,17 @@
 <!-- pages/waybillDetail/index.wxml -->
 <view class="content_active">
 	<view class="content">
+		<view class="cbox_1">
+			<view class="right">
+				<view class="name" wx:if="{{transportStatus=='CREATED'}}">订单状态: 已下单</view>
+				<view class="name" wx:if="{{transportStatus=='DELIVERING'}}">订单状态: 已揽件</view>
+				<view class="name" wx:if="{{transportStatus=='SIGN_IN'}}">订单状态: 已签收</view>
+				<view class="name" wx:if="{{transportStatus=='COMPLETE'}}">订单状态: 已完成</view>
+				<view class="ads">到达时间 {{time.receiveAt}}</view>
+			</view>
+		</view>
+	</view>
+	<!-- <view class="content">
 		<view class="cbox_1" bindtap="{{waybill.transportStatus !='CREATED' ?'bindMap':''}}">
 			<view class="left">
 				<i class="iconfont icon-ic_tomap" />
@@ -14,7 +25,7 @@
 			</view>
 			<i class="iconfont icon-qianjin" />
 		</view>
-		<!-- <view class="cbox_2" wx:if="{{waybill.transportStatus !='CREATED'}}">
+		<view class="cbox_2" wx:if="{{waybill.transportStatus !='CREATED'}}">
 						<view class="left">
 								<i class="iconfont icon-huabanfuben" />
 						</view>
@@ -24,8 +35,8 @@
 										<i class="iconfont icon-dianhua" bindtap="phoneDeliveryman" />
 								</view>
 						</view>
-				</view> -->
-	</view>
+				</view>
+	</view> -->
 	<!-- <view class="box_2" wx:if="{{waybill.consignee._id}}">
 				<view class="contents">
 						<view class="right">

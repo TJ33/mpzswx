@@ -2,7 +2,7 @@
 <scroll-view scroll-y="{{true}}" style="max-height:calc(100vh - 122px);" bindscrolltolower="bindscrolltolower">
 	<view class="box" wx:for="{{list}}" wx:key="{{index}}">
 		<view class="center">
-			<view>{{item.anotherNamer!=''?item.anotherNamer:'暂无店铺名'}}</view>
+			<view>{{item.contactName}}</view>
 			<view>{{item.contactPhone}}</view>
 		</view>
 		<view class="center border">{{item.address}}</view>
@@ -13,5 +13,5 @@
 	</view>
 </scroll-view>
 <miss wx:if="{{list.length == 0}}" />
-<view class="box4" bindtap="{{buttonClick==true?'bindAdds':''}}">添加地址</view>
+<view class="box4" bindtap="bindAdds">添加地址</view>
 

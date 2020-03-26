@@ -11,7 +11,7 @@ Page({
     animation: '',
     TopicTitleActive: 0,
     // CREATED：已下单 PUSHED_ORDER:已推单   RECEIVED_ORDER: 已接单 DELIVERING：已揽件，正在配送中  SIGN_IN：已签收   COMPLETE: 已完成
-    type: ['全部', '已揽件', '已签收', '派单中'],
+    type: ['全部', '派单中', '已揽件', '已签收',],
     waybill: '',     //运单编号
     pageNum: 1,
     allList: [],         //全部
@@ -41,7 +41,6 @@ Page({
         })
       }
     }
-
   },
 
   async onShow() {
@@ -170,23 +169,24 @@ Page({
       this.setData({ 'allList': this.data.allList, 'pageNum': 1 })
     }
     else if (this.data.TopicTitleActive == 1) {
-      this.data.flag = 'DELIVERING'
-      this.data.deliveringList = await ToolServer.findWayBill('DELIVERING', this.data.waybill)
-      this.data.deliveringList = await this.createTime(this.data.deliveringList)
-      // this.reviseTr(this.data.deliveringList)
-      this.setData({ 'deliveringList': this.data.deliveringList, 'pageNum': 1 })
-    } else if (this.data.TopicTitleActive == 2) {
-      this.data.flag = 'SIGN_IN'
-      this.data.signInList = await ToolServer.findWayBill('SIGN_IN', this.data.waybill)
-      this.data.signInList = await this.createTime(this.data.signInList)
-      // this.reviseTr(this.data.signInList)
-      this.setData({ 'signInList': this.data.signInList, 'pageNum': 1 })
-    } else {
       this.data.flag = 'PUSHED_ORDER'
       this.data.pushedOrderList = await ToolServer.findWayBill('PUSHED_ORDER', this.data.waybill)
       this.data.pushedOrderList = await this.createTime(this.data.pushedOrderList)
       // this.reviseTr(this.data.pushedOrderList)
       this.setData({ 'pushedOrderList': this.data.pushedOrderList, 'pageNum': 1 })
+    } else if (this.data.TopicTitleActive == 2) {
+      this.data.flag = 'DELIVERING'
+      this.data.deliveringList = await ToolServer.findWayBill('DELIVERING', this.data.waybill)
+      this.data.deliveringList = await this.createTime(this.data.deliveringList)
+      // this.reviseTr(this.data.deliveringList)
+      this.setData({ 'deliveringList': this.data.deliveringList, 'pageNum': 1 })
+    } else {
+      this.data.flag = 'SIGN_IN'
+      this.data.signInList = await ToolServer.findWayBill('SIGN_IN', this.data.waybill)
+      this.data.signInList = await this.createTime(this.data.signInList)
+      // this.reviseTr(this.data.signInList)
+      this.setData({ 'signInList': this.data.signInList, 'pageNum': 1 })
+
     }
     // if (this.data.TopicTitleActive == 0) {
     //   this.data.flag = 'CREATED'
@@ -230,13 +230,13 @@ Page({
         status = ''
         break;
       case 1:
-        status = 'DELIVERING'
+        status = 'PUSHED_ORDER'
         break;
       case 2:
-        status = 'SIGN_IN'
+        status = 'DELIVERING'
         break;
       case 3:
-        status = 'PUSHED_ORDER'
+        status = 'SIGN_IN'
         break;
       // case 0:
       //   status = 'CREATED'
@@ -268,9 +268,9 @@ Page({
             that.setData({ signInList: that.data.signInList })
             break;
           case 'PUSHED_ORDER':
-            that.data.signInList = list
-            that.data.signInList = await that.createTime(that.data.signInList)
-            that.setData({ signInList: that.data.signInList })
+            that.data.pushedOrderList = list
+            that.data.pushedOrderList = await that.createTime(that.data.pushedOrderList)
+            that.setData({ pushedOrderList: that.data.pushedOrderList })
             break;
           // case 'CREATED':
           //   that.data.createdList = list
@@ -311,23 +311,23 @@ Page({
       this.setData({ 'allList': this.data.allList, 'pageNum': 1 })
     }
     else if (index == 1) {
-      this.data.flag = 'DELIVERING'
-      this.data.deliveringList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
-      this.data.deliveringList = await this.createTime(this.data.deliveringList)
-      // this.reviseTr(this.data.deliveringList)
-      this.setData({ 'deliveringList': this.data.deliveringList, 'pageNum': 1 })
-    } else if (index == 2) {
-      this.data.flag = 'SIGN_IN'
-      this.data.signInList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
-      this.data.signInList = await this.createTime(this.data.signInList)
-      // this.reviseTr(this.data.signInList)
-      this.setData({ 'signInList': this.data.signInList, 'pageNum': 1 })
-    } else {
       this.data.flag = 'PUSHED_ORDER'
       this.data.pushedOrderList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
       this.data.pushedOrderList = await this.createTime(this.data.pushedOrderList)
       // this.reviseTr(this.data.pushedOrderList)
       this.setData({ 'pushedOrderList': this.data.pushedOrderList, 'pageNum': 1 })
+    } else if (index == 2) {
+      this.data.flag = 'DELIVERING'
+      this.data.deliveringList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
+      this.data.deliveringList = await this.createTime(this.data.deliveringList)
+      // this.reviseTr(this.data.deliveringList)
+      this.setData({ 'deliveringList': this.data.deliveringList, 'pageNum': 1 })
+    } else {
+      this.data.flag = 'SIGN_IN'
+      this.data.signInList = await ToolServer.findWayBill(this.data.flag, this.data.waybill)
+      this.data.signInList = await this.createTime(this.data.signInList)
+      // this.reviseTr(this.data.signInList)
+      this.setData({ 'signInList': this.data.signInList, 'pageNum': 1 })
     }
 
     // if (index == 0) {

@@ -28,6 +28,7 @@ Page({
     let keyword = this.data.keyword
     if (this.data.menu == 0) {
       list = await ToolServer.findAddressBook(keyword)
+      console.log('list=====================', list)
     }
     this.setData({ 'list': list, 'keyword': keyword })
   },
@@ -74,7 +75,7 @@ Page({
       success: async function (res) {
         if (res.tapIndex == 0) {
           let sp = ''
-          wx.navigateTo({ url: '../address/index' })
+          wx.navigateTo({ url: '../address/index?type=0' })
         }
         that.setData({
           'menu': res.tapIndex,

@@ -209,8 +209,8 @@ Page({
 
 
   bindDes(e) {
-    let sn = e.currentTarget.dataset.sn
-    wx.navigateTo({ url: `../../order_other/qrDetails/index?id=${sn}` })
+    let id = e.currentTarget.dataset.id
+    wx.navigateTo({ url: '../../waybillDetail/index?id=' + id })
   },
   async bindscrolltolower() {
     await this.tolower(this.data.list)

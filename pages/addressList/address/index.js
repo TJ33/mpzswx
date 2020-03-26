@@ -17,7 +17,10 @@ Page({
     //set: true, //是否保存到地址薄
 
     //按钮判断
-    buttonClick: true
+    buttonClick: true,
+
+    //如果是搜索列表添加的 需要跳转回下单页面
+    type: ''
   },
 
   /**
@@ -80,6 +83,14 @@ Page({
         }
       })
     }
+
+    let type = options.type
+    if (type != undefined) {
+      this.setData({
+        type: type
+      })
+    }
+
   },
   onShow() {
 
@@ -156,7 +167,6 @@ Page({
     let id = this.data.id
     let door = this.data.door
 
-
     if (name == "") {
       wx.showToast({
         title: '请输入联系人姓名',
@@ -224,9 +234,15 @@ Page({
                   icon: 'success',
                   duration: 1000
                 })
-                wx.redirectTo({
-                  url: '../addressBook/index'
-                })
+                if (that.data.type == '0') {
+                  wx.switchTab({
+                    url: '../../order/index'
+                  })
+                } else {
+                  wx.redirectTo({
+                    url: '../addressBook/index'
+                  })
+                }
               } else {
                 wx.showToast({
                   title: '添加失败',
@@ -255,9 +271,15 @@ Page({
                   icon: 'success',
                   duration: 1000
                 })
-                wx.redirectTo({
-                  url: '../addressBook/index'
-                })
+                if (that.data.type == '0') {
+                  wx.switchTab({
+                    url: '../../order/index'
+                  })
+                } else {
+                  wx.redirectTo({
+                    url: '../addressBook/index'
+                  })
+                }
               } else {
                 wx.showToast({
                   title: '修改失败',

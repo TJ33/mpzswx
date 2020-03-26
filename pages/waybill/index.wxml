@@ -83,6 +83,46 @@
 			<scroll-view
 			 scroll-y="{{true}}"
 			 style="height:calc(100vh - 102px);"
+			 bindscrolltolower="bindscrolltolower4"
+			 wx:if="{{pushedOrderList.length > 0 }}"
+			>
+				<view
+				 class="list"
+				 wx:for="{{pushedOrderList}}"
+				 wx:key=""
+				 data-index="1"
+				 data-id="{{item.id}}"
+				 bindtap="bindDes"
+				>
+					<view class="list_dh">
+						<view>运单编号：{{item.sn}}</view>
+						<view class="{{item.transportStatus == 'PUSHED_ORDER'?'st_2':'st_1'}}">派单中</view>
+					</view>
+					<view class="list_box">
+						<view class="box_1">收件人</view>
+						<view class="box_2">
+							{{item.consignee.region.name}}
+							<text>{{item.consignee.contactName}}</text>
+						</view>
+					</view>
+					<view class="list_box">
+						<view class="box_1">下单时间</view>
+						<view class="box_2">
+							<view>{{item.time.createAt}}</view>
+						</view>
+						<view class="box_3">
+							代收货款
+							<text>￥{{item.cargoMoney}}</text>
+						</view>
+					</view>
+				</view>
+			</scroll-view>
+			<miss wx:else></miss>
+		</swiper-item>
+		<swiper-item>
+			<scroll-view
+			 scroll-y="{{true}}"
+			 style="height:calc(100vh - 102px);"
 			 bindscrolltolower="bindscrolltolower2"
 			 wx:if="{{deliveringList.length > 0 }}"
 			>
@@ -137,46 +177,6 @@
 					<view class="list_dh">
 						<view>运单编号：{{item.sn}}</view>
 						<view class="{{item.transportStatus == 'SIGN_IN'?'st_2':'st_1'}}">已签收</view>
-					</view>
-					<view class="list_box">
-						<view class="box_1">收件人</view>
-						<view class="box_2">
-							{{item.consignee.region.name}}
-							<text>{{item.consignee.contactName}}</text>
-						</view>
-					</view>
-					<view class="list_box">
-						<view class="box_1">下单时间</view>
-						<view class="box_2">
-							<view>{{item.time.createAt}}</view>
-						</view>
-						<view class="box_3">
-							代收货款
-							<text>￥{{item.cargoMoney}}</text>
-						</view>
-					</view>
-				</view>
-			</scroll-view>
-			<miss wx:else></miss>
-		</swiper-item>
-		<swiper-item>
-			<scroll-view
-			 scroll-y="{{true}}"
-			 style="height:calc(100vh - 102px);"
-			 bindscrolltolower="bindscrolltolower4"
-			 wx:if="{{pushedOrderList.length > 0 }}"
-			>
-				<view
-				 class="list"
-				 wx:for="{{pushedOrderList}}"
-				 wx:key=""
-				 data-index="1"
-				 data-id="{{item.id}}"
-				 bindtap="bindDes"
-				>
-					<view class="list_dh">
-						<view>运单编号：{{item.sn}}</view>
-						<view class="{{item.transportStatus == 'PUSHED_ORDER'?'st_2':'st_1'}}">派单中</view>
 					</view>
 					<view class="list_box">
 						<view class="box_1">收件人</view>
