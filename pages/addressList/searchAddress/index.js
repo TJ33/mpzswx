@@ -28,7 +28,6 @@ Page({
     let keyword = this.data.keyword
     if (this.data.menu == 0) {
       list = await ToolServer.findAddressBook(keyword)
-      console.log('list=====================', list)
     }
     this.setData({ 'list': list, 'keyword': keyword })
   },
