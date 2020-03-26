@@ -165,8 +165,8 @@
 		</view>
 		<view class="month">
 			<view class="left">
-				<i class="iconfont icon-baoguo--" />
-				<view>是否月结</view>
+				<i class="iconfont icon-rili" />
+				<view>运费月结</view>
 			</view>
 			<view class="right">
 				<view class="section__title" />
@@ -202,7 +202,7 @@
 		</view>
 		<view class="content">
 			<view class="left">
-				<i class="iconfont icon-yunshu" />
+				<i class="iconfont icon-zhangdan" />
 				<view>参考运费(元)</view>
 			</view>
 			<view class="right">

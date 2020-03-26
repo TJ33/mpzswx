@@ -32,8 +32,8 @@
       {
         "pagePath": "pages/waybill/index",
         "text": "查单",
-        "iconPath": "/images/index.png",
-        "selectedIconPath": "/images/selected_index.png"
+        "iconPath": "/images/mpsy/search_a.png",
+        "selectedIconPath": "/images/mpsy/search_b.png"
       },
       {
         "pagePath": "pages/order/index",
