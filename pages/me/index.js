@@ -14,6 +14,7 @@ Page({
     showHeightAnimation: '',
     Myhead: '',
     user: {},
+    code: ''
   },
 
   /**
@@ -47,6 +48,14 @@ Page({
       })
     }
 
+    let that = this
+    wx.login({
+      success: function (res) {
+        that.setData({
+          code: res.code
+        })
+      }
+    })
 
   },
   onShow: function () {
@@ -79,7 +88,7 @@ Page({
               secret: "70372a7d632e6e03a9ff5608d15c715f",
               iv: e.detail.iv,
               encryptedData: e.detail.encryptedData,
-              code: res.code
+              code: that.data.code
             },
             async success(res) {
               if (res.statusCode == 200) {
@@ -142,91 +151,6 @@ Page({
       }
     })
 
-    //登陆有效期检查
-    wx.checkSession({
-      success: function () {
-        //session_key 未过期，并且在本生命周期一直有效
-      },
-      fail: function () {
-        // session_key 已经失效，需要重新执行登录流程
-        wx.login({
-          async success(res) {
-            wx.setStorageSync("CODE", res.code)
-            if (e.detail.errMsg == 'getPhoneNumber:ok') {
-              await wx.request({
-                url: `${domain}/api/wxapp/analys_phone`,
-                method: 'POST',
-                header: {
-                  'Content-Type': 'application/x-www-form-urlencoded'
-                },
-                data: {
-                  appid: "wxfea63eb860bd639e",
-                  secret: "70372a7d632e6e03a9ff5608d15c715f",
-                  iv: e.detail.iv,
-                  encryptedData: e.detail.encryptedData,
-                  code: res.code
-                },
-                async success(res) {
-                  if (res.statusCode == 200) {
-                    let ret = res.data.data.phoneNumber
-                    wx.setStorageSync("PHONE", ret)
-                    if (ret == undefined) {
-                      wx.showToast({
-                        title: '请求异常',
-                        icon: 'none',
-                        duration: 1000
-                      })
-                    } else {
-                      let user = await LoginServer.myPhoneLogin(ret)
-                      let errorcode = user.errorcode
-                      if (errorcode == 0) {
-                        wx.setStorageSync('judgeLogin', true)
-                        that.setData({
-                          user: user.data,
-                          popupShow: true,
-                        })
-                        wx.setStorageSync("USER", user.data)
-                      } else if (errorcode == 1) {
-                        wx.showToast({
-                          title: '用户审核中',
-                          icon: 'none',
-                          duration: 1000
-                        })
-                      } else {
-                        wx.showModal({
-                          title: '提示',
-                          content: '请问是否注册',
-                          success(res) {
-                            if (res.confirm) {
-                              //用户不存在 跳转注册页面
-                              wx.navigateTo({ url: '../register/index' })
-                            }
-                          }
-                        })
-                      }
-                    }
-                  }
-                  else if (res.statusCode = 500) {
-                    wx.showToast({
-                      title: '请求错误',
-                      icon: 'none',
-                      duration: 1000
-                    })
-                  }
-                  else {
-                    wx.showToast({
-                      title: '网络连接异常',
-                      icon: 'none',
-                      duration: 1000
-                    })
-                  }
-                }
-              })
-            }
-          }
-        }) //重新登录
-      }
-    })
   },
   //退出登录
   bindOut(e) {
