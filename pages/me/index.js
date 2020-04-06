@@ -75,7 +75,7 @@ Page({
     //执行wx.login
     wx.login({
       async success(res) {
-        wx.setStorageSync("CODE", res.code)
+        wx.setStorageSync("CODE", that.data.code)
         if (e.detail.errMsg == 'getPhoneNumber:ok') {
           await wx.request({
             url: `${domain}/api/wxapp/analys_phone`,
