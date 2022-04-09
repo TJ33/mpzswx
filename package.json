@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "dependencies": {
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "regenerator-runtime": "^0.13.3",
     "weapp.socket.io": "^2.0.1"
   },
